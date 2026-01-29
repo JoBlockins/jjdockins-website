@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josiah J Dockins - Welcome</title>
+    <style>
+        :root {
+            --primary-dark: #0f2647;
+            --primary-mid: #1a3a5c;
+            --accent-teal: #14b8a6;
+            --accent-coral: #ff8a65;
+            --neutral-700: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-mid) 50%, var(--accent-teal) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .landing-container {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .landing-header {
+            color: white;
+            margin-bottom: 4rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .landing-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .landing-header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .option-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            transition: height 0.4s ease;
+        }
+
+        .option-card.personal::before {
+            background: linear-gradient(90deg, var(--accent-coral), #ff6b6b);
+        }
+
+        .option-card.blueprint::before {
+            background: linear-gradient(90deg, var(--accent-teal), #06b6d4);
+        }
+
+        .option-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .option-card:hover::before {
+            height: 100%;
+            opacity: 0.05;
+        }
+
+        .option-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .option-card h2 {
+            color: var(--primary-dark);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .option-card p {
+            color: var(--neutral-700);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .option-arrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: gap 0.3s ease;
+        }
+
+        .option-card.personal .option-arrow {
+            color: var(--accent-coral);
+        }
+
+        .option-card.blueprint .option-arrow {
+            color: var(--accent-teal);
+        }
+
+        .option-card:hover .option-arrow {
+            gap: 1rem;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                justify-content: flex-start;
+                padding: 2rem 1rem;
+                padding-top: 3rem;
+            }
+
+            .landing-header h1 {
+                font-size: 2rem;
+            }
+
+            .landing-header p {
+                font-size: 1.1rem;
+            }
+
+            .options-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .option-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .option-icon {
+                font-size: 3rem;
+            }
+
+            .option-card h2 {
+                font-size: 1.6rem;
+            }
+
+            .option-card p {
+                font-size: 1rem;
+            }
+
+            footer p {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1.5rem 0.75rem;
+            }
+
+            .landing-header {
+                margin-bottom: 2rem;
+            }
+
+            .landing-header h1 {
+                font-size: 1.75rem;
+            }
+        }
+
+        footer {
+            background: rgba(15, 38, 71, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            border-top: 2px solid rgba(20, 184, 166, 0.3);
+            margin-top: 3rem;
+        }
+
+        footer h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-teal);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="landing-container">
+        <div class="landing-header">
+            <h1>Josiah J Dockins</h1>
+            <p>Student • Career Explorer • Future Builder</p>
+        </div>
+
+        <div class="options-container">
+            <a href="personal.html" class="option-card personal">
+                <h2>About Me</h2>
+                <p>
+                    Learn more about my background, interests, education, and personal journey as a student exploring future career paths.
+                </p>
+                <span class="option-arrow">
+                    Explore My Profile →
+                </span>
+            </a>
+
+            <a href="blueprint.html" class="option-card blueprint">
+                <h2>Project Blueprint</h2>
+                <p>
+                    Discover my career-exploration initiative where I interview professionals to understand real career paths and opportunities.
+                </p>
+                <span class="option-arrow">
+                    View the Project →
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <h4>Disclaimer</h4>
+        <p>
+            I'm actively teaching myself how to code this website from scratch using HTML and guidance from tools like ChatGPT and Claude AI. Since this isn't built from a premade template, you may notice occasional bugs or layout issues. I'm continuously learning and improving the site, so thank you for your patience as I work through fixes and updates.
+        </p>
+    </footer>
+</body>
+</html>

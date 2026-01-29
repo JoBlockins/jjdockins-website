@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Questionnaire - Project Blueprint</title>
+    <style>
+        :root {
+            --primary-dark: #0f2647;
+            --primary-mid: #1a3a5c;
+            --primary-light: #2d5a7b;
+            --accent-teal: #14b8a6;
+            --accent-coral: #ff8a65;
+            --accent-gold: #fbbf24;
+            --neutral-50: #f8fafc;
+            --neutral-100: #f1f5f9;
+            --neutral-700: #334155;
+            --neutral-800: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--neutral-700);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-mid) 50%, var(--accent-teal) 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(15, 38, 71, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--accent-teal);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--neutral-700);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-teal);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-dark), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-dark);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav ul {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.active {
+                max-height: 400px;
+            }
+
+            nav ul li {
+                border-bottom: 1px solid var(--neutral-100);
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 1rem 2rem;
+            }
+
+            nav ul li:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .hero-section {
+            max-width: 1200px;
+            margin: 3rem auto 2rem;
+            padding: 0 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .intro-section {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(15, 38, 71, 0.12);
+            border-left: 6px solid var(--accent-teal);
+        }
+
+        .intro-section h2 {
+            color: var(--primary-dark);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .intro-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-coral));
+            border-radius: 2px;
+        }
+
+        .intro-section p {
+            color: var(--neutral-700);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .questionnaire-container {
+            max-width: 1000px;
+            margin: 2rem auto 4rem;
+            padding: 0 2rem;
+        }
+
+        .question-section {
+            background: white;
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 8px 30px rgba(15, 38, 71, 0.12);
+            border-left: 6px solid var(--accent-teal);
+        }
+
+        .question-section:nth-child(2n) {
+            border-left-color: var(--accent-coral);
+        }
+
+        .question-section:nth-child(3n) {
+            border-left-color: var(--accent-gold);
+        }
+
+        .section-header {
+            color: var(--primary-dark);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-teal);
+            border-radius: 2px;
+        }
+
+        .section-description {
+            color: var(--neutral-700);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .question-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .question-item {
+            color: var(--neutral-700);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .question-item::before {
+            content: attr(data-number);
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+            color: var(--accent-teal);
+        }
+
+        .download-section {
+            max-width: 900px;
+            margin: 3rem auto 4rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-mid));
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(15, 38, 71, 0.12);
+            text-align: center;
+            color: white;
+        }
+
+        .download-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .download-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button.primary {
+            background: var(--accent-teal);
+            color: white;
+        }
+
+        .cta-button.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(20, 184, 166, 0.5);
+            background: #0f9488;
+        }
+
+        .cta-button.secondary {
+            background: white;
+            color: var(--primary-dark);
+        }
+
+        .cta-button.secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        footer {
+            background: var(--primary-dark);
+            color: var(--neutral-100);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--accent-teal);
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        footer p:first-child {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .disclaimer-footer {
+            background: rgba(15, 38, 71, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-top: 2px solid rgba(20, 184, 166, 0.3);
+            margin-top: 0;
+        }
+
+        .disclaimer-footer h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-teal);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .disclaimer-footer p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .question-section {
+                padding: 2rem;
+            }
+
+            .intro-section,
+            .download-section {
+                padding: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-text">Josiah J Dockins</a>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="personal.html">About Me</a></li>
+                <li><a href="blueprint.html">Project Blueprint</a></li>
+                <li><a href="https://www.jjdockins.com/methods.html">Methods</a></li>
+                <li><a href="https://www.jjdockins.com/questionnaire.html">Questionnaire</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Interview Questionnaire</h1>
+                <p>50 Questions That Map a Career Journey</p>
+            </div>
+        </section>
+
+        <section class="intro-section">
+            <h2>About This Questionnaire</h2>
+            <p>
+                This comprehensive questionnaire explores every facet of a professional career journey—from early influences and education to current challenges and future aspirations. These 50 questions are designed to capture authentic stories, practical insights, and the real experiences that shape successful careers.
+            </p>
+        </section>
+
+        <section class="intro-section" style="border-left-color: var(--accent-coral); text-align: center;">
+            <h2>Download PDF Version</h2>
+            <p style="margin-bottom: 2rem;">
+                Prefer to work offline or print the questionnaire? Download the beautifully formatted PDF version to complete at your own pace.
+            </p>
+            <a href="documents/Project_Blueprint_Questionnaire.pdf" download="Project_Blueprint_Questionnaire.pdf" class="cta-button primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                📥 Download PDF Questionnaire
+            </a>
+        </section>
+
+        <div class="questionnaire-container">
+            <!-- Section 1 -->
+            <div class="question-section">
+                <h3 class="section-header">Background & Early Influences</h3>
+                <p class="section-description">
+                    These questions help uncover where you came from and what early experiences shaped your personality, interests, and values.
+                </p>
+                <ul class="question-list">
+                    <li class="question-item" data-number="1.">Where did you grow up, and what experiences shaped your early interests?</li>
+                    <li class="question-item" data-number="2.">What were you like in high school—academically, socially, or with extracurriculars?</li>
+                    <li class="question-item" data-number="3.">Did you have a dream job growing up?</li>
+                    <li class="question-item" data-number="4.">Who influenced you most when you were young?</li>
+                    <li class="question-item" data-number="5.">What's one challenge from your childhood or teenage years that changed you?</li>
+                </ul>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="question-section">
+                <h3 class="section-header">Education Journey</h3>
+                <p class="section-description">
+                    This section explores your educational decisions—why you chose certain paths, what you learned, and how those experiences influenced your career.
+                </p>
+                <ul class="question-list">
+                    <li class="question-item" data-number="6.">What made you choose your college (or choose a different path)?</li>
+                    <li class="question-item" data-number="7.">What did you major in, and why?</li>
+                    <li class="question-item" data-number="8.">Was college useful for your career, or did you learn more on the job?</li>
+                    <li class="question-item" data-number="9.">What class, teacher, or project had the biggest impact on you?</li>
+                    <li class="question-item" data-number="10.">If you could redo your education, what would you change?</li>
+                </ul>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="question-section">
+                <h3 class="section-header">Early Career Development</h3>
+                <p class="section-description">
+                    These questions highlight how you entered your field, the challenges you faced, and the moments that shaped your early career direction.
+                </p>
+                <ul class="question-list">
+                    <li class="question-item" data-number="11.">What was your very first job?</li>
+                    <li class="question-item" data-number="12.">How did you get your foot in the door in your current field?</li>
+                    <li class="question-item" data-number="13.">What early mistake taught you the most?</li>
+                    <li class="question-item" data-number="14.">What was the biggest barrier you faced starting out?</li>
+                    <li class="question-item" data-number="15.">Did you have mentors or people who helped you along the way?</li>
+                </ul>
+            </div>
+
+            <!-- Section 4 -->
+            <div class="question-section">
+                <h3 class="section-header">Current Role</h3>
+                <p class="section-description">
+                    This section helps students understand what your job looks like day-to-day—what you actually do, what you enjoy, and what's difficult.
+                </p>
+                <ul class="question-list">
+                    <li class="question-item" data-number="16.">What is your current job title?</li>
+                    <li class="question-item" data-number="17.">How would you explain your job to a high school student?</li>
+                    <li class="question-item" data-number="18.">What does a normal day or week look like for you?</li>
+                    <li class="question-item" data-number="19.">What part of your job do you enjoy most?</li>
+                    <li class="question-item" data-number="20.">What part is the most difficult or stressful?</li>
+                </ul>
+            </div>
+
+            <!-- Section 5 -->
+            <div class="question-section">
+                <h3 class="section-header">Skills, Decision-Making & Professional Growth</h3>
+                <p class="section-description">
+                    These questions focus on the skills, habits, and choices that help people advance and succeed in your field.
+                </p>
+                <ul class="question-list">
+                    <li class="question-item" data-number="21.">What skills are essential in your line of work?</li>
+                    <li class="question-item" data-number="22.">Which skills did you have to learn the hard way?</li>
+                    <li class="question-item" data-number="23.">What habits or qualities help someone excel in this profession?</li>
+                    <li class="question-item" data-number="24.">How do you make difficult decisions in your job?</li>
+                    <li class="question-item" data-number="25.">What's something people misunderstand about your field?</li>
+                </ul>
+            </div>
+
+            <!-- Section 6 -->
+            <div class="question-section">
+                <h3 class="section-header">Career Turning Points</h3>
+                <p class="section-description">
+                    This section uncovers major moments, risks, and transitions that shaped your career over time.
+                </p>
+                <ul class="question-list">
+                    <li class="question-item" data-number="26.">What has been your biggest career turning point?</li>
+                    <li class="question-item" data-number="27.">Have you ever switched fields or considered quitting?</li>
+                    <li class="question-item" data-number="28.">What's the biggest risk you've taken in your career?</li>
+                    <li class="question-item" data-number="29.">What accomplishment are you most proud of?</li>
+                    <li class="question-item" data-number="30.">What setback or failure changed the direction of your career?</li>
+                </ul>
+            </div>
+
+            <!-- Section 7 -->
+            <div class="question-section">
+                <h3 class="section-header">Industry Perspective</h3>
+                <p class="section-description">
+                    These questions help students understand what's happening in your industry and how it may change in the future.
+                </p>
+                <ul class="question-list">
+                    <li class="question-item" data-number="31.">How is your industry changing right now?</li>
+                    <li class="question-item" data-number="32.">What skills or roles do you think will be most wanted in the future?</li>
+                    <li class="question-item" data-number="33.">Is job stability an issue in your field?</li>
+                    <li class="question-item" data-number="34.">How competitive is your industry?</li>
+                    <li class="question-item" data-number="35.">How do people typically move up or advance?</li>
+                </ul>
+            </div>
+
+            <!-- Section 8 -->
+            <div class="question-section">
+                <h3 class="section-header">Work-Life Balance & Personal Values</h3>
+                <p class="section-description">
+                    This section explores your values, motivations, and the way you balance your career with the rest of your life.
+                </p>
+                <ul class="question-list">
+                    <li class="question-item" data-number="36.">How do you manage stress or avoid burnout?</li>
+                    <li class="question-item" data-number="37.">What does "success" mean to you now?</li>
+                    <li class="question-item" data-number="38.">How do your values influence your work?</li>
+                    <li class="question-item" data-number="39.">What do you wish more people understood about your life outside of work?</li>
+                    <li class="question-item" data-number="40.">What keeps you motivated?</li>
+                </ul>
+            </div>
+
+            <!-- Section 9 -->
+            <div class="question-section">
+                <h3 class="section-header">Practical Career Advice</h3>
+                <p class="section-description">
+                    These questions give students concrete information about entering your field—salary expectations, required experiences, and advice.
+                </p>
+                <ul class="question-list">
+                    <li class="question-item" data-number="41.">What is a realistic starting salary for someone entering your field?</li>
+                    <li class="question-item" data-number="42.">What does the job market look like for new graduates?</li>
+                    <li class="question-item" data-number="43.">What should high school or college students focus on if they want this career?</li>
+                    <li class="question-item" data-number="44.">What experiences (internships, projects, networking) matter most?</li>
+                    <li class="question-item" data-number="45.">What is one thing you wish every student knew before choosing this path?</li>
+                </ul>
+            </div>
+
+            <!-- Section 10 -->
+            <div class="question-section">
+                <h3 class="section-header">Reflection & Future Goals</h3>
+                <p class="section-description">
+                    This final section offers deeper insight into your long-term goals and what you've learned about yourself through your career.
+                </p>
+                <ul class="question-list">
+                    <li class="question-item" data-number="46.">What's a moment when you realized you were on the right (or wrong) career path?</li>
+                    <li class="question-item" data-number="47.">How has your career shaped the person you've become?</li>
+                    <li class="question-item" data-number="48.">If you could give your younger self one piece of advice, what would it be?</li>
+                    <li class="question-item" data-number="49.">What are your goals for the next 5–10 years?</li>
+                    <li class="question-item" data-number="50.">What final message or insight would you want students to take away from your story?</li>
+                </ul>
+            </div>
+        </div>
+
+        <section class="download-section">
+            <h2>Ready to Share Your Journey?</h2>
+            <div class="cta-buttons">
+                <a href="contact.html" class="cta-button secondary">Get In Touch</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Project Blueprint. All rights reserved.</p>
+        <p>Plan the Future. One Story at a Time.</p>
+    </footer>
+
+    <footer class="disclaimer-footer">
+        <h4>Disclaimer</h4>
+        <p>
+            I'm actively teaching myself how to code this website from scratch using HTML and guidance from tools like ChatGPT and Claude AI. Since this isn't built from a premade template, you may notice occasional bugs or layout issues. I'm continuously learning and improving the site, so thank you for your patience as I work through fixes and updates.
+        </p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navMenu').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

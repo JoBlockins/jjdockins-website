@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josiah J Dockins - Welcome</title>
+    <style>
+        :root {
+            --primary-dark: #0f2647;
+            --primary-mid: #1a3a5c;
+            --accent-teal: #14b8a6;
+            --accent-cyan: #06b6d4;
+            --accent-coral: #ff8a65;
+            --accent-purple: #8b5cf6;
+            --neutral-700: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a1628;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                var(--primary-dark) 0%, 
+                var(--primary-mid) 25%,
+                #1e4d6e 50%,
+                var(--accent-teal) 100%);
+            z-index: -2;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.85;
+            }
+        }
+
+        /* AI-inspired geometric background elements */
+        .geometric-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .geometric-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(20, 184, 166, 0.15), transparent);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .geometric-shape:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            top: -200px;
+            left: -100px;
+            animation-delay: 0s;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1), transparent);
+        }
+
+        .geometric-shape:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            bottom: -100px;
+            right: -50px;
+            animation-delay: 3s;
+        }
+
+        .geometric-shape:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            top: 50%;
+            right: 10%;
+            animation-delay: 6s;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.12), transparent);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
+
+        /* Neural network lines */
+        .neural-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .neural-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-teal), transparent);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .neural-line:nth-child(1) {
+            width: 200px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .neural-line:nth-child(2) {
+            width: 300px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 1s;
+        }
+
+        .neural-line:nth-child(3) {
+            width: 150px;
+            top: 40%;
+            left: 50%;
+            animation-delay: 2s;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.1;
+                transform: scaleX(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scaleX(1.2);
+            }
+        }
+
+        .landing-container {
+            max-width: 1100px;
+            width: 100%;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .landing-header {
+            color: white;
+            margin-bottom: 4rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .landing-header h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff, var(--accent-teal), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        .landing-header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+            perspective: 1000px;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            padding: 3.5rem 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent);
+            transition: left 0.6s ease;
+        }
+
+        .option-card:hover::before {
+            left: 100%;
+        }
+
+        .option-card.personal {
+            border-top: 2px solid var(--accent-coral);
+        }
+
+        .option-card.blueprint {
+            border-top: 2px solid var(--accent-teal);
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .option-card h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .option-card p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .option-arrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .option-card.personal .option-arrow {
+            color: var(--accent-coral);
+            background: rgba(255, 138, 101, 0.1);
+        }
+
+        .option-card.blueprint .option-arrow {
+            color: var(--accent-teal);
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        .option-card:hover .option-arrow {
+            gap: 1.2rem;
+            transform: translateX(5px);
+        }
+
+        .option-card.personal:hover .option-arrow {
+            background: rgba(255, 138, 101, 0.2);
+            border-color: var(--accent-coral);
+        }
+
+        .option-card.blueprint:hover .option-arrow {
+            background: rgba(20, 184, 166, 0.2);
+            border-color: var(--accent-teal);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: rgba(15, 38, 71, 0.6);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(20, 184, 166, 0.3);
+            margin-top: 4rem;
+            border-radius: 10px;
+            max-width: 900px;
+        }
+
+        footer h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-teal);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                justify-content: flex-start;
+                padding: 2rem 1rem;
+                padding-top: 3rem;
+            }
+
+            .landing-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .landing-header .subtitle {
+                font-size: 1rem;
+                letter-spacing: 2px;
+            }
+
+            .options-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .option-card {
+                padding: 2.5rem 2rem;
+            }
+
+            .option-card h2 {
+                font-size: 1.75rem;
+            }
+
+            .option-card p {
+                font-size: 1rem;
+            }
+
+            footer p {
+                font-size: 0.8rem;
+            }
+
+            .geometric-shape {
+                opacity: 0.5;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1.5rem 0.75rem;
+            }
+
+            .landing-header {
+                margin-bottom: 2.5rem;
+            }
+
+            .landing-header h1 {
+                font-size: 2rem;
+                letter-spacing: 1px;
+            }
+
+            .landing-header .subtitle {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Geometric AI-inspired background -->
+    <div class="geometric-bg">
+        <div class="geometric-shape"></div>
+        <div class="geometric-shape"></div>
+        <div class="geometric-shape"></div>
+    </div>
+
+    <!-- Neural network inspired lines -->
+    <div class="neural-lines">
+        <div class="neural-line"></div>
+        <div class="neural-line"></div>
+        <div class="neural-line"></div>
+    </div>
+
+    <div class="landing-container">
+        <div class="landing-header">
+            <h1>Josiah J Dockins</h1>
+            <p class="subtitle">Student • Career Explorer • Future Builder</p>
+        </div>
+
+        <div class="options-container">
+            <a href="personal.html" class="option-card personal">
+                <h2>About Me</h2>
+                <p>
+                    Explore my journey as a student-athlete, my academic pursuits, and my commitment to continuous growth both in and out of the classroom.
+                </p>
+                <span class="option-arrow">
+                    Discover More →
+                </span>
+            </a>
+
+            <a href="blueprint.html" class="option-card blueprint">
+                <h2>Project Blueprint</h2>
+                <p>
+                    A career-exploration initiative where I interview professionals to understand real career paths and build a roadmap for the future.
+                </p>
+                <span class="option-arrow">
+                    Explore Project →
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <h4>Disclaimer</h4>
+        <p>
+            I'm actively teaching myself how to code this website from scratch using HTML and guidance from tools like ChatGPT and Claude AI. Since this isn't built from a premade template, you may notice occasional bugs or layout issues. I'm continuously learning and improving the site, so thank you for your patience as I work through fixes and updates.
+        </p>
+    </footer>
+</body>
+</html>

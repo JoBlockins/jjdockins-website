@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methods - Project Blueprint</title>
+    <style>
+        :root {
+            /* Sophisticated Color Palette */
+            --primary-dark: #0f2647;
+            --primary-mid: #1a3a5c;
+            --primary-light: #2d5a7b;
+            --accent-teal: #14b8a6;
+            --accent-coral: #ff8a65;
+            --accent-gold: #fbbf24;
+            --neutral-50: #f8fafc;
+            --neutral-100: #f1f5f9;
+            --neutral-700: #334155;
+            --neutral-800: #1e293b;
+            --gradient-start: #0f2647;
+            --gradient-end: #14b8a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--neutral-700);
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--primary-mid) 50%, var(--gradient-end) 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(15, 38, 71, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--accent-teal);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--neutral-700);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-teal);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-dark), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-dark);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav ul {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.active {
+                max-height: 400px;
+            }
+
+            nav ul li {
+                border-bottom: 1px solid var(--neutral-100);
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 1rem 2rem;
+            }
+
+            nav ul li:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .methods-hero {
+            max-width: 1200px;
+            margin: 3rem auto 2rem;
+            padding: 0 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .methods-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+        }
+
+        .methods-hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .intro-section {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(15, 38, 71, 0.12);
+            border-left: 6px solid var(--accent-teal);
+        }
+
+        .intro-section h2 {
+            color: var(--primary-dark);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .intro-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-coral));
+            border-radius: 2px;
+        }
+
+        .intro-section p {
+            color: var(--neutral-700);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .methods-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .method-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(15, 38, 71, 0.12);
+            transition: all 0.3s ease;
+            border-top: 5px solid var(--neutral-100);
+            position: relative;
+        }
+
+        .method-card:nth-child(1) {
+            border-top-color: var(--accent-teal);
+        }
+
+        .method-card:nth-child(2) {
+            border-top-color: var(--accent-coral);
+        }
+
+        .method-card:nth-child(3) {
+            border-top-color: var(--accent-gold);
+        }
+
+        .method-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(15, 38, 71, 0.15);
+        }
+
+        .method-number {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .method-card:nth-child(1) .method-number {
+            background: var(--accent-teal);
+        }
+
+        .method-card:nth-child(2) .method-number {
+            background: var(--accent-coral);
+        }
+
+        .method-card:nth-child(3) .method-number {
+            background: var(--accent-gold);
+        }
+
+        .method-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .method-card h3 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .method-details {
+            background: var(--neutral-50);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .method-details p {
+            color: var(--neutral-700);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .method-details p:last-child {
+            margin-bottom: 0;
+        }
+
+        .method-details strong {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .method-card p {
+            color: var(--neutral-700);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .method-ideal {
+            background: linear-gradient(135deg, var(--neutral-50), var(--neutral-100));
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--accent-teal);
+        }
+
+        .method-card:nth-child(2) .method-ideal {
+            border-left-color: var(--accent-coral);
+        }
+
+        .method-card:nth-child(3) .method-ideal {
+            border-left-color: var(--accent-gold);
+        }
+
+        .method-ideal p {
+            margin: 0;
+            font-size: 0.95rem;
+            font-style: italic;
+            color: var(--neutral-700);
+        }
+
+        .method-ideal strong {
+            color: var(--primary-dark);
+            font-style: normal;
+        }
+
+        .decision-guide {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(15, 38, 71, 0.12);
+            border-left: 6px solid var(--accent-coral);
+        }
+
+        .decision-guide h2 {
+            color: var(--primary-dark);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .decision-guide h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-coral), var(--accent-gold));
+            border-radius: 2px;
+        }
+
+        .decision-guide p {
+            color: var(--neutral-700);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .decision-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .decision-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--neutral-50);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .decision-option:hover {
+            background: var(--neutral-100);
+            transform: translateX(5px);
+        }
+
+        .decision-option-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .decision-option strong {
+            color: var(--primary-dark);
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-mid));
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            color: white;
+            margin-top: 2rem;
+        }
+
+        .cta-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .cta-box p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent-teal);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(20, 184, 166, 0.5);
+            background: #0f9488;
+        }
+
+        footer {
+            background: var(--primary-dark);
+            color: var(--neutral-100);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--accent-teal);
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        footer p:first-child {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .disclaimer-footer {
+            background: rgba(15, 38, 71, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-top: 2px solid rgba(20, 184, 166, 0.3);
+            margin-top: 0;
+        }
+
+        .disclaimer-footer h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-teal);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .disclaimer-footer p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 968px) {
+            .methods-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .methods-hero h1 {
+                font-size: 2rem;
+            }
+
+            .methods-hero p {
+                font-size: 1rem;
+            }
+
+            .intro-section,
+            .decision-guide {
+                padding: 2rem;
+            }
+
+            .method-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-text">Josiah J Dockins</a>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="personal.html">About Me</a></li>
+                <li><a href="blueprint.html">Project Blueprint</a></li>
+                <li><a href="https://www.jjdockins.com/methods.html">Methods</a></li>
+                <li><a href="https://www.jjdockins.com/questionnaire.html">Questionnaire</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="methods-hero">
+            <h1>Methods of Participation</h1>
+            <p>Choose the format that works best for your schedule and comfort level</p>
+        </section>
+
+        <section class="intro-section">
+            <h2>Flexible & Accessible</h2>
+            <p>
+                To make Project Blueprint accessible and flexible for busy professionals, there are three ways you can participate in the interview process. Each option uses the same standardized set of 50 questions, ensuring consistency while giving you the freedom to choose the format that works best for your schedule and comfort level.
+            </p>
+        </section>
+
+        <div class="methods-container">
+            <div class="method-card">
+                <div class="method-number">1</div>
+                <div class="method-icon">🤝</div>
+                <h3>In-Person Interview</h3>
+                
+                <div class="method-details">
+                    <p><strong>Where:</strong> Your workplace, a nearby café, library study room, or any location you prefer</p>
+                    <p><strong>Time commitment:</strong> ~50–60 minutes</p>
+                </div>
+
+                <p>
+                    If you choose an in-person interview, I'll meet you at a location that's most convenient for you. This is the most conversational and natural option, giving us the opportunity to talk face-to-face and build a stronger personal connection.
+                </p>
+
+                <p>
+                    I'll guide you through the entire set of 50 questions, ask follow-up questions when helpful, and make sure the conversation flows smoothly. During the session, I'll either take notes or—if permitted—make an audio recording so I can accurately capture your responses for the project.
+                </p>
+
+                <div class="method-ideal">
+                    <p><strong>Ideal for:</strong> Those who prefer real conversation and enjoy sharing their career journey in a more relaxed, interactive setting.</p>
+                </div>
+            </div>
+
+            <div class="method-card">
+                <div class="method-number">2</div>
+                <div class="method-icon">💻</div>
+                <h3>Zoom or Virtual Interview</h3>
+                
+                <div class="method-details">
+                    <p><strong>Where:</strong> Online via Zoom</p>
+                    <p><strong>Time commitment:</strong> ~30–45 minutes</p>
+                </div>
+
+                <p>
+                    If meeting in person isn't convenient, a virtual interview works just as well. We'll schedule a Zoom call at a time that fits your schedule. Just like the in-person format, I lead you through all 50 questions and guide the discussion to keep it flowing.
+                </p>
+
+                <p>
+                    I will record the call (with your permission) to make sure your experiences are captured accurately.
+                </p>
+
+                <div class="method-ideal">
+                    <p><strong>Ideal for:</strong> Busy professionals outside my local area or anyone who prefers a quick, easy online conversation.</p>
+                </div>
+            </div>
+
+            <div class="method-card">
+                <div class="method-number">3</div>
+                <div class="method-icon">✍️</div>
+                <h3>Self-Guided Response</h3>
+                
+                <div class="method-details">
+                    <p><strong>Where:</strong> Email or voice recording</p>
+                    <p><strong>Time commitment:</strong> Flexible—complete at your own pace</p>
+                </div>
+
+                <p>
+                    For those with unpredictable schedules or who prefer to reflect before answering, you can complete the interview independently. I will send you the full list of 50 questions, and you can respond in whichever format you prefer:
+                </p>
+
+                <p style="margin-left: 1.5rem;">
+                    • Written responses typed in an email or document<br>
+                    • Voice memo or audio recording that walks through your answers
+                </p>
+
+                <p>
+                    This option allows you to take your time, skip around if needed, and answer the questions when it's most convenient for you—from home, during a break at work, or while commuting.
+                </p>
+
+                <div class="method-ideal">
+                    <p><strong>Ideal for:</strong> Maximum flexibility and privacy while still providing rich insight into your career journey.</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="decision-guide">
+            <h2>Which Method Should You Choose?</h2>
+            <p>
+                All three methods use the same set of questions and contribute equally to the project. It really comes down to your availability and personal preference:
+            </p>
+
+            <div class="decision-options">
+                <div class="decision-option">
+                    <div class="decision-option-icon">🤝</div>
+                    <p><strong>Choose in-person</strong> for a more personal, natural conversation.</p>
+                </div>
+
+                <div class="decision-option">
+                    <div class="decision-option-icon">💻</div>
+                    <p><strong>Choose Zoom</strong> for convenience and no travel.</p>
+                </div>
+
+                <div class="decision-option">
+                    <div class="decision-option-icon">✍️</div>
+                    <p><strong>Choose self-guided responses</strong> for maximum flexibility and privacy.</p>
+                </div>
+            </div>
+
+            <div class="cta-box">
+                <h3>No Preparation Required</h3>
+                <p>Just honesty, reflection, and a willingness to share your story.</p>
+                <a href="contact.html" class="cta-button">Get Started</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Project Blueprint. All rights reserved.</p>
+        <p>Plan the Future. One Story at a Time.</p>
+    </footer>
+
+    <footer class="disclaimer-footer">
+        <h4>Disclaimer</h4>
+        <p>
+            I'm actively teaching myself how to code this website from scratch using HTML and guidance from tools like ChatGPT and Claude AI. Since this isn't built from a premade template, you may notice occasional bugs or layout issues. I'm continuously learning and improving the site, so thank you for your patience as I work through fixes and updates.
+        </p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navMenu').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

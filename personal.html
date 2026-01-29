@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josiah J Dockins - Student-Athlete Profile</title>
+    <style>
+        :root {
+            --primary-navy: #1e3a5f;
+            --primary-blue: #2c5282;
+            --accent-blue: #3182ce;
+            --accent-gold: #d69e2e;
+            --text-dark: #2d3748;
+            --text-medium: #4a5568;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --bg-white: #ffffff;
+            --border-light: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: var(--bg-light);
+        }
+
+        header {
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo-text {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        nav .logo-text:hover {
+            color: var(--accent-blue);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-medium);
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent-blue);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-blue) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.35rem;
+            font-weight: 300;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .hero-stats span {
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin: 2.5rem auto;
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .section h2 {
+            font-size: 1.85rem;
+            font-weight: 500;
+            color: var(--primary-navy);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .section h3 {
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .section h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .section p {
+            font-size: 1.05rem;
+            color: var(--text-medium);
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .timeline {
+            margin-top: 2rem;
+        }
+
+        .timeline-item {
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+            border-left: 2px solid var(--border-light);
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            border: 2px solid var(--bg-white);
+        }
+
+        .timeline-item h3 {
+            font-size: 1.2rem;
+            color: var(--primary-navy);
+            margin-bottom: 0.25rem;
+            margin-top: 0;
+        }
+
+        .timeline-date {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .timeline-item p {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .achievement-item {
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .achievement-item h4 {
+            font-size: 1.1rem;
+            color: var(--primary-navy);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .achievement-item p {
+            font-size: 0.95rem;
+            color: var(--text-medium);
+            margin: 0;
+        }
+
+        .quote-section {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .quote-section blockquote {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .quote-section cite {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-style: normal;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .cta-section {
+            background: var(--bg-white);
+            max-width: 1100px;
+            margin: 2.5rem auto 3rem;
+            padding: 3rem;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .cta-section h2 {
+            font-size: 1.85rem;
+            font-weight: 500;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.05rem;
+            color: var(--text-medium);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 0.85rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .cta-button.primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .cta-button.primary:hover {
+            background: var(--primary-blue);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--accent-blue);
+            border: 2px solid var(--accent-blue);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        footer {
+            background: var(--primary-navy);
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .disclaimer-footer {
+            background: var(--primary-blue);
+            color: rgba(255, 255, 255, 0.85);
+            padding: 1.5rem 2rem;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0;
+        }
+
+        .disclaimer-footer h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .disclaimer-footer p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .section {
+                padding: 2rem 1.5rem;
+            }
+
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-text">Josiah J Dockins</a>
+            <ul>
+                <li><a href="blueprint.html">Project Blueprint</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Josiah J Dockins</h1>
+                <div class="subtitle">Bedford, NH | Amoskeag Rowing Club | Class of 2027</div>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- About Section -->
+            <section class="section">
+                <h2>About Me</h2>
+                <p>
+                    Hi, my name is Josiah Dockins, and I'm a junior at Bedford High School in Bedford, New Hampshire (Class of 2027). I row year-round for Amoskeag Rowing Club and the Bedford High School Rowing Team, and I'm working toward competing at the highest level I can in college. Rowing has become the foundation of my daily life. It's where I've learned discipline, consistency, and how much I enjoy pushing myself to improve every day.
+                </p>
+                <p>
+                    I'm committed to developing as an athlete, student, and a general person. Academically, I challenge myself with one of the most rigorous course loads available at my school, including IB and advanced math and science classes. I take pride in being someone who is trustworthy, responsible, and organized, the kind of person who manages school, training, and long-term goals without losing focus or motivation.
+                </p>
+                <p>
+                    On the rowing side, I'm a 6'0", 165-lb lightweight rower with a strong drive to get faster. I train year-round, and I'm steadily improving my erg numbers and strength as I target major goals like pushing my 2k under 6:30. I care a lot about technique, teamwork, and showing up every day ready to become 1% better. I'm coachable, competitive, and I take feedback seriously. I not only want to be the best possible rower myself, but also work to uplift my team on and off the water.
+                </p>
+                <p>
+                    I'm also very interested in pursuing business, finance, or economics in college, and I'm exploring schools where I can grow in the classroom, contribute to a team culture, and be surrounded by other driven student-athletes.
+                </p>
+            </section>
+
+            <!-- Athlete Profile -->
+            <section class="section" style="border-left-color: var(--accent-gold);">
+                <h2>Athlete Profile</h2>
+                <p>
+                    I am a 6'0", 165-pound lightweight rower training year-round with a strong focus on improving my power-to-weight ratio, refining technique, and developing mental toughness. My training philosophy emphasizes consistency, attention to detail, and making small, incremental improvements each day. My current goal is to achieve a sub-6:30 2k.
+                </p>
+            </section>
+
+            <!-- Why I Row -->
+            <section class="section" style="border-left-color: var(--primary-blue);">
+                <h2>Why I Row</h2>
+                
+                <h3>Brief Introduction</h3>
+                <p>
+                    I'm a high school rower who trains year-round and takes pride in being consistent and disciplined in my approach to the sport. Rowing has become an important part of my life, not just physically but mentally as well, and it has shaped how I set goals, manage my time, and handle challenges. I value being part of a team environment that emphasizes accountability, effort, and continuous improvement.
+                </p>
+
+                <h3>Why I Like Rowing</h3>
+                <p>
+                    I like rowing because it unifies people all working towards the same goal with absolute focus. When I'm on the water, there's no technology or outside distractions, it's just the boat, and the effort I'm putting in. I enjoy the simplicity of trying to make the boat move as fast and efficiently as possible, and I find that focus both challenging and rewarding. Rowing also teaches patience and discipline, since improvement comes from showing up and doing the work consistently.
+                </p>
+
+                <h3>Why I Like the Erg</h3>
+                <p>
+                    For me, erging is one of the most fascinating parts of rowing. The erg is simply a tool that converts effort into results and that is why I appreciate it so much. The people who put their heads down and workout consistently for months will be successful and make incredible fitness gains. That simplicity makes erging one of my favorite aspects of training.
+                </p>
+
+                <h3>Why Rowing in College Is Important to Me</h3>
+                <p>
+                    Rowing in college is important to me because I want to keep pushing myself in an environment that values hard work, discipline, and commitment. I'm excited by the challenge of balancing demanding academics with a competitive athletic program, and I want to be part of a team that holds itself to a high standard. College rowing represents an opportunity for me to continue growing as an athlete while also developing the habits and mindset that will carry over into the rest of my life.
+                </p>
+            </section>
+
+            <!-- Education & Experience -->
+            <section class="section" style="border-left-color: var(--accent-gold);">
+                <h2>Education & Experience</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>Bedford High School</h3>
+                        <div class="timeline-date">2024 - Present (Class of 2027)</div>
+                        <p>
+                            Junior pursuing one of the most rigorous course loads available, including IB and advanced math and science classes. Balancing academic excellence with year-round athletic training and personal development.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Amoskeag Rowing Club</h3>
+                        <div class="timeline-date">Year-Round Training</div>
+                        <p>
+                            Competitive rower training year-round with focus on technique development, strength building, and performance improvement. Working toward collegiate-level competition goals.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Bedford High School Rowing Team</h3>
+                        <div class="timeline-date">School Season</div>
+                        <p>
+                            Team member dedicated to improving individual performance while contributing to team success. Focused on leadership, teamwork, and consistent daily improvement.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements -->
+            <section class="section" style="border-left-color: var(--accent-blue);">
+                <h2>Goals & Achievements</h2>
+                <div class="achievements-grid">
+                    <div class="achievement-item">
+                        <h4>Competitive Rowing</h4>
+                        <p>Year-round training with Amoskeag Rowing Club and Bedford High School Rowing Team, working toward collegiate-level competition.</p>
+                    </div>
+                    <div class="achievement-item">
+                        <h4>Performance Goals</h4>
+                        <p>Targeting sub-6:30 2k erg time through consistent training, technique refinement, and strength development.</p>
+                    </div>
+                    <div class="achievement-item">
+                        <h4>Academic Rigor</h4>
+                        <p>Pursuing one of the most challenging course loads available, including IB and advanced math and science classes.</p>
+                    </div>
+                    <div class="achievement-item">
+                        <h4>Future Aspirations</h4>
+                        <p>Exploring collegiate programs in business, finance, or economics while continuing competitive rowing at the highest level.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Quote Section -->
+        <section class="quote-section">
+            <blockquote>
+                "Discipline is choosing between what you want now and what you want most."
+            </blockquote>
+            <cite>— Abraham Lincoln</cite>
+        </section>
+
+        <!-- Call to Action -->
+        <div class="container">
+            <section class="cta-section">
+                <h2>Let's Connect</h2>
+                <p>
+                    If you'd like to learn more about me, my training, academics, or goals, I'd love to connect. Thank you for taking the time to visit my site — I appreciate your consideration and look forward to speaking with you.
+                </p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="cta-button primary">Get In Touch</a>
+                    <a href="blueprint.html" class="cta-button secondary">View Project Blueprint</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Josiah Dockins. All rights reserved.</p>
+    </footer>
+
+    <footer class="disclaimer-footer">
+        <h4>Disclaimer</h4>
+        <p>
+            I'm actively teaching myself how to code this website from scratch using HTML and guidance from tools like ChatGPT and Claude AI. Since this isn't built from a premade template, you may notice occasional bugs or layout issues. I'm continuously learning and improving the site, so thank you for your patience as I work through fixes and updates.
+        </p>
+    </footer>
+</body>
+</html>

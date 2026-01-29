@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Blueprint - Plan the Future. One Story at a Time.</title>
+    <style>
+        :root {
+            /* Sophisticated Color Palette */
+            --primary-dark: #0f2647;      /* Deep Navy */
+            --primary-mid: #1a3a5c;       /* Rich Blue */
+            --primary-light: #2d5a7b;     /* Ocean Blue */
+            --accent-teal: #14b8a6;       /* Vibrant Teal */
+            --accent-coral: #ff8a65;      /* Warm Coral */
+            --accent-gold: #fbbf24;       /* Soft Gold */
+            --neutral-50: #f8fafc;        /* Off-white */
+            --neutral-100: #f1f5f9;       /* Light Gray */
+            --neutral-700: #334155;       /* Charcoal */
+            --neutral-800: #1e293b;       /* Dark Charcoal */
+            --gradient-start: #0f2647;
+            --gradient-end: #14b8a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--neutral-700);
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--primary-mid) 50%, var(--gradient-end) 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(15, 38, 71, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--accent-teal);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            height: 50px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--neutral-700);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-teal);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-dark), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-dark);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav ul {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.active {
+                max-height: 400px;
+            }
+
+            nav ul li {
+                border-bottom: 1px solid var(--neutral-100);
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 1rem 2rem;
+            }
+
+            nav ul li:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(20, 184, 166, 0.15), transparent);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 0.7;
+            }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #ffffff, var(--accent-teal), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.85;
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent-teal);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(20, 184, 166, 0.5);
+            background: #0f9488;
+        }
+
+        .about {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 3.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(15, 38, 71, 0.15);
+            border-left: 4px solid var(--accent-teal);
+        }
+
+        .about h2 {
+            color: var(--primary-dark);
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .about h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-coral));
+            border-radius: 2px;
+        }
+
+        .about p {
+            color: var(--neutral-700);
+            font-size: 1.08rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .participate-section {
+            background: white;
+            border-left-color: var(--accent-gold);
+        }
+
+        .participate-section ul {
+            list-style: none;
+            margin: 1.5rem 0;
+            padding-left: 1rem;
+        }
+
+        .participate-section li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--neutral-700);
+            font-size: 1.08rem;
+        }
+
+        .participate-section li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-teal);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            background: var(--primary-dark);
+            color: var(--neutral-100);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--accent-teal);
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        footer p:first-child {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .disclaimer-footer {
+            background: rgba(15, 38, 71, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-top: 2px solid rgba(20, 184, 166, 0.3);
+            margin-top: 0;
+        }
+
+        .disclaimer-footer h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-teal);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .disclaimer-footer p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 3rem 2rem 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.2rem;
+                letter-spacing: 1px;
+            }
+
+            .hero p {
+                font-size: 1.05rem;
+            }
+
+            .about {
+                padding: 2.5rem 2rem;
+                margin: 2rem auto;
+            }
+
+            .about h2 {
+                font-size: 1.8rem;
+            }
+
+            .about p {
+                font-size: 1.05rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-text">Josiah J Dockins</a>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="personal.html">About Me</a></li>
+                <li><a href="blueprint.html">Project Blueprint</a></li>
+                <li><a href="https://www.jjdockins.com/methods.html">Methods</a></li>
+                <li><a href="https://www.jjdockins.com/questionnaire.html">Questionnaire</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Project Blueprint</h1>
+                <p class="tagline">Plan the Future. One Story at a Time.</p>
+                <p>
+                    A career-exploration initiative connecting students with real professionals to understand authentic career paths and make informed decisions about the future.
+                </p>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About Project Blueprint</h2>
+            <p>
+                Project Blueprint is a career-exploration initiative I created as I began seriously looking at colleges and thinking about my future. With the rising cost of attending a four-year university, I realized how important it is to have a clearer understanding of what careers actually look like—and which ones might genuinely interest me before committing to a major or long-term path.
+            </p>
+            <p>
+                To do this, I reach out to friends, family, mentors, and people throughout my community to learn about their professional journeys. Each conversation is guided by a consistent set of 50 in-depth questions that explore how they discovered their field, what their day-to-day looks like, the challenges they've faced, and the advice they would share with someone starting out.
+            </p>
+            <p>
+                Every interview becomes its own "blueprint"—a real, honest snapshot of a person's career path. The project shows that careers are rarely linear, that opportunities can appear unexpectedly, and that success is built from experience, resilience, and self-discovery.
+            </p>
+            <p>
+                The goal of Project Blueprint is simple: to gather meaningful insights that help me—and anyone following along—better understand career options, explore new interests, and make smarter decisions about education and the future.
+            </p>
+            <div style="text-align: center; margin-top: 2.5rem;">
+                <a href="https://www.jjdockins.com/methods.html" class="cta-button">Methodology</a>
+            </div>
+        </section>
+
+        <section class="about participate-section">
+            <h2>Interested in Project Blueprint?</h2>
+            <p>
+                If this project resonates with you and you're open to sharing your career journey, I'd love to connect. Project Blueprint is built on the generosity of people willing to reflect on their experiences, and every story adds meaningful insight.
+            </p>
+            <p>
+                Whether you're early in your career, well established, changing fields, or retired, your perspective can help students better understand the many paths a career can take.
+            </p>
+            <p>
+                If you'd like to participate or learn more, you can:
+            </p>
+            <ul>
+                <li>Complete the 50-question career questionnaire</li>
+                <li>Reach out directly to ask questions or schedule a conversation</li>
+            </ul>
+            <p>
+                Your experience could help shape someone's future, and I'd be grateful to include your story in Project Blueprint.
+            </p>
+            <div style="text-align: center; margin-top: 2.5rem;">
+                <a href="contact.html" class="cta-button">Get In Touch</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contact">
+        <p>&copy; 2025 Project Blueprint. All rights reserved.</p>
+        <p>Plan the Future. One Story at a Time.</p>
+    </footer>
+
+    <footer class="disclaimer-footer">
+        <h4>Disclaimer</h4>
+        <p>
+            I'm actively teaching myself how to code this website from scratch using HTML and guidance from tools like ChatGPT and Claude AI. Since this isn't built from a premade template, you may notice occasional bugs or layout issues. I'm continuously learning and improving the site, so thank you for your patience as I work through fixes and updates.
+        </p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navMenu').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
