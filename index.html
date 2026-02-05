@@ -3,223 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Josiah J Dockins - Student-athlete and career explorer. Discover my personal journey and Project Blueprint career exploration initiative.">
+    <meta property="og:title" content="Josiah J Dockins - Welcome">
+    <meta property="og:description" content="Josiah J Dockins - Student-athlete and career explorer. Discover my personal journey and Project Blueprint career exploration initiative.">
+    <meta property="og:type" content="website">
     <title>Josiah J Dockins - Welcome</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        :root {
-            --primary-dark: #0f2647;
-            --primary-mid: #1a3a5c;
-            --accent-teal: #14b8a6;
-            --accent-coral: #ff8a65;
-            --neutral-700: #334155;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-mid) 50%, var(--accent-teal) 100%);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
             padding: 2rem;
         }
 
-        .landing-container {
-            max-width: 1000px;
-            width: 100%;
+        /* Hero Section */
+        .hero {
             text-align: center;
-        }
-
-        .landing-header {
             color: white;
-            margin-bottom: 4rem;
-            animation: fadeInDown 0.8s ease-out;
+            padding: 4rem 0 3rem;
         }
 
-        .landing-header h1 {
-            font-size: 3rem;
+        .hero h1 {
+            font-size: 3.5rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .landing-header p {
+        .hero .tagline {
             font-size: 1.3rem;
             opacity: 0.95;
             font-weight: 300;
             letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
         }
 
-        .options-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .option-card {
-            background: white;
-            padding: 3rem 2rem;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            transition: all 0.4s ease;
-            cursor: pointer;
+        .hero .about-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
             text-decoration: none;
-            display: block;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .hero .about-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: white;
+        }
+
+        /* Featured Project Section */
+        .featured-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .featured-card {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .option-card::before {
+        .featured-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 5px;
-            transition: height 0.4s ease;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-teal), var(--accent-gold));
         }
 
-        .option-card.personal::before {
-            background: linear-gradient(90deg, var(--accent-coral), #ff6b6b);
-        }
-
-        .option-card.blueprint::before {
-            background: linear-gradient(90deg, var(--accent-teal), #06b6d4);
-        }
-
-        .option-card:hover {
-            transform: translateY(-15px);
+        .featured-card:hover {
+            transform: translateY(-8px);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
         }
 
-        .option-card:hover::before {
-            height: 100%;
-            opacity: 0.05;
-        }
-
-        .option-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            animation: fadeIn 1s ease-out;
-        }
-
-        .option-card h2 {
+        .featured-content h2 {
             color: var(--primary-dark);
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 2.2rem;
             font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
-        .option-card p {
-            color: var(--neutral-700);
+        .featured-content .project-tagline {
+            color: var(--accent-teal);
             font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
         }
 
-        .option-arrow {
+        .featured-content p {
+            color: var(--neutral-700);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-cta {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            color: var(--accent-teal);
             font-weight: 600;
             font-size: 1.1rem;
             transition: gap 0.3s ease;
         }
 
-        .option-card.personal .option-arrow {
-            color: var(--accent-coral);
-        }
-
-        .option-card.blueprint .option-arrow {
-            color: var(--accent-teal);
-        }
-
-        .option-card:hover .option-arrow {
+        .featured-card:hover .featured-cta {
             gap: 1rem;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .featured-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .feature-item {
+            background: var(--neutral-50);
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        @media (max-width: 768px) {
-            body {
-                justify-content: flex-start;
-                padding: 2rem 1rem;
-                padding-top: 3rem;
-            }
-
-            .landing-header h1 {
-                font-size: 2rem;
-            }
-
-            .landing-header p {
-                font-size: 1.1rem;
-            }
-
-            .options-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .option-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .option-icon {
-                font-size: 3rem;
-            }
-
-            .option-card h2 {
-                font-size: 1.6rem;
-            }
-
-            .option-card p {
-                font-size: 1rem;
-            }
-
-            footer p {
-                font-size: 0.8rem;
-            }
+        .feature-item .icon {
+            font-size: 1.5rem;
         }
 
-        @media (max-width: 480px) {
-            body {
-                padding: 1.5rem 0.75rem;
-            }
-
-            .landing-header {
-                margin-bottom: 2rem;
-            }
-
-            .landing-header h1 {
-                font-size: 1.75rem;
-            }
+        .feature-item span {
+            color: var(--neutral-700);
+            font-size: 0.95rem;
         }
 
+        /* Projects Grid Section */
+        .projects-section {
+            margin-bottom: 3rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-coral);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card h3 {
+            color: var(--primary-dark);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card p {
+            color: var(--neutral-700);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-card .card-link {
+            color: var(--accent-teal);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Coming Soon Card */
+        .project-card.coming-soon {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 200px;
+        }
+
+        .project-card.coming-soon::before {
+            display: none;
+        }
+
+        .project-card.coming-soon:hover {
+            transform: none;
+            box-shadow: none;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .project-card.coming-soon h3 {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .project-card.coming-soon p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0;
+        }
+
+        /* Footer */
         footer {
             background: rgba(15, 38, 71, 0.95);
             backdrop-filter: blur(10px);
@@ -227,7 +265,7 @@
             padding: 1.5rem 2rem;
             text-align: center;
             border-top: 2px solid rgba(20, 184, 166, 0.3);
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
 
         footer h4 {
@@ -247,43 +285,132 @@
             margin: 0 auto;
         }
 
+        footer .copyright {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.1rem;
+            }
+
+            .featured-card {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+
+            .featured-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .featured-visual {
+                order: -1;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .hero {
+                padding: 2rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .featured-card {
+                padding: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="landing-container">
-        <div class="landing-header">
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
             <h1>Josiah J Dockins</h1>
-            <p>Student • Career Explorer • Future Builder</p>
-        </div>
-
-        <div class="options-container">
-            <a href="personal.html" class="option-card personal">
-                <h2>About Me</h2>
-                <p>
-                    Learn more about my background, interests, education, and personal journey as a student exploring future career paths.
-                </p>
-                <span class="option-arrow">
-                    Explore My Profile →
-                </span>
+            <p class="tagline">Student • Career Explorer • Future Builder</p>
+            <a href="personal.html" class="about-link">
+                Learn About Me →
             </a>
+        </section>
 
-            <a href="blueprint.html" class="option-card blueprint">
-                <h2>Project Blueprint</h2>
-                <p>
-                    Discover my career-exploration initiative where I interview professionals to understand real career paths and opportunities.
-                </p>
-                <span class="option-arrow">
-                    View the Project →
-                </span>
+        <!-- Featured Project -->
+        <section class="featured-section">
+            <p class="section-label">Featured Project</p>
+            <a href="Project-Blueprint/blueprint.html" class="featured-card">
+                <div class="featured-content">
+                    <h2>Project Blueprint</h2>
+                    <p class="project-tagline">Plan the Future. One Story at a Time.</p>
+                    <p>
+                        Project Blueprint is a community interview project where I talk with people from different professions to learn how they built their careers and what their day-to-day work is really like. The goal is to turn those real stories into clear guidance that helps me (and other students) understand what career paths are possible and how to pursue them.
+                    </p>
+                    <span class="featured-cta">
+                        Explore the Project →
+                    </span>
+                </div>
+                <div class="featured-visual">
+                    <div class="feature-item">
+                        <span class="icon">🤝</span>
+                        <span>Learning from real professionals across diverse careers</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">🧭</span>
+                        <span>Discovering the unique paths behind every success story</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">🚀</span>
+                        <span>Building a foundation for my own career journey</span>
+                    </div>
+                </div>
             </a>
-        </div>
+        </section>
+
+        <!-- More Projects Grid -->
+        <section class="projects-section">
+            <p class="section-label">More Projects</p>
+            <div class="projects-grid">
+                <a href="Supplemental-Erg-Data/index.html" class="project-card">
+                    <h3>Supplemental Erg Data</h3>
+                    <p>Real-time data capture and analysis from the Concept2 PM5 to track stroke length and wattage during workouts.</p>
+                    <span class="card-link">Learn More →</span>
+                </a>
+                <a href="Bitcoin-AI-Agent/index.html" class="project-card">
+                    <h3>Bitcoin AI Agent Analysis</h3>
+                    <p>Automated system that pulls real-time Bitcoin market data and uses AI to evaluate likely market direction.</p>
+                    <span class="card-link">Learn More →</span>
+                </a>
+                <a href="Spotify-Recommendation/index.html" class="project-card">
+                    <h3>Spotify New Artist Recommendation</h3>
+                    <p>AI-powered app that analyzes your Spotify listening habits and recommends up-and-coming artists daily.</p>
+                    <span class="card-link">Learn More →</span>
+                </a>
+            </div>
+        </section>
     </div>
 
     <footer>
         <h4>Disclaimer</h4>
         <p>
-            I'm actively teaching myself how to code this website from scratch using HTML and guidance from tools like ChatGPT and Claude AI. Since this isn't built from a premade template, you may notice occasional bugs or layout issues. I'm continuously learning and improving the site, so thank you for your patience as I work through fixes and updates.
+            This website was built from scratch as I teach myself web development, using HTML/CSS and AI tools as learning resources. I'm continuously improving the site as I develop my skills.
         </p>
+        <p class="copyright">&copy; 2026 Josiah Dockins. All rights reserved.</p>
     </footer>
+
+    <script src="main.js"></script>
 </body>
 </html>

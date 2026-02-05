@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Josiah Dockins - a student-athlete rower at Bedford High School pursuing academic excellence and collegiate rowing.">
+    <meta property="og:title" content="Josiah J Dockins - Student-Athlete Profile">
+    <meta property="og:description" content="Learn about Josiah Dockins - a student-athlete rower at Bedford High School pursuing academic excellence and collegiate rowing.">
+    <meta property="og:type" content="website">
     <title>Josiah J Dockins - Student-Athlete Profile</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
         :root {
             --primary-navy: #1e3a5f;
@@ -16,12 +21,6 @@
             --bg-light: #f7fafc;
             --bg-white: #ffffff;
             --border-light: #e2e8f0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
         }
 
         body {
@@ -56,6 +55,10 @@
             letter-spacing: -0.5px;
             text-decoration: none;
             transition: color 0.2s;
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+            background-clip: unset;
         }
 
         nav .logo-text:hover {
@@ -79,6 +82,48 @@
 
         nav a:hover {
             color: var(--accent-blue);
+        }
+
+        nav a::after {
+            display: none;
+        }
+
+        .hamburger span {
+            background: var(--primary-navy);
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.active {
+                max-height: 400px;
+            }
+
+            nav ul li {
+                border-bottom: 1px solid var(--border-light);
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 1rem 2rem;
+            }
+
+            nav ul li:last-child {
+                border-bottom: none;
+            }
         }
 
         .hero-section {
@@ -298,6 +343,7 @@
             font-weight: 600;
             font-size: 1rem;
             transition: all 0.2s;
+            box-shadow: none;
         }
 
         .cta-button.primary {
@@ -307,6 +353,8 @@
 
         .cta-button.primary:hover {
             background: var(--primary-blue);
+            transform: none;
+            box-shadow: none;
         }
 
         .cta-button.secondary {
@@ -318,6 +366,8 @@
         .cta-button.secondary:hover {
             background: var(--accent-blue);
             color: white;
+            transform: none;
+            box-shadow: none;
         }
 
         footer {
@@ -328,26 +378,28 @@
             margin-top: 3rem;
             font-family: 'Segoe UI', sans-serif;
             font-size: 0.9rem;
+            border-top: none;
         }
 
-        .disclaimer-footer {
+        footer .disclaimer {
             background: var(--primary-blue);
             color: rgba(255, 255, 255, 0.85);
             padding: 1.5rem 2rem;
-            font-family: 'Segoe UI', sans-serif;
-            margin-top: 0;
+            margin: 2rem -2rem -2rem -2rem;
+            border-top: none;
         }
 
-        .disclaimer-footer h4 {
+        footer .disclaimer h4 {
             font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             opacity: 0.9;
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        .disclaimer-footer p {
+        footer .disclaimer p {
             font-size: 0.85rem;
             line-height: 1.6;
             max-width: 900px;
@@ -393,9 +445,17 @@
     <header>
         <nav>
             <a href="index.html" class="logo-text">Josiah J Dockins</a>
-            <ul>
-                <li><a href="blueprint.html">Project Blueprint</a></li>
-                <li><a href="contact.html">Contact</a></li>
+            <div class="hamburger" aria-label="Toggle navigation menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="personal.html">About Me</a></li>
+                <li><a href="Project-Blueprint/blueprint.html">Project Blueprint</a></li>
+                <li><a href="Project-Blueprint/methods.html">Methods</a></li>
+                <li><a href="Project-Blueprint/questionnaire.html">Questionnaire</a></li>
+                <li><a href="Project-Blueprint/contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -420,7 +480,7 @@
                     I'm committed to developing as an athlete, student, and a general person. Academically, I challenge myself with one of the most rigorous course loads available at my school, including IB and advanced math and science classes. I take pride in being someone who is trustworthy, responsible, and organized, the kind of person who manages school, training, and long-term goals without losing focus or motivation.
                 </p>
                 <p>
-                    On the rowing side, I'm a 6'0", 165-lb lightweight rower with a strong drive to get faster. I train year-round, and I'm steadily improving my erg numbers and strength as I target major goals like pushing my 2k under 6:30. I care a lot about technique, teamwork, and showing up every day ready to become 1% better. I'm coachable, competitive, and I take feedback seriously. I not only want to be the best possible rower myself, but also work to uplift my team on and off the water.
+                    On the rowing side, I'm a 6'0", 160-lb lightweight rower with a strong drive to get faster. I train year-round, and I'm steadily improving my erg numbers and strength as I target major goals like pushing my 2k under 6:30. I care a lot about technique, teamwork, and showing up every day ready to become 1% better. I'm coachable, competitive, and I take feedback seriously. I not only want to be the best possible rower myself, but also work to uplift my team on and off the water.
                 </p>
                 <p>
                     I'm also very interested in pursuing business, finance, or economics in college, and I'm exploring schools where I can grow in the classroom, contribute to a team culture, and be surrounded by other driven student-athletes.
@@ -431,14 +491,14 @@
             <section class="section" style="border-left-color: var(--accent-gold);">
                 <h2>Athlete Profile</h2>
                 <p>
-                    I am a 6'0", 165-pound lightweight rower training year-round with a strong focus on improving my power-to-weight ratio, refining technique, and developing mental toughness. My training philosophy emphasizes consistency, attention to detail, and making small, incremental improvements each day. My current goal is to achieve a sub-6:30 2k.
+                    I am a 6'0", 160-pound lightweight rower training year-round with a strong focus on improving my power-to-weight ratio, refining technique, and developing mental toughness. My training philosophy emphasizes consistency, attention to detail, and making small, incremental improvements each day. My current goal is to achieve a sub-6:30 2k.
                 </p>
             </section>
 
             <!-- Why I Row -->
             <section class="section" style="border-left-color: var(--primary-blue);">
                 <h2>Why I Row</h2>
-                
+
                 <h3>Brief Introduction</h3>
                 <p>
                     I'm a high school rower who trains year-round and takes pride in being consistent and disciplined in my approach to the sport. Rowing has become an important part of my life, not just physically but mentally as well, and it has shaped how I set goals, manage my time, and handle challenges. I value being part of a team environment that emphasizes accountability, effort, and continuous improvement.
@@ -528,22 +588,23 @@
                     If you'd like to learn more about me, my training, academics, or goals, I'd love to connect. Thank you for taking the time to visit my site — I appreciate your consideration and look forward to speaking with you.
                 </p>
                 <div class="cta-buttons">
-                    <a href="contact.html" class="cta-button primary">Get In Touch</a>
-                    <a href="blueprint.html" class="cta-button secondary">View Project Blueprint</a>
+                    <a href="Project-Blueprint/contact.html" class="cta-button primary">Get In Touch</a>
+                    <a href="Project-Blueprint/blueprint.html" class="cta-button secondary">View Project Blueprint</a>
                 </div>
             </section>
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2025 Josiah Dockins. All rights reserved.</p>
+        <p>&copy; 2026 Josiah Dockins. All rights reserved.</p>
+        <div class="disclaimer">
+            <h4>Disclaimer</h4>
+            <p>
+                This website was built from scratch as I teach myself web development, using HTML/CSS and AI tools as learning resources. I'm continuously improving the site as I develop my skills.
+            </p>
+        </div>
     </footer>
 
-    <footer class="disclaimer-footer">
-        <h4>Disclaimer</h4>
-        <p>
-            I'm actively teaching myself how to code this website from scratch using HTML and guidance from tools like ChatGPT and Claude AI. Since this isn't built from a premade template, you may notice occasional bugs or layout issues. I'm continuously learning and improving the site, so thank you for your patience as I work through fixes and updates.
-        </p>
-    </footer>
+    <script src="main.js"></script>
 </body>
 </html>

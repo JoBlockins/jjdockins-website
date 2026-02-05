@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Spotify New Artist Recommendation - AI-powered daily music recommendations from up-and-coming artists based on your listening habits.">
+    <meta property="og:title" content="Spotify New Artist Recommendation - Josiah J Dockins">
+    <meta property="og:description" content="AI-powered daily music recommendations from up-and-coming artists based on your listening habits.">
+    <meta property="og:type" content="website">
+    <title>Spotify New Artist Recommendation - Josiah J Dockins</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--neutral-700);
+            background: linear-gradient(135deg, #191414 0%, #1a3a2a 50%, #1DB954 100%);
+            min-height: 100vh;
+        }
+
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+        }
+
+        .hero .status-badge {
+            display: inline-block;
+            background: rgba(29, 185, 84, 0.3);
+            border: 1px solid #1DB954;
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .about {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 3.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(15, 38, 71, 0.15);
+            border-left: 4px solid #1DB954;
+        }
+
+        .about h2 {
+            color: var(--primary-dark);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .about h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #1DB954, var(--accent-teal));
+            border-radius: 2px;
+        }
+
+        .about p {
+            color: var(--neutral-700);
+            font-size: 1.08rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--neutral-50);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #1DB954;
+        }
+
+        .feature-card:nth-child(2) {
+            border-left-color: var(--accent-coral);
+        }
+
+        .feature-card:nth-child(3) {
+            border-left-color: var(--accent-teal);
+        }
+
+        .feature-card h3 {
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--neutral-700);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        footer {
+            background: #191414;
+            color: var(--neutral-100);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid #1DB954;
+        }
+
+        footer .footer-main p:first-child {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        footer .disclaimer {
+            background: rgba(25, 20, 20, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-top: 2px solid rgba(29, 185, 84, 0.3);
+            margin: 2rem -2rem -2rem -2rem;
+        }
+
+        footer .disclaimer h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1DB954;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer .disclaimer p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.1rem;
+            }
+
+            .about {
+                padding: 2.5rem 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html" class="logo-text">Josiah J Dockins</a>
+            <div class="hamburger" aria-label="Toggle navigation menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="../personal.html">About Me</a></li>
+                <li><a href="../Project-Blueprint/blueprint.html">Project Blueprint</a></li>
+                <li><a href="../Project-Blueprint/methods.html">Methods</a></li>
+                <li><a href="../Project-Blueprint/questionnaire.html">Questionnaire</a></li>
+                <li><a href="../Project-Blueprint/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <a href="../index.html" class="back-link">← Back to Home</a>
+            <h1>Spotify New Artist Recommendation</h1>
+            <p class="tagline">AI-Powered Daily Music Discovery</p>
+            <span class="status-badge">In Development</span>
+            <div style="margin-top: 1.5rem;">
+                <a href="https://github.com/JoBlockins/Spotify-New-Artist-Recommendation" target="_blank" class="cta-button" style="font-size: 1rem; padding: 0.75rem 2rem;">View on GitHub</a>
+            </div>
+        </section>
+
+        <section class="about">
+            <h2>About This Project</h2>
+            <p>
+                This app uses the Spotify API to analyze your listening habits - like your favorite genres, artists, and recently played tracks - and then uses an AI Agent to generate a personalized daily music recommendation each day from an up-and-coming new artist you might like.
+            </p>
+            <p>
+                The goal is to help music listeners break out of their comfort zone and discover emerging artists that match their taste, before they blow up.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Spotify API Integration</h3>
+                    <p>Analyzes your listening habits, favorite genres, artists, and recently played tracks.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>AI-Powered Matching</h3>
+                    <p>Uses an AI Agent to find up-and-coming artists that align with your music taste.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Daily Recommendations</h3>
+                    <p>Delivers a fresh personalized recommendation every day from a new emerging artist.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-main">
+            <p>&copy; 2026 Josiah Dockins. All rights reserved.</p>
+        </div>
+        <div class="disclaimer">
+            <h4>Disclaimer</h4>
+            <p>
+                This website was built from scratch as I teach myself web development, using HTML/CSS and AI tools as learning resources. I'm continuously improving the site as I develop my skills.
+            </p>
+        </div>
+    </footer>
+
+    <script src="../main.js"></script>
+</body>
+</html>

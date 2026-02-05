@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get in touch with Josiah Dockins about Project Blueprint or to participate in career interviews.">
+    <meta property="og:title" content="Contact - Project Blueprint">
+    <meta property="og:description" content="Get in touch with Josiah Dockins about Project Blueprint or to participate in career interviews.">
+    <meta property="og:type" content="website">
+    <title>Contact - Project Blueprint</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--neutral-700);
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--primary-mid) 50%, var(--gradient-end) 100%);
+            min-height: 100vh;
+        }
+
+        .contact-hero {
+            max-width: 1200px;
+            margin: 3rem auto 2rem;
+            padding: 0 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .contact-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+        }
+
+        .contact-hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(15, 38, 71, 0.12);
+            border-left: 6px solid var(--accent-teal);
+        }
+
+        .contact-info h2 {
+            color: var(--primary-dark);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .contact-info h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-coral));
+            border-radius: 2px;
+        }
+
+        .contact-info p {
+            color: var(--neutral-700);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .contact-methods {
+            margin-top: 2rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--neutral-50);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover {
+            background: var(--neutral-100);
+            transform: translateX(5px);
+        }
+
+        .contact-method-icon {
+            font-size: 1.8rem;
+            color: var(--accent-teal);
+        }
+
+        .contact-method-text h3 {
+            color: var(--primary-dark);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-method-text p {
+            color: var(--neutral-700);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        footer {
+            background: var(--primary-dark);
+            color: var(--neutral-100);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--accent-teal);
+        }
+
+        footer .footer-main p:first-child {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        footer .disclaimer {
+            background: rgba(15, 38, 71, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-top: 2px solid rgba(20, 184, 166, 0.3);
+            margin: 2rem -2rem -2rem -2rem;
+        }
+
+        footer .disclaimer h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-teal);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer .disclaimer p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .contact-hero h1 {
+                font-size: 2rem;
+            }
+
+            .contact-hero p {
+                font-size: 1rem;
+            }
+
+            .contact-info {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html" class="logo-text">Josiah J Dockins</a>
+            <div class="hamburger" aria-label="Toggle navigation menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="../personal.html">About Me</a></li>
+                <li><a href="blueprint.html">Project Blueprint</a></li>
+                <li><a href="methods.html">Methods</a></li>
+                <li><a href="questionnaire.html">Questionnaire</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contact-hero">
+            <h1>Get In Touch</h1>
+            <p>Let's connect and build your blueprint together</p>
+        </section>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <p>
+                    I'm excited to hear from you! Whether you're interested in participating in Project Blueprint, have questions about the initiative, or just want to learn more, I'd love to connect.
+                </p>
+
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-method-text">
+                            <h3>Email</h3>
+                            <p>me@jjdockins.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-method-text">
+                            <h3>Cell Phone</h3>
+                            <p>603-858-2648</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-method-text">
+                            <h3>Location</h3>
+                            <p>Bedford, New Hampshire</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-method-text">
+                            <h3>GitHub</h3>
+                            <p><a href="https://github.com/JoBlockins" target="_blank" style="color: var(--accent-teal); text-decoration: none;">github.com/JoBlockins</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-method-text">
+                            <h3>LinkedIn</h3>
+                            <p><a href="https://www.linkedin.com/in/josiah-dockins-495b8039a/" target="_blank" style="color: var(--accent-teal); text-decoration: none;">linkedin.com/in/josiah-dockins</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-main">
+            <p>&copy; 2026 Project Blueprint. All rights reserved.</p>
+            <p>Plan the Future. One Story at a Time.</p>
+        </div>
+        <div class="disclaimer">
+            <h4>Disclaimer</h4>
+            <p>
+                This website was built from scratch as I teach myself web development, using HTML/CSS and AI tools as learning resources. I'm continuously improving the site as I develop my skills.
+            </p>
+        </div>
+    </footer>
+
+    <script src="../main.js"></script>
+</body>
+</html>

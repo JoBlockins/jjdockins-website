@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bitcoin AI Agent Analysis - Automated system that pulls real-time Bitcoin market data and uses AI to evaluate market direction.">
+    <meta property="og:title" content="Bitcoin AI Agent Analysis - Josiah J Dockins">
+    <meta property="og:description" content="Automated system that pulls real-time Bitcoin market data and uses AI to evaluate market direction.">
+    <meta property="og:type" content="website">
+    <title>Bitcoin AI Agent Analysis - Josiah J Dockins</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--neutral-700);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+        }
+
+        .hero .status-badge {
+            display: inline-block;
+            background: rgba(251, 191, 36, 0.3);
+            border: 1px solid var(--accent-gold);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .about {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 3.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(15, 38, 71, 0.15);
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .about h2 {
+            color: var(--primary-dark);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .about h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-coral));
+            border-radius: 2px;
+        }
+
+        .about p {
+            color: var(--neutral-700);
+            font-size: 1.08rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--neutral-50);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .feature-card:nth-child(2) {
+            border-left-color: var(--accent-coral);
+        }
+
+        .feature-card:nth-child(3) {
+            border-left-color: var(--accent-teal);
+        }
+
+        .feature-card h3 {
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--neutral-700);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .component-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(15, 38, 71, 0.15);
+            border-top: 4px solid var(--accent-gold);
+        }
+
+        .component-box:nth-child(2) {
+            border-top-color: var(--accent-coral);
+        }
+
+        .component-box h3 {
+            color: var(--primary-dark);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .component-box p {
+            color: var(--neutral-700);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+        }
+
+        .component-box .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .component-box .tech-tag {
+            background: var(--neutral-50);
+            color: var(--neutral-700);
+            padding: 0.3rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .component-box .box-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--accent-teal);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: gap 0.3s ease;
+        }
+
+        .component-box .box-link:hover {
+            gap: 0.8rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        footer {
+            background: #1a1a2e;
+            color: var(--neutral-100);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--accent-gold);
+        }
+
+        footer .footer-main p:first-child {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        footer .disclaimer {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-top: 2px solid rgba(251, 191, 36, 0.3);
+            margin: 2rem -2rem -2rem -2rem;
+        }
+
+        footer .disclaimer h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer .disclaimer p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.1rem;
+            }
+
+            .about {
+                padding: 2.5rem 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html" class="logo-text">Josiah J Dockins</a>
+            <div class="hamburger" aria-label="Toggle navigation menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="../personal.html">About Me</a></li>
+                <li><a href="../Project-Blueprint/blueprint.html">Project Blueprint</a></li>
+                <li><a href="../Project-Blueprint/methods.html">Methods</a></li>
+                <li><a href="../Project-Blueprint/questionnaire.html">Questionnaire</a></li>
+                <li><a href="../Project-Blueprint/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <a href="../index.html" class="back-link">← Back to Home</a>
+            <h1>Bitcoin AI Agent Analysis</h1>
+            <p class="tagline">AI-Powered Market Intelligence</p>
+            <span class="status-badge">In Development</span>
+            <div style="margin-top: 1.5rem;">
+                <a href="https://github.com/JoBlockins/Bitcoin-AI-Agent-Analysis" target="_blank" class="cta-button" style="font-size: 1rem; padding: 0.75rem 2rem;">View on GitHub</a>
+            </div>
+        </section>
+
+        <section class="about">
+            <h2>About This Project</h2>
+            <p>
+                Bitcoin AI Agent Analysis is an automated system that pulls real-time and historical Bitcoin market data - including price, volume, volatility, trend strength, and key support/resistance levels - and then uses that information to evaluate what the market is most likely to do next.
+            </p>
+            <p>
+                This project explores the intersection of artificial intelligence and financial markets, using AI agents to process and interpret complex market signals in real time.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Real-Time Data</h3>
+                    <p>Pulls live Bitcoin price, volume, volatility, and trend data from market APIs.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Uses AI agents to evaluate market conditions and predict likely market direction.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Key Levels Detection</h3>
+                    <p>Identifies support and resistance levels to provide context for market movement.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="components-grid">
+            <div class="component-box">
+                <h3>Analysis Dashboard</h3>
+                <p>
+                    A live web dashboard that pulls real-time Bitcoin data from the CoinGecko API and runs technical analysis — including RSI, MACD, Bollinger Bands, support/resistance levels, and market regime classification — to evaluate current market conditions.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">Vite</span>
+                    <span class="tech-tag">CoinGecko API</span>
+                </div>
+                <a href="https://www.jjdockins.com/bitcoin-analysis/" target="_blank" class="box-link">View Live Dashboard →</a>
+            </div>
+            <div class="component-box">
+                <h3>AI Trading Agent</h3>
+                <p>
+                    An autonomous agent that scrapes the analysis dashboard, feeds the structured market data to Claude, and receives a BUY, SELL, or HOLD decision. It runs on a schedule, tracks a simulated portfolio, and logs every trade.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">Claude API</span>
+                    <span class="tech-tag">Puppeteer</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-main">
+            <p>&copy; 2026 Josiah Dockins. All rights reserved.</p>
+        </div>
+        <div class="disclaimer">
+            <h4>Disclaimer</h4>
+            <p>
+                This website was built from scratch as I teach myself web development, using HTML/CSS and AI tools as learning resources. I'm continuously improving the site as I develop my skills.
+            </p>
+        </div>
+    </footer>
+
+    <script src="../main.js"></script>
+</body>
+</html>

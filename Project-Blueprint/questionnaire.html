@@ -3,147 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="50-question career questionnaire for Project Blueprint - mapping professional journeys from early influences to future goals.">
+    <meta property="og:title" content="Interview Questionnaire - Project Blueprint">
+    <meta property="og:description" content="50-question career questionnaire for Project Blueprint - mapping professional journeys from early influences to future goals.">
+    <meta property="og:type" content="website">
     <title>Interview Questionnaire - Project Blueprint</title>
+    <link rel="stylesheet" href="../styles.css">
     <style>
-        :root {
-            --primary-dark: #0f2647;
-            --primary-mid: #1a3a5c;
-            --primary-light: #2d5a7b;
-            --accent-teal: #14b8a6;
-            --accent-coral: #ff8a65;
-            --accent-gold: #fbbf24;
-            --neutral-50: #f8fafc;
-            --neutral-100: #f1f5f9;
-            --neutral-700: #334155;
-            --neutral-800: #1e293b;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: var(--neutral-700);
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-mid) 50%, var(--accent-teal) 100%);
             min-height: 100vh;
-        }
-
-        header {
-            background: rgba(255, 255, 255, 0.98);
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(15, 38, 71, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 3px solid var(--accent-teal);
-        }
-
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--neutral-700);
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-teal);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover {
-            color: var(--accent-teal);
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        nav .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary-dark), var(--accent-teal));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 4px;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary-dark);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            nav ul {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                gap: 0;
-                padding: 0;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-
-            nav ul.active {
-                max-height: 400px;
-            }
-
-            nav ul li {
-                border-bottom: 1px solid var(--neutral-100);
-            }
-
-            nav ul li a {
-                display: block;
-                padding: 1rem 2rem;
-            }
-
-            nav ul li:last-child {
-                border-bottom: none;
-            }
         }
 
         .hero-section {
@@ -320,38 +192,6 @@
             flex-wrap: wrap;
         }
 
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .cta-button.primary {
-            background: var(--accent-teal);
-            color: white;
-        }
-
-        .cta-button.primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(20, 184, 166, 0.5);
-            background: #0f9488;
-        }
-
-        .cta-button.secondary {
-            background: white;
-            color: var(--primary-dark);
-        }
-
-        .cta-button.secondary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(255, 255, 255, 0.3);
-        }
-
         footer {
             background: var(--primary-dark);
             color: var(--neutral-100);
@@ -361,24 +201,20 @@
             border-top: 3px solid var(--accent-teal);
         }
 
-        footer p {
-            opacity: 0.9;
-        }
-
-        footer p:first-child {
+        footer .footer-main p:first-child {
             font-weight: 500;
             margin-bottom: 0.5rem;
         }
 
-        .disclaimer-footer {
+        footer .disclaimer {
             background: rgba(15, 38, 71, 0.95);
             backdrop-filter: blur(10px);
             padding: 1.5rem 2rem;
             border-top: 2px solid rgba(20, 184, 166, 0.3);
-            margin-top: 0;
+            margin: 2rem -2rem -2rem -2rem;
         }
 
-        .disclaimer-footer h4 {
+        footer .disclaimer h4 {
             font-size: 0.9rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
@@ -387,7 +223,7 @@
             letter-spacing: 1px;
         }
 
-        .disclaimer-footer p {
+        footer .disclaimer p {
             font-size: 0.85rem;
             line-height: 1.6;
             opacity: 0.9;
@@ -428,17 +264,17 @@
 <body>
     <header>
         <nav>
-            <a href="index.html" class="logo-text">Josiah J Dockins</a>
-            <div class="hamburger" onclick="toggleMenu()">
+            <a href="../index.html" class="logo-text">Josiah J Dockins</a>
+            <div class="hamburger" aria-label="Toggle navigation menu" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
             <ul id="navMenu">
-                <li><a href="personal.html">About Me</a></li>
+                <li><a href="../personal.html">About Me</a></li>
                 <li><a href="blueprint.html">Project Blueprint</a></li>
-                <li><a href="https://www.jjdockins.com/methods.html">Methods</a></li>
-                <li><a href="https://www.jjdockins.com/questionnaire.html">Questionnaire</a></li>
+                <li><a href="methods.html">Methods</a></li>
+                <li><a href="questionnaire.html">Questionnaire</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
@@ -455,7 +291,7 @@
         <section class="intro-section">
             <h2>About This Questionnaire</h2>
             <p>
-                This comprehensive questionnaire explores every facet of a professional career journey—from early influences and education to current challenges and future aspirations. These 50 questions are designed to capture authentic stories, practical insights, and the real experiences that shape successful careers.
+                This comprehensive questionnaire explores every facet of a professional career journey-from early influences and education to current challenges and future aspirations. These 50 questions are designed to capture authentic stories, practical insights, and the real experiences that shape successful careers.
             </p>
         </section>
 
@@ -464,7 +300,7 @@
             <p style="margin-bottom: 2rem;">
                 Prefer to work offline or print the questionnaire? Download the beautifully formatted PDF version to complete at your own pace.
             </p>
-            <a href="documents/Project_Blueprint_Questionnaire.pdf" download="Project_Blueprint_Questionnaire.pdf" class="cta-button primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+            <a href="../documents/Project_Blueprint_Questionnaire.pdf" download="Project_Blueprint_Questionnaire.pdf" class="cta-button primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
                 📥 Download PDF Questionnaire
             </a>
         </section>
@@ -478,7 +314,7 @@
                 </p>
                 <ul class="question-list">
                     <li class="question-item" data-number="1.">Where did you grow up, and what experiences shaped your early interests?</li>
-                    <li class="question-item" data-number="2.">What were you like in high school—academically, socially, or with extracurriculars?</li>
+                    <li class="question-item" data-number="2.">What were you like in high school-academically, socially, or with extracurriculars?</li>
                     <li class="question-item" data-number="3.">Did you have a dream job growing up?</li>
                     <li class="question-item" data-number="4.">Who influenced you most when you were young?</li>
                     <li class="question-item" data-number="5.">What's one challenge from your childhood or teenage years that changed you?</li>
@@ -489,7 +325,7 @@
             <div class="question-section">
                 <h3 class="section-header">Education Journey</h3>
                 <p class="section-description">
-                    This section explores your educational decisions—why you chose certain paths, what you learned, and how those experiences influenced your career.
+                    This section explores your educational decisions-why you chose certain paths, what you learned, and how those experiences influenced your career.
                 </p>
                 <ul class="question-list">
                     <li class="question-item" data-number="6.">What made you choose your college (or choose a different path)?</li>
@@ -519,7 +355,7 @@
             <div class="question-section">
                 <h3 class="section-header">Current Role</h3>
                 <p class="section-description">
-                    This section helps students understand what your job looks like day-to-day—what you actually do, what you enjoy, and what's difficult.
+                    This section helps students understand what your job looks like day-to-day-what you actually do, what you enjoy, and what's difficult.
                 </p>
                 <ul class="question-list">
                     <li class="question-item" data-number="16.">What is your current job title?</li>
@@ -594,7 +430,7 @@
             <div class="question-section">
                 <h3 class="section-header">Practical Career Advice</h3>
                 <p class="section-description">
-                    These questions give students concrete information about entering your field—salary expectations, required experiences, and advice.
+                    These questions give students concrete information about entering your field-salary expectations, required experiences, and advice.
                 </p>
                 <ul class="question-list">
                     <li class="question-item" data-number="41.">What is a realistic starting salary for someone entering your field?</li>
@@ -615,7 +451,7 @@
                     <li class="question-item" data-number="46.">What's a moment when you realized you were on the right (or wrong) career path?</li>
                     <li class="question-item" data-number="47.">How has your career shaped the person you've become?</li>
                     <li class="question-item" data-number="48.">If you could give your younger self one piece of advice, what would it be?</li>
-                    <li class="question-item" data-number="49.">What are your goals for the next 5–10 years?</li>
+                    <li class="question-item" data-number="49.">What are your goals for the next 5-10 years?</li>
                     <li class="question-item" data-number="50.">What final message or insight would you want students to take away from your story?</li>
                 </ul>
             </div>
@@ -630,29 +466,18 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 Project Blueprint. All rights reserved.</p>
-        <p>Plan the Future. One Story at a Time.</p>
+        <div class="footer-main">
+            <p>&copy; 2026 Project Blueprint. All rights reserved.</p>
+            <p>Plan the Future. One Story at a Time.</p>
+        </div>
+        <div class="disclaimer">
+            <h4>Disclaimer</h4>
+            <p>
+                This website was built from scratch as I teach myself web development, using HTML/CSS and AI tools as learning resources. I'm continuously improving the site as I develop my skills.
+            </p>
+        </div>
     </footer>
 
-    <footer class="disclaimer-footer">
-        <h4>Disclaimer</h4>
-        <p>
-            I'm actively teaching myself how to code this website from scratch using HTML and guidance from tools like ChatGPT and Claude AI. Since this isn't built from a premade template, you may notice occasional bugs or layout issues. I'm continuously learning and improving the site, so thank you for your patience as I work through fixes and updates.
-        </p>
-    </footer>
-
-    <script>
-        function toggleMenu() {
-            const navMenu = document.getElementById('navMenu');
-            navMenu.classList.toggle('active');
-        }
-
-        // Close menu when clicking on a link
-        document.querySelectorAll('#navMenu a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navMenu').classList.remove('active');
-            });
-        });
-    </script>
+    <script src="../main.js"></script>
 </body>
 </html>
