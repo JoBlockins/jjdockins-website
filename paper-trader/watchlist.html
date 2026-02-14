@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watchlist (89) — Paper Trader</title>
+    <style>
+:root {
+    --bg: #0e1117;
+    --surface: #1a1d23;
+    --surface-hover: #262730;
+    --border: #333640;
+    --text: #fafafa;
+    --text-muted: #9ca3af;
+    --green: #22c55e;
+    --yellow: #eab308;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --gray: #6b7280;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 32px;
+    margin-bottom: 12px;
+}
+
+h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+p, .description {
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+}
+
+.metrics-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.metric-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 24px;
+    min-width: 140px;
+    flex: 1;
+}
+
+.metric-box .label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.metric-box .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+th {
+    background: var(--surface);
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+}
+
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+tr:hover { background: var(--surface-hover); }
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.card-header .symbol {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.card-body p {
+    margin-bottom: 8px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-green { background: rgba(34,197,94,0.15); color: var(--green); }
+.badge-yellow { background: rgba(234,179,8,0.15); color: var(--yellow); }
+.badge-red { background: rgba(239,68,68,0.15); color: var(--red); }
+.badge-gray { background: rgba(156,163,175,0.15); color: var(--gray); }
+.badge-blue { background: rgba(59,130,246,0.15); color: var(--blue); }
+
+.text-green { color: var(--green); }
+.text-yellow { color: var(--yellow); }
+.text-red { color: var(--red); }
+.text-muted { color: var(--text-muted); }
+
+.progress-bar {
+    background: var(--surface-hover);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+    margin: 8px 0;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.caption {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.concerns-list {
+    margin: 8px 0 0 16px;
+}
+
+.concerns-list li {
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.status-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+</style>
+</head>
+<body>
+<style>
+.nav {
+    background: #1a1d23;
+    border-bottom: 1px solid #333640;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.nav-brand {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fafafa;
+    margin-right: 24px;
+    padding: 12px 0;
+    text-decoration: none;
+}
+
+.nav a {
+    color: #9ca3af;
+    text-decoration: none;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.nav a:hover {
+    color: #fafafa;
+    text-decoration: none;
+}
+
+.nav a.active {
+    color: #fafafa;
+    border-bottom-color: #3b82f6;
+}
+</style>
+<nav class="nav">
+    <a class="nav-brand" href="index.html">$ Paper Trader</a>
+    <a href="index.html">Home</a><a href="watchlist.html" class="active">Watchlist</a><a href="signals.html">Signals</a><a href="sentinel.html">Sentinel</a><a href="briefing.html">Briefing</a><a href="trading.html">Trading</a>
+</nav>
+<div class="container">
+    <h1>Watchlist (89)</h1>
+    <p class="description">Stocks that pass the screener's quality and volatility filters.</p>
+    <hr>
+    
+<div class="metrics-row"><div class="metric-box">
+    <div class="label">Total Scanned</div>
+    <div class="value">1,584</div>
+</div><div class="metric-box">
+    <div class="label">Qualified</div>
+    <div class="value">89</div>
+</div><div class="metric-box">
+    <div class="label">Generated</div>
+    <div class="value">2026-02-12 10:25</div>
+</div></div>
+<div class="two-col">
+    <div class="card">
+        <div class="card-body">
+            <h3>Quality Filters</h3>
+            <p>Market cap $2B+ (mid-cap and above)</p>
+            <p>Average daily volume 500K+ shares</p>
+            <p>Positive revenue</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h3>Volatility Filters</h3>
+            <p>ATR above 5.0% of stock price</p>
+            <p>12.0%+ swings in 95% of rolling 2-week windows</p>
+            <p>Lookback: 1y</p>
+        </div>
+    </div>
+</div>
+<hr>
+<table>
+    <thead><tr><th>Symbol</th><th>Name</th><th>Rating</th><th>Price</th><th>ATR %</th><th>Swing Freq %</th><th>Windows</th></tr></thead>
+    <tbody><tr><td><a href="https://finance.yahoo.com/quote/LEU" target="_blank">LEU</a></td><td>Centrus Energy Corp.</td><td>buy</td><td>$197.04</td><td>16.2%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/FIGR" target="_blank">FIGR</a></td><td>Figure Technology Solutions, Inc.</td><td>buy</td><td>$35.87</td><td>14.7%</td><td>100%</td><td>98/98</td></tr><tr><td><a href="https://finance.yahoo.com/quote/STUB" target="_blank">STUB</a></td><td>StubHub Holdings, Inc.</td><td>buy</td><td>$8.83</td><td>14.4%</td><td>100%</td><td>94/94</td></tr><tr><td><a href="https://finance.yahoo.com/quote/IREN" target="_blank">IREN</a></td><td>IREN Limited</td><td>buy</td><td>$41.83</td><td>14.0%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/AAOI" target="_blank">AAOI</a></td><td>Applied Optoelectronics, Inc.</td><td>buy</td><td>$45.00</td><td>13.0%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/BE" target="_blank">BE</a></td><td>Bloom Energy Corporation</td><td>buy</td><td>$145.84</td><td>12.1%</td><td>98%</td><td>237/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/IONQ" target="_blank">IONQ</a></td><td>IonQ, Inc.</td><td>buy</td><td>$32.76</td><td>11.2%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/RGTI" target="_blank">RGTI</a></td><td>Rigetti Computing, Inc.</td><td>buy</td><td>$15.30</td><td>11.0%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/MARA" target="_blank">MARA</a></td><td>MARA Holdings, Inc.</td><td>buy</td><td>$7.56</td><td>10.7%</td><td>98%</td><td>237/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/ALAB" target="_blank">ALAB</a></td><td>Astera Labs, Inc.</td><td>buy</td><td>$142.22</td><td>10.6%</td><td>99%</td><td>240/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/CRWV" target="_blank">CRWV</a></td><td>CoreWeave, Inc.</td><td>buy</td><td>$94.15</td><td>10.3%</td><td>100%</td><td>212/212</td></tr><tr><td><a href="https://finance.yahoo.com/quote/SNDK" target="_blank">SNDK</a></td><td>Sandisk Corporation</td><td>buy</td><td>$645.64</td><td>10.3%</td><td>95%</td><td>230/242</td></tr><tr><td><a href="https://finance.yahoo.com/quote/PL" target="_blank">PL</a></td><td>Planet Labs PBC</td><td>buy</td><td>$21.09</td><td>10.2%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/RDDT" target="_blank">RDDT</a></td><td>Reddit, Inc.</td><td>buy</td><td>$132.98</td><td>9.9%</td><td>95%</td><td>231/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/NBIS" target="_blank">NBIS</a></td><td>Nebius Group N.V.</td><td>buy</td><td>$88.02</td><td>9.8%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/KTOS" target="_blank">KTOS</a></td><td>Kratos Defense & Security Solutio...</td><td>buy</td><td>$88.06</td><td>9.6%</td><td>95%</td><td>231/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/ANDG" target="_blank">ANDG</a></td><td>Andersen Group Inc.</td><td>buy</td><td>$18.82</td><td>9.4%</td><td>100%</td><td>30/30</td></tr><tr><td><a href="https://finance.yahoo.com/quote/HOOD" target="_blank">HOOD</a></td><td>Robinhood Markets, Inc.</td><td>buy</td><td>$73.52</td><td>9.2%</td><td>98%</td><td>239/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/FIG" target="_blank">FIG</a></td><td>Figma, Inc.</td><td>buy</td><td>$22.46</td><td>9.0%</td><td>95%</td><td>121/127</td></tr><tr><td><a href="https://finance.yahoo.com/quote/UPST" target="_blank">UPST</a></td><td>Upstart Holdings, Inc.</td><td>buy</td><td>$31.65</td><td>8.8%</td><td>98%</td><td>237/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/CRCL" target="_blank">CRCL</a></td><td>Circle Internet Group</td><td>buy</td><td>$58.01</td><td>8.6%</td><td>97%</td><td>160/165</td></tr><tr><td><a href="https://finance.yahoo.com/quote/HTFL" target="_blank">HTFL</a></td><td>Heartflow, Inc.</td><td>buy</td><td>$25.72</td><td>8.0%</td><td>100%</td><td>120/120</td></tr><tr><td><a href="https://finance.yahoo.com/quote/VSAT" target="_blank">VSAT</a></td><td>Viasat, Inc.</td><td>buy</td><td>$45.58</td><td>8.0%</td><td>99%</td><td>241/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/BLSH" target="_blank">BLSH</a></td><td>Bullish</td><td>buy</td><td>$31.59</td><td>7.3%</td><td>98%</td><td>116/118</td></tr><tr><td><a href="https://finance.yahoo.com/quote/ZETA" target="_blank">ZETA</a></td><td>Zeta Global Holdings Corp.</td><td>buy</td><td>$15.70</td><td>7.1%</td><td>99%</td><td>241/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/SBSW" target="_blank">SBSW</a></td><td>Sibanye Stillwater Limited</td><td>buy</td><td>$17.61</td><td>7.1%</td><td>95%</td><td>231/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/W" target="_blank">W</a></td><td>Wayfair Inc.</td><td>buy</td><td>$86.48</td><td>6.6%</td><td>96%</td><td>233/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/VNET" target="_blank">VNET</a></td><td>VNET Group, Inc.</td><td>buy</td><td>$14.27</td><td>6.5%</td><td>98%</td><td>239/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/ARWR" target="_blank">ARWR</a></td><td>Arrowhead Pharmaceuticals, Inc.</td><td>buy</td><td>$62.13</td><td>6.4%</td><td>97%</td><td>235/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/VG" target="_blank">VG</a></td><td>Venture Global, Inc.</td><td>buy</td><td>$9.85</td><td>6.3%</td><td>97%</td><td>235/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/ALB" target="_blank">ALB</a></td><td>Albemarle Corporation</td><td>buy</td><td>$167.39</td><td>6.1%</td><td>97%</td><td>235/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/ONDS" target="_blank">ONDS</a></td><td>Ondas Inc.</td><td>strong_buy</td><td>$8.98</td><td>13.1%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/APLD" target="_blank">APLD</a></td><td>Applied Digital Corporation</td><td>strong_buy</td><td>$35.86</td><td>12.1%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/GLXY" target="_blank">GLXY</a></td><td>Galaxy Digital</td><td>strong_buy</td><td>$20.53</td><td>11.8%</td><td>100%</td><td>178/178</td></tr><tr><td><a href="https://finance.yahoo.com/quote/CLSK" target="_blank">CLSK</a></td><td>CleanSpark, Inc.</td><td>strong_buy</td><td>$9.60</td><td>11.7%</td><td>99%</td><td>240/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/CIFR" target="_blank">CIFR</a></td><td>Cipher Mining Inc.</td><td>strong_buy</td><td>$16.31</td><td>11.6%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/BTDR" target="_blank">BTDR</a></td><td>Bitdeer Technologies Group</td><td>strong_buy</td><td>$11.23</td><td>10.8%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/HUT" target="_blank">HUT</a></td><td>Hut 8 Corp.</td><td>strong_buy</td><td>$53.22</td><td>10.6%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/BETA" target="_blank">BETA</a></td><td>BETA Technologies, Inc.</td><td>strong_buy</td><td>$18.57</td><td>10.5%</td><td>100%</td><td>60/60</td></tr><tr><td><a href="https://finance.yahoo.com/quote/QBTS" target="_blank">QBTS</a></td><td>D-Wave Quantum Inc.</td><td>strong_buy</td><td>$19.03</td><td>10.5%</td><td>99%</td><td>240/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/WULF" target="_blank">WULF</a></td><td>TeraWulf Inc.</td><td>strong_buy</td><td>$16.68</td><td>10.5%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/IBRX" target="_blank">IBRX</a></td><td>ImmunityBio, Inc.</td><td>strong_buy</td><td>$6.64</td><td>9.5%</td><td>98%</td><td>237/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/ALM" target="_blank">ALM</a></td><td>Almonty Industries Inc.</td><td>strong_buy</td><td>$13.43</td><td>9.5%</td><td>98%</td><td>238/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/RIOT" target="_blank">RIOT</a></td><td>Riot Platforms, Inc.</td><td>strong_buy</td><td>$15.04</td><td>9.2%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/CLS" target="_blank">CLS</a></td><td>Celestica Inc.</td><td>strong_buy</td><td>$282.24</td><td>9.2%</td><td>96%</td><td>233/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/MP" target="_blank">MP</a></td><td>MP Materials Corp.</td><td>strong_buy</td><td>$58.07</td><td>9.1%</td><td>98%</td><td>238/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/CRDO" target="_blank">CRDO</a></td><td>Credo Technology Group Holding Ltd</td><td>strong_buy</td><td>$129.29</td><td>8.9%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/SEI" target="_blank">SEI</a></td><td>Solaris Energy Infrastructure, Inc.</td><td>strong_buy</td><td>$54.31</td><td>8.7%</td><td>98%</td><td>237/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/EXK" target="_blank">EXK</a></td><td>Endeavour Silver Corp.</td><td>strong_buy</td><td>$12.19</td><td>8.6%</td><td>96%</td><td>233/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/NAVN" target="_blank">NAVN</a></td><td>Navan, Inc.</td><td>strong_buy</td><td>$10.72</td><td>8.6%</td><td>100%</td><td>63/63</td></tr><tr><td><a href="https://finance.yahoo.com/quote/NTSK" target="_blank">NTSK</a></td><td>Netskope, Inc.</td><td>strong_buy</td><td>$11.98</td><td>8.1%</td><td>97%</td><td>90/93</td></tr><tr><td><a href="https://finance.yahoo.com/quote/ALMS" target="_blank">ALMS</a></td><td>Alumis Inc.</td><td>strong_buy</td><td>$25.70</td><td>7.4%</td><td>96%</td><td>232/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/WGS" target="_blank">WGS</a></td><td>GeneDx Holdings Corp.</td><td>strong_buy</td><td>$91.92</td><td>7.4%</td><td>96%</td><td>232/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/CORZ" target="_blank">CORZ</a></td><td>Core Scientific, Inc.</td><td>strong_buy</td><td>$18.32</td><td>7.3%</td><td>96%</td><td>232/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/BBAR" target="_blank">BBAR</a></td><td>Banco BBVA Argentina S.A.</td><td>strong_buy</td><td>$17.70</td><td>6.9%</td><td>95%</td><td>231/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/BEAM" target="_blank">BEAM</a></td><td>Beam Therapeutics Inc.</td><td>strong_buy</td><td>$26.38</td><td>6.8%</td><td>98%</td><td>239/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/IMNM" target="_blank">IMNM</a></td><td>Immunome, Inc.</td><td>strong_buy</td><td>$23.34</td><td>6.7%</td><td>97%</td><td>236/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/HSAI" target="_blank">HSAI</a></td><td>Hesai Group</td><td>strong_buy</td><td>$25.58</td><td>6.5%</td><td>96%</td><td>233/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/WRD" target="_blank">WRD</a></td><td>WeRide Inc.</td><td>strong_buy</td><td>$7.61</td><td>6.0%</td><td>99%</td><td>240/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/PONY" target="_blank">PONY</a></td><td>Pony AI Inc.</td><td>strong_buy</td><td>$14.58</td><td>6.0%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/WVE" target="_blank">WVE</a></td><td>Wave Life Sciences Ltd.</td><td>strong_buy</td><td>$12.78</td><td>5.9%</td><td>97%</td><td>235/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/TERN" target="_blank">TERN</a></td><td>Terns Pharmaceuticals, Inc.</td><td>strong_buy</td><td>$38.53</td><td>5.5%</td><td>99%</td><td>241/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/FLNC" target="_blank">FLNC</a></td><td>Fluence Energy, Inc.</td><td>hold</td><td>$17.98</td><td>19.2%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/HIMS" target="_blank">HIMS</a></td><td>Hims & Hers Health, Inc.</td><td>hold</td><td>$16.58</td><td>14.8%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/ASTS" target="_blank">ASTS</a></td><td>AST SpaceMobile, Inc.</td><td>hold</td><td>$84.67</td><td>14.0%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/SMR" target="_blank">SMR</a></td><td>NuScale Power Corporation</td><td>hold</td><td>$15.42</td><td>11.5%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/SYM" target="_blank">SYM</a></td><td>Symbotic Inc.</td><td>hold</td><td>$56.06</td><td>8.2%</td><td>99%</td><td>241/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/JOBY" target="_blank">JOBY</a></td><td>Joby Aviation, Inc.</td><td>hold</td><td>$10.02</td><td>8.0%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/SEDG" target="_blank">SEDG</a></td><td>SolarEdge Technologies, Inc.</td><td>hold</td><td>$35.47</td><td>7.8%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/OPEN" target="_blank">OPEN</a></td><td>Opendoor Technologies Inc.</td><td>hold</td><td>$4.41</td><td>7.8%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/LCID" target="_blank">LCID</a></td><td>Lucid Group, Inc.</td><td>hold</td><td>$10.23</td><td>7.0%</td><td>95%</td><td>231/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/RH" target="_blank">RH</a></td><td>RH</td><td>hold</td><td>$204.18</td><td>6.1%</td><td>97%</td><td>236/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/OSCR" target="_blank">OSCR</a></td><td>Oscar Health, Inc.</td><td>hold</td><td>$14.51</td><td>5.7%</td><td>100%</td><td>242/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/HYMC" target="_blank">HYMC</a></td><td>Hycroft Mining Holding Corporation</td><td>none</td><td>$37.28</td><td>17.7%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/LUNR" target="_blank">LUNR</a></td><td>Intuitive Machines, Inc.</td><td>none</td><td>$15.85</td><td>14.9%</td><td>96%</td><td>234/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/EOSE" target="_blank">EOSE</a></td><td>Eos Energy Enterprises, Inc.</td><td>none</td><td>$11.43</td><td>13.2%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/RKLB" target="_blank">RKLB</a></td><td>Rocket Lab Corporation</td><td>none</td><td>$66.60</td><td>10.6%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/LMND" target="_blank">LMND</a></td><td>Lemonade, Inc.</td><td>none</td><td>$65.65</td><td>9.5%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/PLUG" target="_blank">PLUG</a></td><td>Plug Power Inc.</td><td>none</td><td>$1.90</td><td>9.5%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/NVTS" target="_blank">NVTS</a></td><td>Navitas Semiconductor Corporation</td><td>none</td><td>$8.77</td><td>9.4%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/RUN" target="_blank">RUN</a></td><td>Sunrun Inc.</td><td>none</td><td>$19.04</td><td>8.8%</td><td>99%</td><td>241/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/SOUN" target="_blank">SOUN</a></td><td>SoundHound AI, Inc.</td><td>none</td><td>$7.70</td><td>8.8%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/XMTR" target="_blank">XMTR</a></td><td>Xometry, Inc.</td><td>none</td><td>$62.06</td><td>8.1%</td><td>96%</td><td>232/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/SEZL" target="_blank">SEZL</a></td><td>Sezzle Inc.</td><td>none</td><td>$62.26</td><td>7.8%</td><td>100%</td><td>242/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/GRAL" target="_blank">GRAL</a></td><td>GRAIL, Inc.</td><td>none</td><td>$99.04</td><td>7.4%</td><td>100%</td><td>243/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/TEM" target="_blank">TEM</a></td><td>Tempus AI, Inc.</td><td>none</td><td>$52.40</td><td>6.7%</td><td>98%</td><td>238/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/TXG" target="_blank">TXG</a></td><td>10x Genomics, Inc.</td><td>none</td><td>$18.29</td><td>5.6%</td><td>96%</td><td>232/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/PBF" target="_blank">PBF</a></td><td>PBF Energy Inc.</td><td>none</td><td>$35.59</td><td>5.4%</td><td>98%</td><td>239/243</td></tr><tr><td><a href="https://finance.yahoo.com/quote/RCUS" target="_blank">RCUS</a></td><td>Arcus Biosciences, Inc.</td><td>none</td><td>$20.77</td><td>5.2%</td><td>96%</td><td>232/243</td></tr></tbody>
+</table>
+
+    <div class="footer">
+        Paper Trader — Static export generated 2026-02-13 21:57
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signals — Paper Trader</title>
+    <style>
+:root {
+    --bg: #0e1117;
+    --surface: #1a1d23;
+    --surface-hover: #262730;
+    --border: #333640;
+    --text: #fafafa;
+    --text-muted: #9ca3af;
+    --green: #22c55e;
+    --yellow: #eab308;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --gray: #6b7280;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 32px;
+    margin-bottom: 12px;
+}
+
+h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+p, .description {
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+}
+
+.metrics-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.metric-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 24px;
+    min-width: 140px;
+    flex: 1;
+}
+
+.metric-box .label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.metric-box .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+th {
+    background: var(--surface);
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+}
+
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+tr:hover { background: var(--surface-hover); }
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.card-header .symbol {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.card-body p {
+    margin-bottom: 8px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-green { background: rgba(34,197,94,0.15); color: var(--green); }
+.badge-yellow { background: rgba(234,179,8,0.15); color: var(--yellow); }
+.badge-red { background: rgba(239,68,68,0.15); color: var(--red); }
+.badge-gray { background: rgba(156,163,175,0.15); color: var(--gray); }
+.badge-blue { background: rgba(59,130,246,0.15); color: var(--blue); }
+
+.text-green { color: var(--green); }
+.text-yellow { color: var(--yellow); }
+.text-red { color: var(--red); }
+.text-muted { color: var(--text-muted); }
+
+.progress-bar {
+    background: var(--surface-hover);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+    margin: 8px 0;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.caption {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.concerns-list {
+    margin: 8px 0 0 16px;
+}
+
+.concerns-list li {
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.status-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+</style>
+</head>
+<body>
+<style>
+.nav {
+    background: #1a1d23;
+    border-bottom: 1px solid #333640;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.nav-brand {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fafafa;
+    margin-right: 24px;
+    padding: 12px 0;
+    text-decoration: none;
+}
+
+.nav a {
+    color: #9ca3af;
+    text-decoration: none;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.nav a:hover {
+    color: #fafafa;
+    text-decoration: none;
+}
+
+.nav a.active {
+    color: #fafafa;
+    border-bottom-color: #3b82f6;
+}
+</style>
+<nav class="nav">
+    <a class="nav-brand" href="index.html">$ Paper Trader</a>
+    <a href="index.html">Home</a><a href="watchlist.html">Watchlist</a><a href="signals.html" class="active">Signals</a><a href="sentinel.html">Sentinel</a><a href="briefing.html">Briefing</a><a href="trading.html">Trading</a>
+</nav>
+<div class="container">
+    <h1>Signals</h1>
+    <p class="description">Rule-based signal scores and AI-validated buy signals for watchlist stocks.</p>
+    <hr>
+    
+<div class="metrics-row"><div class="metric-box">
+    <div class="label">Total Stocks</div>
+    <div class="value">89</div>
+</div><div class="metric-box">
+    <div class="label">BUY</div>
+    <div class="value" style="color: #22c55e">6</div>
+</div><div class="metric-box">
+    <div class="label">WATCH</div>
+    <div class="value" style="color: #eab308">25</div>
+</div><div class="metric-box">
+    <div class="label">NEUTRAL</div>
+    <div class="value">58</div>
+</div><div class="metric-box">
+    <div class="label">Evaluated</div>
+    <div class="value">2026-02-11 23:49</div>
+</div></div>
+<h2>Section 1: Rule-Based Signals</h2>
+<div class="card">
+    <div class="card-body">
+        <h3>Scoring Rules</h3>
+        <p>RSI oversold (&lt; 35): +30 pts &nbsp;|&nbsp; RSI overbought (&gt; 70): &minus;30 pts &nbsp;|&nbsp;
+        Near 10-day range low (&lt; 25%): +25 pts &nbsp;|&nbsp; Volume spike (&gt; 1.5x avg): +10 pts &nbsp;|&nbsp;
+        Above 50-day MA: +15 pts &nbsp;|&nbsp; MA20 pullback: +20 pts</p>
+        <p class="caption">Score 60+ = BUY &nbsp;|&nbsp; 35&ndash;59 = WATCH &nbsp;|&nbsp; Below 35 = NEUTRAL</p>
+    </div>
+</div>
+<table>
+    <thead><tr><th>Symbol</th><th>Name</th><th>Signal</th><th>Score</th><th>Price</th><th>RSI</th><th>Vol Ratio</th><th>Range Pos %</th><th>Rules Triggered</th></tr></thead>
+    <tbody><tr><td>HOOD</td><td>Unknown</td><td><span class="badge badge-green">BUY</span></td><td>65</td><td>$77.97</td><td><span style="color: #22c55e; font-weight: bold">29.7</span></td><td>2.16x</td><td>18.8%</td><td>rsi_oversold, near_range_low, volume_spike</td></tr><tr><td>UPST</td><td>Unknown</td><td><span class="badge badge-green">BUY</span></td><td>65</td><td>$33.10</td><td>30.6</td><td>4.74x</td><td>5.3%</td><td>rsi_oversold, near_range_low, volume_spike</td></tr><tr><td>ASTS</td><td>Unknown</td><td><span class="badge badge-green">BUY</span></td><td>60</td><td>$96.92</td><td>48.2</td><td>0.81x</td><td>14.5%</td><td>near_range_low, above_ma50, ma20_pullback</td></tr><tr><td>PL</td><td>Unknown</td><td><span class="badge badge-green">BUY</span></td><td>60</td><td>$21.65</td><td>45.0</td><td>0.57x</td><td>19.9%</td><td>near_range_low, above_ma50, ma20_pullback</td></tr><tr><td>HYMC</td><td>Unknown</td><td><span class="badge badge-green">BUY</span></td><td>60</td><td>$35.93</td><td>49.8</td><td>0.38x</td><td>21.0%</td><td>near_range_low, above_ma50, ma20_pullback</td></tr><tr><td>IMNM</td><td>Unknown</td><td><span class="badge badge-green">BUY</span></td><td>60</td><td>$23.41</td><td>48.2</td><td>0.69x</td><td>13.5%</td><td>near_range_low, above_ma50, ma20_pullback</td></tr><tr><td>IONQ</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>55</td><td>$33.61</td><td>34.3</td><td>0.69x</td><td>22.8%</td><td>rsi_oversold, near_range_low</td></tr><tr><td>FIGR</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>55</td><td>$35.41</td><td>31.9</td><td>0.95x</td><td>2.0%</td><td>rsi_oversold, near_range_low</td></tr><tr><td>RGTI</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>55</td><td>$16.43</td><td>34.8</td><td>1.01x</td><td>23.7%</td><td>rsi_oversold, near_range_low</td></tr><tr><td>HIMS</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>55</td><td>$16.69</td><td><span style="color: #22c55e; font-weight: bold">15.3</span></td><td>1.11x</td><td>2.4%</td><td>rsi_oversold, near_range_low</td></tr><tr><td>OPEN</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>55</td><td>$4.76</td><td>34.9</td><td>0.84x</td><td>11.7%</td><td>rsi_oversold, near_range_low</td></tr><tr><td>STUB</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>55</td><td>$9.45</td><td>31.4</td><td>0.96x</td><td>3.0%</td><td>rsi_oversold, near_range_low</td></tr><tr><td>FLNC</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>55</td><td>$17.52</td><td>33.3</td><td>1.45x</td><td>1.6%</td><td>rsi_oversold, near_range_low</td></tr><tr><td>NAVN</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>55</td><td>$10.66</td><td>34.1</td><td>0.97x</td><td>21.1%</td><td>rsi_oversold, near_range_low</td></tr><tr><td>ZETA</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>55</td><td>$16.01</td><td>32.8</td><td>0.99x</td><td>3.6%</td><td>rsi_oversold, near_range_low</td></tr><tr><td>NTSK</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>55</td><td>$11.81</td><td><span style="color: #22c55e; font-weight: bold">27.4</span></td><td>0.93x</td><td>10.7%</td><td>rsi_oversold, near_range_low</td></tr><tr><td>W</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>55</td><td>$88.07</td><td>30.9</td><td>1.08x</td><td>13.0%</td><td>rsi_oversold, near_range_low</td></tr><tr><td>HUT</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$53.22</td><td>48.1</td><td>0.68x</td><td>45.3%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>LEU</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$210.16</td><td>36.3</td><td>2.36x</td><td>2.9%</td><td>near_range_low, volume_spike</td></tr><tr><td>GRAL</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$100.40</td><td>50.1</td><td>0.58x</td><td>43.5%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>RUN</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$19.16</td><td>49.4</td><td>1.26x</td><td>36.8%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>ALAB</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$143.71</td><td>42.4</td><td>3.24x</td><td>11.2%</td><td>near_range_low, volume_spike</td></tr><tr><td>MP</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$60.58</td><td>48.1</td><td>0.40x</td><td>49.2%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>SEI</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$53.73</td><td>52.7</td><td>1.17x</td><td>60.2%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>RH</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$199.94</td><td>47.4</td><td>0.82x</td><td>39.4%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>LUNR</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$17.04</td><td>47.4</td><td>0.75x</td><td>28.5%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>HSAI</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$25.99</td><td>53.1</td><td>1.41x</td><td>58.9%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>ALMS</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$25.63</td><td>60.7</td><td>0.63x</td><td>34.0%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>TXG</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$19.15</td><td>47.2</td><td>0.69x</td><td>50.1%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>SBSW</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$17.56</td><td>53.3</td><td>0.45x</td><td>37.5%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>BBAR</td><td>Unknown</td><td><span class="badge badge-yellow">WATCH</span></td><td>35</td><td>$18.16</td><td>47.0</td><td>0.32x</td><td>29.6%</td><td>above_ma50, ma20_pullback</td></tr><tr><td>JOBY</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>30</td><td>$10.10</td><td>32.1</td><td>0.64x</td><td>38.5%</td><td>rsi_oversold</td></tr><tr><td>TEM</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>30</td><td>$53.61</td><td>34.9</td><td>0.77x</td><td>26.0%</td><td>rsi_oversold</td></tr><tr><td>FIG</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>30</td><td>$22.57</td><td>31.6</td><td>0.91x</td><td>27.4%</td><td>rsi_oversold</td></tr><tr><td>RKLB</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$69.62</td><td>43.2</td><td>0.77x</td><td>18.3%</td><td>near_range_low</td></tr><tr><td>IREN</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$42.67</td><td>42.8</td><td>0.76x</td><td>24.1%</td><td>near_range_low</td></tr><tr><td>LMND</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$68.49</td><td>38.2</td><td>0.92x</td><td>6.8%</td><td>near_range_low</td></tr><tr><td>SMR</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$15.57</td><td>41.9</td><td>1.01x</td><td>16.5%</td><td>near_range_low</td></tr><tr><td>ONDS</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$9.23</td><td>42.5</td><td>0.65x</td><td>23.0%</td><td>near_range_low</td></tr><tr><td>EOSE</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$11.58</td><td>38.1</td><td>0.91x</td><td>11.4%</td><td>near_range_low</td></tr><tr><td>PLUG</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$1.96</td><td>41.8</td><td>0.86x</td><td>20.3%</td><td>near_range_low</td></tr><tr><td>BBAI</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$4.43</td><td>37.3</td><td>0.66x</td><td>21.6%</td><td>near_range_low</td></tr><tr><td>RXRX</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$3.71</td><td>37.0</td><td>1.10x</td><td>18.1%</td><td>near_range_low</td></tr><tr><td>MARA</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$7.56</td><td>35.7</td><td>0.98x</td><td>24.9%</td><td>near_range_low</td></tr><tr><td>ARWR</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$61.55</td><td>40.5</td><td>1.21x</td><td>7.7%</td><td>near_range_low</td></tr><tr><td>KTOS</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>25</td><td>$87.78</td><td>41.7</td><td>0.76x</td><td>10.7%</td><td>near_range_low</td></tr><tr><td>CRWV</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$95.15</td><td>54.2</td><td>0.73x</td><td>65.2%</td><td>above_ma50</td></tr><tr><td>APLD</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$36.60</td><td>53.7</td><td>0.69x</td><td>72.7%</td><td>above_ma50</td></tr><tr><td>WULF</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$16.03</td><td>58.4</td><td>1.13x</td><td>72.0%</td><td>above_ma50</td></tr><tr><td>AAOI</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$48.40</td><td>62.3</td><td>0.64x</td><td>82.6%</td><td>above_ma50</td></tr><tr><td>SEDG</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$36.33</td><td>58.4</td><td>0.99x</td><td>81.9%</td><td>above_ma50</td></tr><tr><td>VSAT</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$45.33</td><td>56.2</td><td>0.85x</td><td>66.5%</td><td>above_ma50</td></tr><tr><td>TERN</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$38.64</td><td>57.5</td><td>0.79x</td><td>84.2%</td><td>above_ma50</td></tr><tr><td>PBF</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$35.77</td><td>62.0</td><td>1.49x</td><td>90.8%</td><td>above_ma50</td></tr><tr><td>ALM</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$14.18</td><td>69.4</td><td>0.77x</td><td>82.0%</td><td>above_ma50</td></tr><tr><td>BE</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$155.54</td><td>57.3</td><td>1.09x</td><td>53.3%</td><td>above_ma50</td></tr><tr><td>IBRX</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$6.54</td><td>64.5</td><td>0.31x</td><td>61.7%</td><td>above_ma50</td></tr><tr><td>VG</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$9.78</td><td>59.8</td><td>0.59x</td><td>56.4%</td><td>above_ma50</td></tr><tr><td>ALB</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$175.43</td><td>56.2</td><td>1.08x</td><td>62.4%</td><td>above_ma50</td></tr><tr><td>EXK</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$12.37</td><td>55.5</td><td>0.73x</td><td>53.7%</td><td>above_ma50</td></tr><tr><td>CORZ</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$18.09</td><td>53.1</td><td>0.55x</td><td>71.9%</td><td>above_ma50</td></tr><tr><td>XMTR</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>15</td><td>$63.61</td><td>50.4</td><td>1.11x</td><td>45.6%</td><td>above_ma50</td></tr><tr><td>BETA</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>10</td><td>$19.39</td><td>36.3</td><td>4.51x</td><td>47.4%</td><td>volume_spike</td></tr><tr><td>NBIS</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$88.61</td><td>47.5</td><td>1.05x</td><td>58.6%</td><td></td></tr><tr><td>CRDO</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$128.40</td><td>48.7</td><td>1.36x</td><td>71.6%</td><td></td></tr><tr><td>GLXY</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$20.40</td><td>38.1</td><td>0.77x</td><td>25.2%</td><td></td></tr><tr><td>PONY</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$14.68</td><td>48.5</td><td>0.85x</td><td>71.1%</td><td></td></tr><tr><td>CIFR</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$16.28</td><td>49.1</td><td>0.88x</td><td>58.1%</td><td></td></tr><tr><td>RIOT</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$14.80</td><td>46.9</td><td>0.77x</td><td>54.5%</td><td></td></tr><tr><td>SOUN</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$7.96</td><td>35.0</td><td>1.17x</td><td>29.4%</td><td></td></tr><tr><td>BTDR</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$11.99</td><td>44.9</td><td>1.07x</td><td>36.8%</td><td></td></tr><tr><td>HTFL</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$26.95</td><td>38.8</td><td>1.11x</td><td>25.9%</td><td></td></tr><tr><td>QUBT</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$8.54</td><td>38.0</td><td>0.79x</td><td>25.2%</td><td></td></tr><tr><td>NVTS</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$8.76</td><td>47.9</td><td>0.70x</td><td>55.1%</td><td></td></tr><tr><td>OSCR</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$13.60</td><td>41.3</td><td>1.40x</td><td>54.4%</td><td></td></tr><tr><td>SEZL</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$62.86</td><td>43.3</td><td>1.15x</td><td>36.9%</td><td></td></tr><tr><td>SYM</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$58.40</td><td>46.5</td><td>0.88x</td><td>55.6%</td><td></td></tr><tr><td>QBTS</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$19.64</td><td>38.5</td><td>0.77x</td><td>33.6%</td><td></td></tr><tr><td>WRD</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$7.55</td><td>39.4</td><td>0.94x</td><td>37.2%</td><td></td></tr><tr><td>CLSK</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$9.62</td><td>39.7</td><td>0.85x</td><td>27.3%</td><td></td></tr><tr><td>VNET</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$13.54</td><td><span style="color: #ef4444; font-weight: bold">71.9</span></td><td>2.11x</td><td>95.0%</td><td>rsi_overbought, volume_spike, above_ma50</td></tr><tr><td>BEAM</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$25.99</td><td>41.6</td><td>0.84x</td><td>30.0%</td><td></td></tr><tr><td>BLSH</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$31.88</td><td>43.8</td><td>1.43x</td><td>76.2%</td><td></td></tr><tr><td>CRCL</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$57.86</td><td>36.1</td><td>0.69x</td><td>38.5%</td><td></td></tr><tr><td>WVE</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$13.27</td><td>46.1</td><td>0.73x</td><td>33.8%</td><td></td></tr><tr><td>RCUS</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$21.36</td><td>47.4</td><td>0.64x</td><td>60.9%</td><td></td></tr><tr><td>CLS</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$295.68</td><td>47.6</td><td>0.81x</td><td>43.0%</td><td></td></tr><tr><td>WGS</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$91.44</td><td>36.8</td><td>0.80x</td><td>48.5%</td><td></td></tr><tr><td>LCID</td><td>Unknown</td><td><span class="badge badge-gray">NEUTRAL</span></td><td>0</td><td>$10.05</td><td>42.8</td><td>1.03x</td><td>27.2%</td><td></td></tr></tbody>
+</table>
+
+<hr>
+<h2>Section 2: AI Analysis</h2>
+<p class="description">BUY and WATCH stocks validated by Claude Sonnet with specific trade rules.</p>
+<p class="caption">Model: claude-sonnet-4-5-20250929 (BUY) + claude-haiku-4-5-20251001 (WATCH) | Analyzed: 2026-02-11 23:50 | 31 stocks reviewed</p>
+<div class="metrics-row"><div class="metric-box">
+    <div class="label">Total Reviewed</div>
+    <div class="value">31</div>
+</div><div class="metric-box">
+    <div class="label">Confirm</div>
+    <div class="value" style="color: #22c55e">0</div>
+</div><div class="metric-box">
+    <div class="label">Caution</div>
+    <div class="value" style="color: #eab308">30</div>
+</div><div class="metric-box">
+    <div class="label">Reject</div>
+    <div class="value" style="color: #ef4444">1</div>
+</div></div>
+<div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">HOOD</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 65/100 | $77.97</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> While RSI oversold (29.7) and massive volume spike (2.16x) suggest capitulation selling that could mark a bottom, the price remains in a severe downtrend - sitting 25% below recent highs and deeply beneath both MA20 and MA50. The 8.5% distance from 10-day low provides minimal cushion, and the dramatic selloff may have further to run before stabilizing. A 7% bounce from current levels would only reach $83.42, still far below key resistance levels.</p><p><strong>Buy Rule:</strong> Buy if price stabilizes above $75 for 2 consecutive days with RSI remaining below 35 and volume declining to under 1.5x average, confirming panic selling has exhausted</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">UPST</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 65/100 | $33.10</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> While RSI oversold (30.6) and extreme 4.74x volume spike near range low suggest capitulation selling, the price remains 21% below MA-20 and 27% below MA-50, indicating a strong downtrend with no technical support structure. The massive volume could signal either panic selling or institutional distribution. For a 1-2 week swing requiring +7% to $35.42, UPST needs to reverse a clear bearish trend without established support levels.</p><p><strong>Buy Rule:</strong> Buy if price stabilizes above $33.50 for two consecutive days AND RSI rises above 35 with decreasing volume, confirming exhaustion. Otherwise wait for price to reclaim MA-20 at $42 with improving momentum.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">ASTS</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 60/100 | $96.92</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> While price is near the 10-day range low with RSI at neutral 48.2, the stock shows concerning weakness with price 9.5% below MA20 and below-average volume (0.81x). The 25% drop from recent highs suggests strong downward momentum that hasn't stabilized. The gap between MA20 ($107.15) and current price creates significant resistance for reaching the +7% target of $103.70.</p><p><strong>Buy Rule:</strong> Buy if price holds above $94.50 for two consecutive days with volume exceeding 1.2x average and RSI stays above 45, confirming base formation before entry</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">PL</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 60/100 | $21.65</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> While price is near 10-day low and above MA50, the volume is concerningly weak at only 0.57x average, suggesting lack of buying conviction. The price is still 14.3% below MA20 ($25.20), indicating significant bearish momentum that hasn't reversed. The 21.84% distance from recent high suggests substantial downtrend pressure that may not have completed. Without volume confirmation, this could be catching a falling knife rather than buying a bounce.</p><p><strong>Buy Rule:</strong> Buy if price holds above $21.00 with RSI remaining above 42 AND volume exceeds 1.2x the 20-day average (16.8M+) for confirmation of buyer interest, OR wait for price to reclaim MA20 at $25.20 with volume support</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">IMNM</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 60/100 | $23.41</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> While the stock is near its 10-day low and above the MA50, the below-average volume (0.69x) during this pullback suggests weak conviction. The price is 6% below MA20 and sitting just 2.9% above the range low with no signs of reversal momentum (RSI at neutral 48.2). The risk of further downside testing $22.75 is elevated without volume confirmation of buying interest.</p><p><strong>Buy Rule:</strong> Buy if price holds above $22.75 and volume exceeds 2.0M with RSI climbing above 50, OR if price reclaims $24.00 on volume above 1.8M indicating MA20 reversal</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">IONQ</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 55/100 | $33.61</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> IONQ shows oversold RSI (34.3) and is near its 10-day low, which are promising entry signals, but volume is significantly below average (0.69x) and price sits 26.7% below the 10-day high with both 20-day and 50-day MAs well above current price, suggesting weak intermediate momentum. The stock needs confirmation through volume expansion and stabilization before it becomes a reliable swing candidate.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 45 while volume sustains above 20-day average (>20.8M shares) AND price holds above $34.50, indicating sustained buying interest and recovery momentum.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">FIGR</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 55/100 | $35.41</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> FIGR shows oversold RSI (31.9) near its 10-day low, which triggered the WATCH signal, but volume is below average (0.95x) and price is deeply underwater versus both moving averages (MA20: $55.52, MA50: $48.63). The stock needs to demonstrate either stabilization with confirmed buying pressure or a reversal pattern before becoming a reliable swing-trade candidate.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rebounds above 45 while price holds above $36.50 AND volume exceeds 1.2x the 20-day average on an up day, confirming the oversold bounce has institutional interest.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">RGTI</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 55/100 | $16.43</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> RGTI shows RSI oversold (34.8) and is trading near its 10-day low (23.7% into range), which are positive reversal signals. However, price is significantly below both MA20 ($20.70) and MA50 ($23.25), indicating weak intermediate momentum. Volume is flat at 1.01x average, lacking the conviction needed to confirm a bounce—a strong reversal typically requires elevated volume to validate the move.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI bounces above 45 while price reclaims MA20 ($20.70) on volume >1.5x average, confirming institutional buying pressure in the oversold bounce.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">HIMS</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 55/100 | $16.69</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> HIMS shows extreme oversold RSI (15.3) and is trading at the 10-day range low, which are technically bullish mean-reversion signals. However, the stock is significantly below both the 20-day and 50-day moving averages (45% and 48% respectively), suggesting sustained downward momentum rather than a temporary dip. Volume is only 1.11x average, insufficient to confirm a reversal at such depressed levels.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI climbs above 30 AND price closes above the 20-day MA ($26.76) on elevated volume (>1.5x average), confirming reversal intent rather than a dead-cat bounce.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">OPEN</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 55/100 | $4.76</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> OPEN shows RSI oversold (34.9) and is trading near its 10-day low (11.7% into range), which are promising for a reversal entry. However, the stock is significantly below both MA20 ($5.60) and MA50 ($6.21), suggesting downward momentum persists, and volume is below average (0.84x), weakening the conviction of a reversal. The +7% target from $4.76 ($5.09) still requires clearing MA20 resistance first.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI bounces above 45 AND price closes above MA20 ($5.60) on above-average volume (>51.6M shares), confirming reversal and providing a cleaner entry for the 1-2 week swing.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">STUB</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 55/100 | $9.45</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> STUB shows RSI oversold (31.4) near a 10-day low, which are positive setup indicators for mean reversion. However, the stock is 37% below its 10-day high and trading significantly below both MA20 and MA50, suggesting weak intermediate momentum. Volume is below average (0.96x), which weakens conviction in a potential bounce.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 40 AND price closes above MA20 ($13.06) on above-average volume (>3.4M shares), confirming both oversold recovery and resistance break within the 1-2 week window.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">FLNC</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 55/100 | $17.52</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> FLNC is extremely oversold (RSI 33.3) and near its 10-day low with elevated volume, which typically precedes reversals. However, the stock is trading 47.7% below its 10-day high and deeply below both MA20 and MA50, suggesting strong downtrend momentum that may continue before stabilizing. The setup has reversal potential but carries elevated downside risk before a swing-trade entry becomes prudent.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 45 AND price closes above MA20 ($25.83) with sustained volume above 1.3x average, confirming reversal momentum rather than false-bottom bounce.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">NAVN</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 55/100 | $10.66</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> NAVN shows RSI oversold (34.1) near recent lows, which is typically bullish setup, but critically lacks volume support (0.97x average) needed to confirm a reversal move. Price is deeply underwater against both MA20 ($12.82) and MA50 ($14.48), suggesting continued weakness; the stock needs volume confirmation and a break above the 10-day range high ($13.62) to justify swing entry.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI holds below 40 AND volume spikes above 1.5x average AND price closes above $11.50, signaling volume-backed reversal attempt toward the $13.62 range high.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">ZETA</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 55/100 | $16.01</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> ZETA shows an oversold RSI (32.8) near its 10-day low, which triggered the WATCH signal, but volume is weak (0.99x average) and both moving averages are significantly above price ($19.21 MA20, $19.66 MA50), suggesting downward momentum may persist. The stock needs bullish confirmation before qualifying as a BUY candidate.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 45 AND price closes above the 20-day MA ($19.21) on volume ratio exceeding 1.2x average, confirming a reversal from oversold conditions with institutional participation.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">NTSK</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 55/100 | $11.81</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> NTSK shows extreme oversold conditions (RSI 27.4) near its 10-day low, which attracted the WATCH signal, but volume is below average (0.93x) suggesting weak buying conviction. The stock is deeply underwater relative to both 20-day and 50-day moving averages, indicating a stronger downtrend that may not reverse within a 1-2 week swing window.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 35 AND volume ratio exceeds 1.2x on the same day AND price reclaims the $12.50 level, confirming reversal momentum with institutional participation.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">W</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 55/100 | $88.07</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> W is deeply oversold (RSI 30.9) near the 10-day low, which could attract bounces, but the stock is trading significantly below both 20 and 50-day MAs with no clear support signal yet. Volume is only marginally elevated (1.08x), suggesting weak conviction buying pressure, and a 1-2 week swing from this depressed state would need a +7% gain ($6.16 move to $94.23) with uncertain catalysts.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI bounces above 40 while price holds above $87.50 AND volume ratio exceeds 1.35x, confirming institutional accumulation at support rather than capitulation alone.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">HUT</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $53.22</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> HUT shows mixed signals with price below MA20 ($56.90) and volume well below average (0.68x), which weakens momentum for a near-term swing entry. However, RSI at 48.1 is neutral and price remains above MA50 support, suggesting the pullback may not be severe enough yet to set up an attractive risk-reward for a +7% target within 1-2 weeks.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI drops to 40-42 range while price holds above MA50 ($51.48) AND volume ratio recovers above 0.90x, signaling capitulation with support intact—this would provide a cleaner entry for a mean-reversion swing to MA20.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">LEU</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $210.16</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> LEU shows two positive signals (volume spike at 2.36x and price near 10-day low), but RSI at 36.3 indicates oversold conditions that could drive further decline before reversal. The stock is 38% below its 10-day high and trading below both MA20 and MA50, suggesting weak intermediate momentum. A bounce from these levels could target the $225-235 range (+7% to +12%), but confirmation is needed.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 40 while price holds above $208 (recent low support) AND volume remains elevated (>1.5x average), signaling stabilization and reversal intent rather than continued weakness.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">GRAL</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $100.40</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> GRAL shows mixed signals with price below MA20 ($102.19) and weak volume (0.58x average), which are headwinds for a swing-trade entry. While RSI is neutral at 50.1 and price remains above MA50, the low volume ratio suggests insufficient momentum to reliably reach the +7% target within 1-2 weeks. The stock needs stronger confirmation before becoming a buy candidate.</p><p><strong>Buy Rule:</strong> Becomes a buy if volume ratio rises to 1.2x+ AND RSI moves above 55 AND price reclaims above MA20 ($102.19), confirming renewed buying pressure into the swing window.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">RUN</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $19.16</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> RUN shows mixed signals with a neutral RSI (49.4) and price below MA20 despite being above MA50, suggesting weak momentum despite elevated volume. The stock is only 36.8% through its 10-day range and 11.58% below the recent high, indicating potential further downside before a meaningful bounce becomes probable for a swing trade.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 55 while price reclaims MA20 ($19.26) and volume ratio stays above 1.2x, confirming momentum shift needed for the +7% target within 1-2 weeks</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">ALAB</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $143.71</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> ALAB shows conflicting signals: strong volume spike (3.24x) and proximity to 10-day low (4.52%) are positive reversal indicators, but RSI at 42.4 lacks oversold confirmation (<30), and price remains significantly below both 20-day ($166.50) and 50-day ($164.10) moving averages, suggesting ongoing downtrend. The stock needs clearer reversal confirmation before reaching buy threshold.</p><p><strong>Buy Rule:</strong> Becomes a buy candidate if RSI drops to ≤30 (true oversold) while price holds above $137.50 (10-day low support), AND volume sustains above 2x average on the next 1-2 trading sessions showing accumulation.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">MP</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $60.58</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> MP shows mixed technicals: RSI at 48.1 is neutral with room to move, and price holding above MA50 is positive, but volume is critically weak at 0.40x average (only 4.1M shares vs 10.3M typical). The price pullback below MA20 combined with low conviction volume suggests the downtrend lacks capitulation, making a quick reversal to +7% unlikely within 1-2 weeks.</p><p><strong>Buy Rule:</strong> Becomes a buy candidate if volume surges above 8M shares (0.78x average minimum) while RSI stays 45-55 and price reclaims MA20 ($64.09), confirming institutional accumulation during the pullback.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">SEI</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $53.73</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> SEI is in a middle-ground position with price below MA20 despite being above MA50, suggesting momentum weakness. RSI at 52.7 is neutral without clear directional conviction, and the stock is already 10% below its 10-day high—limiting upside potential to reach the +7% auto-sell target within a 1-2 week swing window. Volume is moderately elevated but not exceptional.</p><p><strong>Buy Rule:</strong> Becomes a buy if price closes above MA20 ($53.85) with RSI crossing above 55 and volume sustains above 1.3x average, signaling renewed upside momentum toward the $57.50+ level needed for optimal risk-reward on a 1-2 week swing.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">RH</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $199.94</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> RH is in a weak pullback position with price 6.4% below MA20 ($212.20), suggesting downward momentum may persist. RSI at 47.4 is neutral-to-bearish and volume is below average (0.82x), indicating weak conviction. The stock needs to stabilize above MA20 with stronger volume to confirm a reversal before becoming a reliable buy candidate for a 1-2 week swing targeting +7%.</p><p><strong>Buy Rule:</strong> Becomes a buy if price closes above $212.20 (MA20) on above-average volume (>885k shares) with RSI rising above 50, confirming reversal. Watch for consolidation in the $208-215 range over next 2-3 days as a setup signal.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">LUNR</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $17.04</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> LUNR shows mixed signals with price below MA20 ($19.26) despite being above MA50, indicating weakness in the intermediate trend. RSI at 47.4 is neutral and volume is 25% below average, suggesting low conviction. The stock needs to reclaim MA20 and show volume confirmation before becoming a reliable buy candidate for a 1-2 week swing with a +7% target.</p><p><strong>Buy Rule:</strong> Becomes a buy if price closes above $19.26 (MA20) on volume >15M shares AND RSI rises above 55, confirming uptrend resumption and reducing pullback risk.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">HSAI</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $25.99</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> HSAI shows mixed momentum with RSI at 53.1 (neutral-to-bullish) and above MA50, but the price is below MA20 and only 8.4% away from the 10-day high, limiting upside room for a 7% target within 1-2 weeks. Volume support (1.41x avg) is moderate but not compelling; the stock needs to reclaim MA20 and gain momentum before becoming a confident buy signal.</p><p><strong>Buy Rule:</strong> Becomes a buy if price closes above MA20 ($26.11) with RSI breaking above 55 and volume sustaining above 1.5x average, confirming bullish reversal before the 10-day range high resistance.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">ALMS</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $25.63</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> ALMS is price below MA20 with elevated RSI at 60.7, showing momentum that hasn't cooled for optimal entry. Volume is significantly below average (0.63x), reducing conviction in the move. While positioned well above MA50 with room to the 10-day high (+9.4%), the lack of volume backing and overbought RSI suggest waiting for a pullback-confirm setup rather than chasing.</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI drops below 50 while price holds above MA50 ($17.62) and MA20 ($25.90), with volume returning to >1.5M shares (above 0.75x ratio) to confirm institutional support.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">TXG</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $19.15</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> TXG shows mixed signals with price trapped between MAs (below 20-day, above 50-day) and weak volume at 0.69x average, suggesting insufficient conviction. RSI at 47.2 is neutral territory with no momentum edge. The stock needs to either break above MA20 ($20.53) with volume support or establish clearer directional conviction before becoming a reliable swing-trade candidate.</p><p><strong>Buy Rule:</strong> Becomes a buy if price closes above MA20 ($20.53) on volume >1.8M shares AND RSI moves above 55, establishing an uptrend for the 1-2 week swing window.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">SBSW</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $17.56</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> SBSW shows mixed momentum with RSI at neutral 53.3 and weak volume (0.45x average), suggesting insufficient conviction for entry. While price holds above MA50, the pullback below MA20 and low volume ratio indicate the move lacks follow-through; accumulation would be needed to justify a BUY upgrade.</p><p><strong>Buy Rule:</strong> Becomes a buy if volume ratio exceeds 1.2x average AND price reclaims above $17.80 (MA20) with RSI staying 45-65, confirming renewed buyer interest without overextension.</p></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">BBAR</span> <span class="badge badge-yellow">CAUTION</span> <span class="text-muted">Score 35/100 | $18.16</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> BBAR shows mixed technicals with price holding above MA50 but struggling below MA20, and RSI at neutral 47 lacks conviction for immediate entry. More critically, volume is severely depressed at 0.32x the 20-day average, which raises liquidity concerns for executing a $10K position and hitting the +7% exit target within 1-2 weeks.</p><p><strong>Buy Rule:</strong> Becomes a buy candidate if volume surges above 0.8x the 20-day average AND RSI climbs above 55 while price reclaims MA20 ($18.82), signaling renewed momentum with sufficient liquidity for swing execution.</p></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">HYMC</span> <span class="badge badge-red">REJECT</span> <span class="text-muted">Score 60/100 | $35.93</span></div>
+    <div class="card-body"><p><strong>Reasoning:</strong> While price is near range low and above MA50, the extremely low volume (0.38x average) signals lack of conviction. Price is 12% below MA20 indicating a breakdown rather than a healthy pullback, and the 33% drop from recent highs suggests potential downtrend continuation. The weak volume during this decline is particularly concerning as it prevents reliable price discovery and exit liquidity.</p><p><strong>Buy Rule:</strong> Wait for volume confirmation above 1.2x average with price holding above $34 and RSI bouncing above 45, or wait for a retest of MA50 support at $28.25 with volume spike above 2x average</p></div>
+</div>
+
+
+    <div class="footer">
+        Paper Trader — Static export generated 2026-02-13 21:57
+    </div>
+</div>
+</body>
+</html>

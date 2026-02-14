@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morning Briefing (31) — Paper Trader</title>
+    <style>
+:root {
+    --bg: #0e1117;
+    --surface: #1a1d23;
+    --surface-hover: #262730;
+    --border: #333640;
+    --text: #fafafa;
+    --text-muted: #9ca3af;
+    --green: #22c55e;
+    --yellow: #eab308;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --gray: #6b7280;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 32px;
+    margin-bottom: 12px;
+}
+
+h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+p, .description {
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+}
+
+.metrics-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.metric-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 24px;
+    min-width: 140px;
+    flex: 1;
+}
+
+.metric-box .label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.metric-box .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+th {
+    background: var(--surface);
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+}
+
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+tr:hover { background: var(--surface-hover); }
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.card-header .symbol {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.card-body p {
+    margin-bottom: 8px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-green { background: rgba(34,197,94,0.15); color: var(--green); }
+.badge-yellow { background: rgba(234,179,8,0.15); color: var(--yellow); }
+.badge-red { background: rgba(239,68,68,0.15); color: var(--red); }
+.badge-gray { background: rgba(156,163,175,0.15); color: var(--gray); }
+.badge-blue { background: rgba(59,130,246,0.15); color: var(--blue); }
+
+.text-green { color: var(--green); }
+.text-yellow { color: var(--yellow); }
+.text-red { color: var(--red); }
+.text-muted { color: var(--text-muted); }
+
+.progress-bar {
+    background: var(--surface-hover);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+    margin: 8px 0;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.caption {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.concerns-list {
+    margin: 8px 0 0 16px;
+}
+
+.concerns-list li {
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.status-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+</style>
+</head>
+<body>
+<style>
+.nav {
+    background: #1a1d23;
+    border-bottom: 1px solid #333640;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.nav-brand {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fafafa;
+    margin-right: 24px;
+    padding: 12px 0;
+    text-decoration: none;
+}
+
+.nav a {
+    color: #9ca3af;
+    text-decoration: none;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.nav a:hover {
+    color: #fafafa;
+    text-decoration: none;
+}
+
+.nav a.active {
+    color: #fafafa;
+    border-bottom-color: #3b82f6;
+}
+</style>
+<nav class="nav">
+    <a class="nav-brand" href="index.html">$ Paper Trader</a>
+    <a href="index.html">Home</a><a href="watchlist.html">Watchlist</a><a href="signals.html">Signals</a><a href="sentinel.html">Sentinel</a><a href="briefing.html" class="active">Briefing</a><a href="trading.html">Trading</a>
+</nav>
+<div class="container">
+    <h1>Morning Briefing (31)</h1>
+    <p class="description">Combined view of signals, AI validation, and news analysis. Shows which stocks to monitor today and under what conditions to buy them.</p>
+    <hr>
+    
+<div class="metrics-row"><div class="metric-box">
+    <div class="label">Total</div>
+    <div class="value">31</div>
+</div><div class="metric-box">
+    <div class="label">Trade Ready</div>
+    <div class="value" style="color: #22c55e">0</div>
+</div><div class="metric-box">
+    <div class="label">Caution</div>
+    <div class="value" style="color: #eab308">2</div>
+</div><div class="metric-box">
+    <div class="label">On Hold</div>
+    <div class="value" style="color: #ef4444">11</div>
+</div><div class="metric-box">
+    <div class="label">Watch</div>
+    <div class="value">18</div>
+</div></div>
+<p class="caption">Signals: 2026-02-11 23:49 | LLM: 2026-02-11 23:50 | Sentinel: 2026-02-11 23:52</p>
+<div class="card">
+    <div class="card-body">
+        <p><strong>Composite status:</strong></p>
+        <p><span class="text-green">Trade Ready</span> — All checks passed. Monitor the buy rule — execute only when the condition is met.</p>
+        <p><span class="text-yellow">Caution</span> — Mixed signals or minor news concerns. Buy rule is active but proceed carefully.</p>
+        <p><span class="text-red">On Hold</span> — Material news flag or rejected by Claude. Do not trade until resolved.</p>
+        <p class="text-muted">Watch — Not yet a buy candidate. Monitor for changes.</p>
+    </div>
+</div>
+<hr>
+<div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">PL</span> <span class="badge badge-yellow">Caution</span> <span class="text-muted">BUY (60/100) | $21.65</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>BUY</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> near_range_low, above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Buy if price holds above $21.00 with RSI remaining above 42 AND volume exceeds 1.2x the 20-day average (16.8M+) for confirmation of buyer interest, OR wait for price to reclaim MA20 at $25.20 with volume support</p><p><strong>LLM Analysis:</strong> While price is near 10-day low and above MA50, the volume is concerningly weak at only 0.57x average, suggesting lack of buying conviction. The price is still 14.3% below MA20 ($25.20), indicating significant bearish momentum that hasn't reversed. The 21.84% distance from recent high suggests substantial downtrend pressure that may not have completed. Without volume confirmation, this could be catching a falling knife rather than buying a bounce.</p><p><strong>News Check:</strong> Director insider selling of $1.3M in shares raises liquidity/confidence concerns, though offset by positive government contracts (Sweden, Slovenia). Stock has surged 273% YTY, creating valuation risk if growth expectations reset.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Insider selling: Director Kristen Robinson sold 47,835 shares (~$1.3M) in January, first open-market transaction, timing coincides with stock strength</li><li>Valuation risk: 273% YTY gain suggests elevated multiples vulnerable to growth disappointment or profit-taking</li><li>High S&M spend impacting near-term margins per Jan 30 report</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #eab308">
+    <div class="card-header"><span class="symbol">IMNM</span> <span class="badge badge-yellow">Caution</span> <span class="text-muted">BUY (60/100) | $23.41</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>BUY</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> near_range_low, above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Buy if price holds above $22.75 and volume exceeds 2.0M with RSI climbing above 50, OR if price reclaims $24.00 on volume above 1.8M indicating MA20 reversal</p><p><strong>LLM Analysis:</strong> While the stock is near its 10-day low and above the MA50, the below-average volume (0.69x) during this pullback suggests weak conviction. The price is 6% below MA20 and sitting just 2.9% above the range low with no signs of reversal momentum (RSI at neutral 48.2). The risk of further downside testing $22.75 is elevated without volume confirmation of buying interest.</p><p><strong>News Check:</strong> While Phase 3 success is genuinely positive, the stock has already surged 45-151% in recent months, creating significant momentum-driven valuation risk. Jim Cramer's cautionary stance on losses and speculative nature, combined with typical biotech binary risks around FDA approval timing, warrant caution on entry at current elevated levels.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Stock already up 45.82% in past 3 months and 131.74% YTD—substantial prior momentum limits upside in short-term swing window</li><li>Company remains unprofitable with high cash burn despite Phase 3 success, per Cramer commentary</li><li>FDA approval not guaranteed; still dependent on Q2 2026 NDA filing and regulatory decision—binary risk event</li><li>Valuation signals conflicting (P/B vs DCF per headline)—suggests potential overextension at current $22.85 price</li><li>Heavy speculative positioning post-catalyst increases risk of profit-taking pullback in 1-2 week horizon</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">HOOD</span> <span class="badge badge-red">On Hold</span> <span class="text-muted">BUY (65/100) | $77.97</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>BUY</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>flag</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low, volume_spike</p><p><strong>Buy Rule:</strong> Buy if price stabilizes above $75 for 2 consecutive days with RSI remaining below 35 and volume declining to under 1.5x average, confirming panic selling has exhausted</p><p><strong>LLM Analysis:</strong> While RSI oversold (29.7) and massive volume spike (2.16x) suggest capitulation selling that could mark a bottom, the price remains in a severe downtrend - sitting 25% below recent highs and deeply beneath both MA20 and MA50. The 8.5% distance from 10-day low provides minimal cushion, and the dramatic selloff may have further to run before stabilizing. A 7% bounce from current levels would only reach $83.42, still far below key resistance levels.</p><p><strong>News Check:</strong> HOOD reported Q4 revenue miss versus analyst expectations, causing the stock to decline as much as 13% intraday on Feb 11—its largest single-day drop since April 2025. This is a material negative catalyst for a 1-2 week swing trade window.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Q4 2025 revenue missed analyst expectations</li><li>Stock down 9-13% intraday following earnings miss</li><li>Largest intraday decline since April 2025 signals strong negative market reaction</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">UPST</span> <span class="badge badge-red">On Hold</span> <span class="text-muted">BUY (65/100) | $33.10</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>BUY</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>flag</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low, volume_spike</p><p><strong>Buy Rule:</strong> Buy if price stabilizes above $33.50 for two consecutive days AND RSI rises above 35 with decreasing volume, confirming exhaustion. Otherwise wait for price to reclaim MA-20 at $42 with improving momentum.</p><p><strong>LLM Analysis:</strong> While RSI oversold (30.6) and extreme 4.74x volume spike near range low suggest capitulation selling, the price remains 21% below MA-20 and 27% below MA-50, indicating a strong downtrend with no technical support structure. The massive volume could signal either panic selling or institutional distribution. For a 1-2 week swing requiring +7% to $35.42, UPST needs to reverse a clear bearish trend without established support levels.</p><p><strong>News Check:</strong> CEO stepping down effective May 1 creates near-term leadership uncertainty despite beating earnings. Stock already down 13%+ on the news, indicating market is pricing in significant concern about the transition.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>CEO Dave Girouard stepping down May 1 with CTO Paul Gu taking over - leadership transition risk</li><li>Stock already down 13%+ on announcement day despite beating revenue and guidance estimates - suggests market uncertainty overrides positive fundamentals</li><li>Margin challenges noted alongside leadership transition creates execution risk during critical leadership period</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">ASTS</span> <span class="badge badge-red">On Hold</span> <span class="text-muted">BUY (60/100) | $96.92</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>BUY</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>flag</strong></span></div><p><strong>Rules Triggered:</strong> near_range_low, above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Buy if price holds above $94.50 for two consecutive days with volume exceeding 1.2x average and RSI stays above 45, confirming base formation before entry</p><p><strong>LLM Analysis:</strong> While price is near the 10-day range low with RSI at neutral 48.2, the stock shows concerning weakness with price 9.5% below MA20 and below-average volume (0.81x). The 25% drop from recent highs suggests strong downward momentum that hasn't stabilized. The gap between MA20 ($107.15) and current price creates significant resistance for reaching the +7% target of $103.70.</p><p><strong>News Check:</strong> Multiple material negatives converge: analyst concerns about declining estimate revisions and rising costs, significant insider selling ($9.7M), and competitive pressures from AT&T/Amazon partnership. Stock volatility and -5.73% recent decline suggest headwinds ahead.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Falling 2025-26 earnings estimates and rising operational costs creating valuation pressure</li><li>Insider selling of $9.7M suggests insiders may lack conviction at current levels</li><li>AT&T/Amazon satellite partnership signals competitive threat to ASTS market opportunity</li><li>23.6% decline over 7 days indicates momentum shift despite BlueBird 6 deployment success</li><li>Stock already up 346% over 5 years - significant gains already priced in</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">HYMC</span> <span class="badge badge-red">On Hold</span> <span class="text-muted">BUY (60/100) | $35.93</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>BUY</strong></span><span>LLM: <strong>reject</strong></span><span>Sentinel: <strong>flag</strong></span></div><p><strong>Rules Triggered:</strong> near_range_low, above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Wait for volume confirmation above 1.2x average with price holding above $34 and RSI bouncing above 45, or wait for a retest of MA50 support at $28.25 with volume spike above 2x average</p><p><strong>LLM Analysis:</strong> While price is near range low and above MA50, the extremely low volume (0.38x average) signals lack of conviction. Price is 12% below MA20 indicating a breakdown rather than a healthy pullback, and the 33% drop from recent highs suggests potential downtrend continuation. The weak volume during this decline is particularly concerning as it prevents reliable price discovery and exit liquidity.</p><p><strong>News Check:</strong> Extreme volatility (24% down past week after 442% gain in 90 days), overvaluation concerns, and pending equity dilution via $163M shelf offering create material short-term risk. Stock is highly commodity-dependent with sharp reversals tied to precious metals prices.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Extreme volatility: 24% decline past week after massive run-up; price swings of 11-19% in single days</li><li>Valuation risk: Morningstar rates HYMC 67% overvalued despite technical momentum</li><li>Equity dilution: $163.24M shelf registration filed for 4.7M shares; dilution pressure when exercised</li><li>Commodity price dependency: Stock moves 11-19% daily based on gold/silver price fluctuations; high beta risk</li><li>Governance concern: Reduction of quorum for shareholder meetings raises red flags for minority investors</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">IONQ</span> <span class="badge badge-red">On Hold</span> <span class="text-muted">WATCH (55/100) | $33.61</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>flag</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 45 while volume sustains above 20-day average (>20.8M shares) AND price holds above $34.50, indicating sustained buying interest and recovery momentum.</p><p><strong>LLM Analysis:</strong> IONQ shows oversold RSI (34.3) and is near its 10-day low, which are promising entry signals, but volume is significantly below average (0.69x) and price sits 26.7% below the 10-day high with both 20-day and 50-day MAs well above current price, suggesting weak intermediate momentum. The stock needs confirmation through volume expansion and stabilization before it becomes a reliable swing candidate.</p><p><strong>News Check:</strong> Multiple material negatives converge: short-seller allegations of misleading practices and Pentagon revenue reliance, dilutive equity raises funding unprofitable operations, and sector-wide valuation concerns (57x sales). Recent 4.5-8.5% daily drops signal negative momentum.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Short-seller report (Wolfpack Research) alleging misleading Pentagon contract revenues and insider selling</li><li>Dilutive share issuances to fund acquisitions while company remains unprofitable</li><li>Terminated Pentagon contracts reportedly drove majority of recent revenues</li><li>Extreme valuation (57x sales) with no clear path to profitability</li><li>Negative technical momentum with 4.5-8.5% single-day declines and 60% drawdown from highs</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">RGTI</span> <span class="badge badge-red">On Hold</span> <span class="text-muted">WATCH (55/100) | $16.43</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>flag</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI bounces above 45 while price reclaims MA20 ($20.70) on volume >1.5x average, confirming institutional buying pressure in the oversold bounce.</p><p><strong>LLM Analysis:</strong> RGTI shows RSI oversold (34.8) and is trading near its 10-day low (23.7% into range), which are positive reversal signals. However, price is significantly below both MA20 ($20.70) and MA50 ($23.25), indicating weak intermediate momentum. Volume is flat at 1.01x average, lacking the conviction needed to confirm a bounce—a strong reversal typically requires elevated volume to validate the move.</p><p><strong>News Check:</strong> RGTI has experienced a 23% YTD decline following a roadmap reset and soft results, with a delayed flagship product launch (Cepheus-1-108Q) signaling execution challenges. Competitive pressures from IonQ's acquisition strategy add to near-term uncertainty.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Roadmap reset and delayed Cepheus-1-108Q product launch indicates technical/execution risks</li><li>23% YTD decline and recent negative price moves suggest momentum weakness</li><li>Increased competitive pressure from IonQ's hardware manufacturing acquisition</li><li>Company described as loss-making with soft recent results</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">HIMS</span> <span class="badge badge-red">On Hold</span> <span class="text-muted">WATCH (55/100) | $16.69</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>flag</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI climbs above 30 AND price closes above the 20-day MA ($26.76) on elevated volume (>1.5x average), confirming reversal intent rather than a dead-cat bounce.</p><p><strong>LLM Analysis:</strong> HIMS shows extreme oversold RSI (15.3) and is trading at the 10-day range low, which are technically bullish mean-reversion signals. However, the stock is significantly below both the 20-day and 50-day moving averages (45% and 48% respectively), suggesting sustained downward momentum rather than a temporary dip. Volume is only 1.11x average, insufficient to confirm a reversal at such depressed levels.</p><p><strong>News Check:</strong> HIMS faces material legal and regulatory headwinds with an active patent lawsuit from Novo Nordisk, FDA regulatory pressure forcing product withdrawal, and analyst downside warnings. Stock has already dropped 55.8% in 3 months, signaling significant near-term selling pressure.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Active patent lawsuit filed by Novo Nordisk over compounded semaglutide with 'very significant' damages claim</li><li>FDA regulatory crackdown forcing HIMS to halt compounded semaglutide pill offering days after launch</li><li>Bank of America analysts citing 'significant further downside' in HIMS stock</li><li>Core competitive advantage in GLP-1 market being eroded by legal/regulatory actions</li><li>Stock momentum deeply negative with 55.8% drop over 3 months preceding further losses</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">FLNC</span> <span class="badge badge-red">On Hold</span> <span class="text-muted">WATCH (55/100) | $17.52</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>flag</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 45 AND price closes above MA20 ($25.83) with sustained volume above 1.3x average, confirming reversal momentum rather than false-bottom bounce.</p><p><strong>LLM Analysis:</strong> FLNC is extremely oversold (RSI 33.3) and near its 10-day low with elevated volume, which typically precedes reversals. However, the stock is trading 47.7% below its 10-day high and deeply below both MA20 and MA50, suggesting strong downtrend momentum that may continue before stabilizing. The setup has reversal potential but carries elevated downside risk before a swing-trade entry becomes prudent.</p><p><strong>News Check:</strong> FLNC experienced a severe 35-36% stock price decline following Q1 earnings that missed expectations with widened losses and margin pressures. Despite reaffirmed guidance and record backlog, the market's sharp negative reaction and ongoing profitability concerns create material risk for a 1-2 week swing trade.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Q1 revenue and GAAP EPS missed Wall Street expectations with significant negative market reaction</li><li>Net loss widened to $45.07M in Q1 2026 vs prior year, indicating deteriorating profitability</li><li>Stock down 35-36% post-earnings with investors spooked by higher losses</li><li>Discrete project cost overruns cited by management suggest execution risk despite backlog strength</li><li>Margin pressure and seasonality headwinds create near-term profitability headwinds</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">NTSK</span> <span class="badge badge-red">On Hold</span> <span class="text-muted">WATCH (55/100) | $11.81</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>flag</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 35 AND volume ratio exceeds 1.2x on the same day AND price reclaims the $12.50 level, confirming reversal momentum with institutional participation.</p><p><strong>LLM Analysis:</strong> NTSK shows extreme oversold conditions (RSI 27.4) near its 10-day low, which attracted the WATCH signal, but volume is below average (0.93x) suggesting weak buying conviction. The stock is deeply underwater relative to both 20-day and 50-day moving averages, indicating a stronger downtrend that may not reverse within a 1-2 week swing window.</p><p><strong>News Check:</strong> NTSK has experienced a steep 27.8% decline over 30 days and 28.9% YTD decline, with multiple analyst price target cuts (RBC from $27 to $23, KeyBanc from $28 to $24). CFO insider selling of $856K adds conviction to downward momentum and suggests management concern about valuation.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Significant insider selling: CFO sold $856K in stock in January</li><li>Multiple analyst price target cuts despite positive earnings (RBC and KeyBanc both lowered targets)</li><li>Sharp recent decline: 19.1% drop in past 7 days, 27.8% in past 30 days</li><li>Valuation reset from IPO enthusiasm with stock trading below IPO price</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">HUT</span> <span class="badge badge-red">On Hold</span> <span class="text-muted">WATCH (35/100) | $53.22</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>flag</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI drops to 40-42 range while price holds above MA50 ($51.48) AND volume ratio recovers above 0.90x, signaling capitulation with support intact—this would provide a cleaner entry for a mean-reversion swing to MA20.</p><p><strong>LLM Analysis:</strong> HUT shows mixed signals with price below MA20 ($56.90) and volume well below average (0.68x), which weakens momentum for a near-term swing entry. However, RSI at 48.1 is neutral and price remains above MA50 support, suggesting the pullback may not be severe enough yet to set up an attractive risk-reward for a +7% target within 1-2 weeks.</p><p><strong>News Check:</strong> HUT experienced a 17.9% single-day drop on Feb 6 driven by sector-wide Bitcoin weakness and Treasury concerns. The stock faces material near-term headwinds from crypto market volatility and conflicting strategic shifts that could pressure sentiment in the 1-2 week swing window.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>17.9% single-day decline on Feb 6 due to Bitcoin price collapse and Treasury Department uncertainty regarding crypto support</li><li>Sector-wide Bitcoin mining/crypto selloff affecting comparable stocks (MARA, RIOT down 7-14%)</li><li>Strategic pivot from crypto mining to AI data centers creates execution risk and potential investor confusion</li><li>Local environmental and community concerns over 500MW NY data center proposal could create permitting/regulatory delays</li><li>Bitcoin volatility directly correlates to HUT price movement; near-term crypto sentiment remains fragile</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #ef4444">
+    <div class="card-header"><span class="symbol">ALAB</span> <span class="badge badge-red">On Hold</span> <span class="text-muted">WATCH (35/100) | $143.71</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>flag</strong></span></div><p><strong>Rules Triggered:</strong> near_range_low, volume_spike</p><p><strong>Buy Rule:</strong> Becomes a buy candidate if RSI drops to ≤30 (true oversold) while price holds above $137.50 (10-day low support), AND volume sustains above 2x average on the next 1-2 trading sessions showing accumulation.</p><p><strong>LLM Analysis:</strong> ALAB shows conflicting signals: strong volume spike (3.24x) and proximity to 10-day low (4.52%) are positive reversal indicators, but RSI at 42.4 lacks oversold confirmation (<30), and price remains significantly below both 20-day ($166.50) and 50-day ($164.10) moving averages, suggesting ongoing downtrend. The stock needs clearer reversal confirmation before reaching buy threshold.</p><p><strong>News Check:</strong> ALAB reported strong Q4 earnings and revenue beats, but stock is plummeting due to margin concerns and dilution from new Amazon warrant issuance. Material negative catalysts on earnings day create significant near-term downside risk for a 1-2 week swing trade.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Earnings day margin concerns sparked investor selling despite beating estimates</li><li>Company issued new warrants for Amazon, creating shareholder dilution</li><li>Stock plunging below key support levels despite strong Q4 fundamentals indicates broken momentum</li><li>Stock has surged 109% YoY and 26.4% in past week, suggesting profit-taking and valuation concerns</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">FIGR</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (55/100) | $35.41</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rebounds above 45 while price holds above $36.50 AND volume exceeds 1.2x the 20-day average on an up day, confirming the oversold bounce has institutional interest.</p><p><strong>LLM Analysis:</strong> FIGR shows oversold RSI (31.9) near its 10-day low, which triggered the WATCH signal, but volume is below average (0.95x) and price is deeply underwater versus both moving averages (MA20: $55.52, MA50: $48.63). The stock needs to demonstrate either stabilization with confirmed buying pressure or a reversal pattern before becoming a reliable swing-trade candidate.</p><p><strong>News Check:</strong> FIGR shows significant recent price volatility with a 27.4% decline over 7 days and 24.5% over 30 days, indicating potential momentum reversal or sector headwinds. While the company has positive catalysts (blockchain partnerships, analyst mentions), the sharp pullback and elevated valuation (P/E of 228.86) present execution risk for a 1-2 week swing trade.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Sharp recent decline: -27.4% over past 7 days, -24.5% over past 30 days suggests potential momentum loss</li><li>Extremely elevated valuation with trailing P/E of 228.86, leaving limited room for positive surprise</li><li>Stock appears overextended after 43% gain in prior month, now correcting sharply</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">OPEN</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (55/100) | $4.76</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI bounces above 45 AND price closes above MA20 ($5.60) on above-average volume (>51.6M shares), confirming reversal and providing a cleaner entry for the 1-2 week swing.</p><p><strong>LLM Analysis:</strong> OPEN shows RSI oversold (34.9) and is trading near its 10-day low (11.7% into range), which are promising for a reversal entry. However, the stock is significantly below both MA20 ($5.60) and MA50 ($6.21), suggesting downward momentum persists, and volume is below average (0.84x), weakening the conviction of a reversal. The +7% target from $4.76 ($5.09) still requires clearing MA20 resistance first.</p><p><strong>News Check:</strong> OPEN shows mixed signals with strong recent momentum (260% YTD, 45% in 90 days) but faces execution risk from major strategic pivot under new CEO and significant operational uncertainty. Recent 12% January drop and questions about model sustainability warrant caution for short-term traders.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>New CEO leadership transition with major operational restructuring increases execution risk in near term</li><li>Shift from asset-heavy home flipping to AI-driven asset-light model is unproven at scale with sustainability questions</li><li>Stock experienced 12% decline in January despite positive headlines, signaling underlying investor skepticism</li><li>Bearish thesis circulation and mixed options sentiment suggest divergent investor views on valuation</li><li>High volatility (IV30 at 92.57) and recent sharp pullback after strong run indicate potential mean reversion risk</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">STUB</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (55/100) | $9.45</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>clear</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 40 AND price closes above MA20 ($13.06) on above-average volume (>3.4M shares), confirming both oversold recovery and resistance break within the 1-2 week window.</p><p><strong>LLM Analysis:</strong> STUB shows RSI oversold (31.4) near a 10-day low, which are positive setup indicators for mean reversion. However, the stock is 37% below its 10-day high and trading significantly below both MA20 and MA50, suggesting weak intermediate momentum. Volume is below average (0.96x), which weakens conviction in a potential bounce.</p><p><strong>News Check:</strong> All headlines are generic, positive articles highlighting STUB's high insider ownership and growth potential. No material negatives detected—no earnings misses, downgrades, regulatory issues, or insider selling.</p></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">NAVN</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (55/100) | $10.66</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI holds below 40 AND volume spikes above 1.5x average AND price closes above $11.50, signaling volume-backed reversal attempt toward the $13.62 range high.</p><p><strong>LLM Analysis:</strong> NAVN shows RSI oversold (34.1) near recent lows, which is typically bullish setup, but critically lacks volume support (0.97x average) needed to confirm a reversal move. Price is deeply underwater against both MA20 ($12.82) and MA50 ($14.48), suggesting continued weakness; the stock needs volume confirmation and a break above the 10-day range high ($13.62) to justify swing entry.</p><p><strong>News Check:</strong> NAVN has experienced significant recent weakness (37% decline over 30 days, 33% YTD decline) with a Goldman Sachs price target cut from $30 to $22 on Jan 28. While insider buying and positive business developments (Booking.com partnership, Emirates NDC integration) are constructive, the sharp valuation compression and analyst downgrade suggest caution for near-term swing trading.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Goldman Sachs price target cut from $30 to $22 (Jan 28) while maintaining Buy suggests analyst concern about near-term valuation</li><li>37% stock decline over past 30 days indicates strong negative momentum despite positive business news</li><li>Stock trading significantly below lowest Wall Street price target of $20, suggesting potential for further weakness before recovery</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">ZETA</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (55/100) | $16.01</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 45 AND price closes above the 20-day MA ($19.21) on volume ratio exceeding 1.2x average, confirming a reversal from oversold conditions with institutional participation.</p><p><strong>LLM Analysis:</strong> ZETA shows an oversold RSI (32.8) near its 10-day low, which triggered the WATCH signal, but volume is weak (0.99x average) and both moving averages are significantly above price ($19.21 MA20, $19.66 MA50), suggesting downward momentum may persist. The stock needs bullish confirmation before qualifying as a BUY candidate.</p><p><strong>News Check:</strong> ZETA has experienced significant recent weakness (34% down in 30 days, 11.4% single-day decline) driven by sector-wide AI disruption concerns rather than company-specific negatives. While fundamentals appear solid (17 consecutive beat-and-raise quarters, strong margins, Athena momentum), the short-term momentum is fading and sector sentiment is fragile.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Sharp 30-day decline of 34% suggests broken short-term momentum despite positive fundamentals</li><li>Broad AI sector sell-off creating ongoing volatility risk with 'AI replacement' narrative at fever pitch</li><li>6.76% single-day decline and negative returns over multiple timeframes indicate weakness persists</li><li>Sector-wide headwinds may continue to pressure stock regardless of company-specific positive developments</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">W</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (55/100) | $88.07</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> rsi_oversold, near_range_low</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI bounces above 40 while price holds above $87.50 AND volume ratio exceeds 1.35x, confirming institutional accumulation at support rather than capitulation alone.</p><p><strong>LLM Analysis:</strong> W is deeply oversold (RSI 30.9) near the 10-day low, which could attract bounces, but the stock is trading significantly below both 20 and 50-day MAs with no clear support signal yet. Volume is only marginally elevated (1.08x), suggesting weak conviction buying pressure, and a 1-2 week swing from this depressed state would need a +7% gain ($6.16 move to $94.23) with uncertain catalysts.</p><p><strong>News Check:</strong> W shows positive partnership momentum with Affirm expansion, but recent price action reveals sharp pullbacks (-17.8% over 7 days, -19.4% over 30 days) that suggest weakening short-term momentum despite strong long-term gains. Valuation uncertainty and mixed near-term sentiment pose swing-trade timing risks.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Sharp recent price declines (17.8% over 7 days, 19.4% over 30 days) indicate deteriorating short-term momentum</li><li>Mixed sentiment on valuation at current levels ($88-$103 range) with analysts questioning opportunity vs. risk</li><li>Recent 1-day and weekly declines suggest loss of upside momentum despite positive partnership news</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">LEU</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $210.16</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> near_range_low, volume_spike</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 40 while price holds above $208 (recent low support) AND volume remains elevated (>1.5x average), signaling stabilization and reversal intent rather than continued weakness.</p><p><strong>LLM Analysis:</strong> LEU shows two positive signals (volume spike at 2.36x and price near 10-day low), but RSI at 36.3 indicates oversold conditions that could drive further decline before reversal. The stock is 38% below its 10-day high and trading below both MA20 and MA50, suggesting weak intermediate momentum. A bounce from these levels could target the $225-235 range (+7% to +12%), but confirmation is needed.</p><p><strong>News Check:</strong> LEU posted a significant earnings miss (-44.52% EPS surprise) and has experienced sharp recent declines (16.4% in 7 days, 32% in 30 days), though a $900M HALEU contract award and positive 2026 guidance provide some offset. The stock is volatile and may face near-term headwinds from the earnings miss despite longer-term positives.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Q4 2025 EPS miss of 44.52% despite revenue beat</li><li>Sharp 16.4% pullback over past 7 days and 32% over 30 days suggests momentum reversal</li><li>Significant drop in uranium revenue noted in earnings coverage</li><li>Stock weakness despite $900M contract award indicates investor skepticism on near-term execution</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">GRAL</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $100.40</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy if volume ratio rises to 1.2x+ AND RSI moves above 55 AND price reclaims above MA20 ($102.19), confirming renewed buying pressure into the swing window.</p><p><strong>LLM Analysis:</strong> GRAL shows mixed signals with price below MA20 ($102.19) and weak volume (0.58x average), which are headwinds for a swing-trade entry. While RSI is neutral at 50.1 and price remains above MA50, the low volume ratio suggests insufficient momentum to reliably reach the +7% target within 1-2 weeks. The stock needs stronger confirmation before becoming a buy candidate.</p><p><strong>News Check:</strong> GRAL has experienced a massive 186% one-year surge and shows recent 7-day/30-day declines of 6.7% and 9.4%, suggesting momentum loss and potential overvaluation after the rally. While fundamentals appear solid with revenue growth and partnerships, the sharp recent pullback combined with stretched valuation warrants caution for short-term swing trades.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Stock down 6.7% last 7 days and 9.4% last 30 days despite positive catalysts, indicating momentum reversal</li><li>Massive 186% one-year gain creates elevated risk of profit-taking and mean reversion on short timeframe</li><li>Valuation stretched after 300%+ gains in 2025; analyst price targets ($110-$115) only 17-22% above current $94 level, limiting upside</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">RUN</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $19.16</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>clear</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI rises above 55 while price reclaims MA20 ($19.26) and volume ratio stays above 1.2x, confirming momentum shift needed for the +7% target within 1-2 weeks</p><p><strong>LLM Analysis:</strong> RUN shows mixed signals with a neutral RSI (49.4) and price below MA20 despite being above MA50, suggesting weak momentum despite elevated volume. The stock is only 36.8% through its 10-day range and 11.58% below the recent high, indicating potential further downside before a meaningful bounce becomes probable for a swing trade.</p><p><strong>News Check:</strong> No material negatives identified. Headlines are predominantly positive, highlighting strong fundamentals (430% customer base expansion, distributed power plant growth), technical strength (golden cross, moving average breakouts), and recent momentum (12% rally). Competitor strength is noted but doesn't constitute a RUN-specific negative.</p></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">MP</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $60.58</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy candidate if volume surges above 8M shares (0.78x average minimum) while RSI stays 45-55 and price reclaims MA20 ($64.09), confirming institutional accumulation during the pullback.</p><p><strong>LLM Analysis:</strong> MP shows mixed technicals: RSI at 48.1 is neutral with room to move, and price holding above MA50 is positive, but volume is critically weak at 0.40x average (only 4.1M shares vs 10.3M typical). The price pullback below MA20 combined with low conviction volume suggests the downtrend lacks capitulation, making a quick reversal to +7% unlikely within 1-2 weeks.</p><p><strong>News Check:</strong> MP has strong fundamental catalysts (DoD investment, 10-year offtake, Project Vault) and insider buying support, but recent volatility around government policy signals and valuation concerns after a 224% 2025 rally suggest near-term choppiness. Stock tanked on Feb 4 when officials discussed critical minerals policy, indicating sentiment sensitivity.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Sector-wide volatility tied to policy announcements (Trump administration signals on price controls and critical minerals causing sharp daily swings)</li><li>Valuation stretched after 224% 2025 rally; Feb 6 article questions if current price is justified</li><li>Policy-dependent upside creates headline-driven volatility risk for 1-2 week swing trades</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">SEI</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $53.73</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy if price closes above MA20 ($53.85) with RSI crossing above 55 and volume sustains above 1.3x average, signaling renewed upside momentum toward the $57.50+ level needed for optimal risk-reward on a 1-2 week swing.</p><p><strong>LLM Analysis:</strong> SEI is in a middle-ground position with price below MA20 despite being above MA50, suggesting momentum weakness. RSI at 52.7 is neutral without clear directional conviction, and the stock is already 10% below its 10-day high—limiting upside potential to reach the +7% auto-sell target within a 1-2 week swing window. Volume is moderately elevated but not exceptional.</p><p><strong>News Check:</strong> SEI shows strong bullish momentum with major AI data center contracts and analyst upgrades, but the stock has already rallied 53% YTD with a high trailing P/E of 57.34, creating significant valuation risk and potential pullback exposure for a 1-2 week swing trade.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>High valuation at P/E 57.34 after 53% YTD rally increases pullback risk</li><li>Stock may be overextended after recent sharp gains (14.64% in one week), creating squeeze-out risk for late entries</li><li>Regulatory debate mentioned but not detailed - potential headwind in energy sector</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">RH</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $199.94</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy if price closes above $212.20 (MA20) on above-average volume (>885k shares) with RSI rising above 50, confirming reversal. Watch for consolidation in the $208-215 range over next 2-3 days as a setup signal.</p><p><strong>LLM Analysis:</strong> RH is in a weak pullback position with price 6.4% below MA20 ($212.20), suggesting downward momentum may persist. RSI at 47.4 is neutral-to-bearish and volume is below average (0.82x), indicating weak conviction. The stock needs to stabilize above MA20 with stronger volume to confirm a reversal before becoming a reliable buy candidate for a 1-2 week swing targeting +7%.</p><p><strong>News Check:</strong> RH shows significant volatility and sector headwinds with a 52.6% one-year decline and recent 13% weekly pullback. However, no specific earnings misses, downgrades, regulatory issues, or insider selling are reported. Mixed sentiment with some bullish thesis countered by consumer spending concerns.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Sector-wide retail headwinds as e-commerce takes share from brick-and-mortar</li><li>High sensitivity to consumer spending and housing demand weakness</li><li>Recent sharp pullback (13% over 7 days, 12.9% over 1 week) suggests momentum fading</li><li>52.6% one-year decline indicates sustained bearish sentiment despite recent relief rally</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">LUNR</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $17.04</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>clear</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy if price closes above $19.26 (MA20) on volume >15M shares AND RSI rises above 55, confirming uptrend resumption and reducing pullback risk.</p><p><strong>LLM Analysis:</strong> LUNR shows mixed signals with price below MA20 ($19.26) despite being above MA50, indicating weakness in the intermediate trend. RSI at 47.4 is neutral and volume is 25% below average, suggesting low conviction. The stock needs to reclaim MA20 and show volume confirmation before becoming a reliable buy candidate for a 1-2 week swing with a +7% target.</p><p><strong>News Check:</strong> Recent headlines are overwhelmingly positive with major catalysts (Lanteris $800M acquisition, AFRL contracts, NASA Artemis II work, institutional investment from UPenn, analyst price target hikes). No material negatives detected.</p></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">HSAI</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $25.99</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>clear</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy if price closes above MA20 ($26.11) with RSI breaking above 55 and volume sustaining above 1.5x average, confirming bullish reversal before the 10-day range high resistance.</p><p><strong>LLM Analysis:</strong> HSAI shows mixed momentum with RSI at 53.1 (neutral-to-bullish) and above MA50, but the price is below MA20 and only 8.4% away from the 10-day high, limiting upside room for a 7% target within 1-2 weeks. Volume support (1.41x avg) is moderate but not compelling; the stock needs to reclaim MA20 and gain momentum before becoming a confident buy signal.</p><p><strong>News Check:</strong> HSAI shows positive momentum with recent BofA Buy rating reaffirmation and price target raise to $32. No material negatives identified—headlines are predominantly bullish with strong insider ownership, valuation support, and analyst coverage.</p></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">ALMS</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $25.63</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy if RSI drops below 50 while price holds above MA50 ($17.62) and MA20 ($25.90), with volume returning to >1.5M shares (above 0.75x ratio) to confirm institutional support.</p><p><strong>LLM Analysis:</strong> ALMS is price below MA20 with elevated RSI at 60.7, showing momentum that hasn't cooled for optimal entry. Volume is significantly below average (0.63x), reducing conviction in the move. While positioned well above MA50 with room to the 10-day high (+9.4%), the lack of volume backing and overbought RSI suggest waiting for a pullback-confirm setup rather than chasing.</p><p><strong>News Check:</strong> ALMS has experienced exceptional momentum (361.9% YTD, 250% YoY) with positive Phase 3 data and insider buying support, but valuation has extended significantly with one fund selling a $5M stake recently. Extended rallies carry elevated mean-reversion risk in biotech swing trades.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Extreme valuation extension after 361.9% YTD gain and 250%+ YoY surge increases reversal risk</li><li>Fund liquidation of $5M stake signals some profit-taking by institutional investors</li><li>Clinical-stage biotech dependent on regulatory approval (FDA path for envudeucitinib) introduces execution risk</li><li>Stock already up 46% in past month, limiting further near-term upside for 1-2 week swing horizon</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">TXG</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $19.15</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy if price closes above MA20 ($20.53) on volume >1.8M shares AND RSI moves above 55, establishing an uptrend for the 1-2 week swing window.</p><p><strong>LLM Analysis:</strong> TXG shows mixed signals with price trapped between MAs (below 20-day, above 50-day) and weak volume at 0.69x average, suggesting insufficient conviction. RSI at 47.2 is neutral territory with no momentum edge. The stock needs to either break above MA20 ($20.53) with volume support or establish clearer directional conviction before becoming a reliable swing-trade candidate.</p><p><strong>News Check:</strong> TXG has earnings report scheduled for tomorrow (Feb 13) with analyst expectations pointing to negative earnings. While recent momentum is strong (40% in 1 month), pre-earnings uncertainty and analyst pessimism create risk for a 1-2 week swing position.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Earnings report imminent (tomorrow after market close) with analyst consensus expecting negative earnings</li><li>Multiple articles flag TXG as lacking 'right combination' for earnings beat, creating high volatility risk around report</li><li>Recent 40%+ momentum may reflect speculative positioning ahead of earnings disappointment</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">SBSW</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $17.56</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy if volume ratio exceeds 1.2x average AND price reclaims above $17.80 (MA20) with RSI staying 45-65, confirming renewed buyer interest without overextension.</p><p><strong>LLM Analysis:</strong> SBSW shows mixed momentum with RSI at neutral 53.3 and weak volume (0.45x average), suggesting insufficient conviction for entry. While price holds above MA50, the pullback below MA20 and low volume ratio indicate the move lacks follow-through; accumulation would be needed to justify a BUY upgrade.</p><p><strong>News Check:</strong> While SBSW shows positive momentum with recent price strength and analyst upgrades, a $3.6B loss at a major mining competitor signals sector-wide headwinds in platinum operations that could pressure sentiment. Gold tailwinds are present but platinum exposure creates near-term volatility risk.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Platinum sector weakness: Mining giant posted $3.6B loss, creating potential sector contagion despite gold strength</li><li>Commodity price dependency: Stock momentum heavily tied to gold/platinum prices which are volatile and cyclical</li></ul></div>
+</div><div class="card" style="border-left: 3px solid #9ca3af">
+    <div class="card-header"><span class="symbol">BBAR</span> <span class="badge badge-gray">Watch</span> <span class="text-muted">WATCH (35/100) | $18.16</span></div>
+    <div class="card-body"><div class="status-row"><span>Signal: <strong>WATCH</strong></span><span>LLM: <strong>caution</strong></span><span>Sentinel: <strong>warning</strong></span></div><p><strong>Rules Triggered:</strong> above_ma50, ma20_pullback</p><p><strong>Buy Rule:</strong> Becomes a buy candidate if volume surges above 0.8x the 20-day average AND RSI climbs above 55 while price reclaims MA20 ($18.82), signaling renewed momentum with sufficient liquidity for swing execution.</p><p><strong>LLM Analysis:</strong> BBAR shows mixed technicals with price holding above MA50 but struggling below MA20, and RSI at neutral 47 lacks conviction for immediate entry. More critically, volume is severely depressed at 0.32x the 20-day average, which raises liquidity concerns for executing a $10K position and hitting the +7% exit target within 1-2 weeks.</p><p><strong>News Check:</strong> Mixed signals with recent analyst upgrades offsetting earlier downward revisions and a significant Q3 net income drop. Macro-dependent emerging market bank with high volatility and currency exposure risks for a 1-2 week swing trade.</p><p><strong>Concerns:</strong></p><ul class="concerns-list"><li>Significant drop in Q3 net income despite revenue of $1.21B - earnings quality concern</li><li>High analyst volatility: price target swung from ARS 9,663 down to 7,817 then up to 11,606 within weeks</li><li>Emerging market bank heavily exposed to Argentine macroeconomic and political risk</li><li>Stock is highly volatile and sentiment-driven (40%+ swings on political events); difficult to predict short-term direction</li></ul></div>
+</div>
+
+    <div class="footer">
+        Paper Trader — Static export generated 2026-02-13 21:57
+    </div>
+</div>
+</body>
+</html>
