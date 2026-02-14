@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/dockinsi/public_html/
+    - export DEPLOYPATH=/home/dockinsi/public_html/jjdockins/
     - /bin/cp -R paper-trader $DEPLOYPATH
