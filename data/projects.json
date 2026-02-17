@@ -1,0 +1,154 @@
+{
+  "lastUpdated": "2026-02-17T09:00:00Z",
+  "activeProject": null,
+  "projects": [
+    {
+      "id": "2k",
+      "name": "2K",
+      "tagline": "AI-powered training coach for a sub-6:30 2K erg",
+      "description": "Ingests training data from Concept2 ErgData, Whoop, Withings, and MyFitnessPal. Uses Claude as the reasoning engine to detect trends and adjust training plans. Serves a web dashboard for daily logging, trend visualization, and AI chat.",
+      "status": "active",
+      "phase": "development",
+      "tech": ["Python", "FastAPI", "Streamlit", "Claude API", "SQLite", "SQLAlchemy"],
+      "category": "ai",
+      "lastWorkedOn": "2026-02-17",
+      "currentFocus": "Core architecture and data ingestion setup",
+      "nextSteps": [
+        "Implement data ingestion from ErgData CSV exports",
+        "Build daily logging dashboard in Streamlit",
+        "Integrate Claude for training plan adjustments"
+      ],
+      "completionEstimate": 15,
+      "repo": null,
+      "siteUrl": null
+    },
+    {
+      "id": "auto-spin",
+      "name": "Auto-Spin",
+      "tagline": "ESP32-S3 BLE accessory with AMOLED display",
+      "description": "Battery-powered BLE accessory built on a LILYGO T-Display-S3 AMOLED (ESP32-S3). Pairs with iPhone over Bluetooth and sends timed button-press events. Features a 240x536 AMOLED display with live connection status, session stats, and procedural animations.",
+      "status": "paused",
+      "phase": "testing",
+      "tech": ["C++", "PlatformIO", "ESP32-S3", "NimBLE", "FreeRTOS"],
+      "category": "hardware",
+      "lastWorkedOn": "2026-02-07",
+      "currentFocus": "Awaiting hardware assembly and testing",
+      "nextSteps": [
+        "Assemble hardware (board, battery, buttons)",
+        "Run through 7 hardware testing phases",
+        "Field test BLE connection stability"
+      ],
+      "completionEstimate": 75,
+      "repo": null,
+      "siteUrl": null
+    },
+    {
+      "id": "bitcoin-ai-agent",
+      "name": "Bitcoin AI Agent",
+      "tagline": "Automated Bitcoin analysis with Claude trading decisions",
+      "description": "Two-component system: a React dashboard computes technical indicators (RSI, MACD, Bollinger Bands, etc.) from live CoinGecko data, and a Node.js agent scrapes the dashboard with Puppeteer, sends analysis to Claude, and logs BUY/SELL/HOLD decisions.",
+      "status": "complete",
+      "phase": "complete",
+      "tech": ["React", "Vite", "Node.js", "Puppeteer", "Claude API", "CoinGecko API"],
+      "category": "ai",
+      "lastWorkedOn": "2026-02-04",
+      "currentFocus": "Project complete",
+      "nextSteps": [],
+      "completionEstimate": 100,
+      "repo": "https://github.com/JoBlockins/Bitcoin-AI-Agent-Analysis",
+      "siteUrl": "Bitcoin-AI-Agent/index.html"
+    },
+    {
+      "id": "concept2-data",
+      "name": "Concept2 Data",
+      "tagline": "Real-time PM5 erg dashboard with stroke-level analytics",
+      "description": "Connects to a Concept2 PM5 via USB (CSAFE protocol), captures per-stroke metrics (drive length, force curves, watts, pace, SPM, heart rate), stores in SQLite, and streams to a browser dashboard over WebSocket. Includes live dashboard, Rowing View, and Session History.",
+      "status": "active",
+      "phase": "development",
+      "tech": ["Python", "FastAPI", "WebSockets", "SQLite", "Chart.js", "Vanilla JS"],
+      "category": "data",
+      "lastWorkedOn": "2026-02-17",
+      "currentFocus": "MVP and Rowing View complete, testing with real PM5 hardware",
+      "nextSteps": [
+        "Test USB connection with physical PM5",
+        "Add session comparison features",
+        "Build data export functionality"
+      ],
+      "completionEstimate": 60,
+      "repo": null,
+      "siteUrl": "Supplemental-Erg-Data/index.html"
+    },
+    {
+      "id": "concept2-data-analyzer",
+      "name": "Concept2 Data Analyzer",
+      "tagline": "CLI tool for PM5 USB data capture and post-workout analysis",
+      "description": "Python tool for connecting to a Concept2 PM5 via USB, capturing real-time workout data (stroke rate, split, watts, drive length). Features interactive CLI, post-workout statistics with 500m split breakdowns, and CSV export.",
+      "status": "paused",
+      "phase": "testing",
+      "tech": ["Python", "PyRow", "PyUSB"],
+      "category": "data",
+      "lastWorkedOn": "2026-01-27",
+      "currentFocus": "Core modules complete, awaiting USB cable for hardware testing",
+      "nextSteps": [
+        "Test with physical PM5 hardware",
+        "Validate data accuracy against ErgData app",
+        "Add advanced analysis metrics"
+      ],
+      "completionEstimate": 70,
+      "repo": "https://github.com/JoBlockins/concept2-data-analyzer",
+      "siteUrl": null
+    },
+    {
+      "id": "disneyme",
+      "name": "DisneyME",
+      "tagline": "Family Disney World trip PWA with offline support",
+      "description": "Mobile-first Progressive Web App for the Dockins family Disney World trip (Feb 22-24, 2026). Covers three park days with swipeable tabs, live countdown, activity checkboxes, Lightning Lane counter, offline support, and dark mode. Installable on iPhone.",
+      "status": "complete",
+      "phase": "complete",
+      "tech": ["HTML", "CSS", "Vanilla JS", "Service Worker", "PWA"],
+      "category": "web",
+      "lastWorkedOn": "2026-02-14",
+      "currentFocus": "Project complete and ready for the trip",
+      "nextSteps": [],
+      "completionEstimate": 100,
+      "repo": "https://github.com/JoBlockins/DisneyME",
+      "siteUrl": null
+    },
+    {
+      "id": "paper-trader",
+      "name": "Paper Trader",
+      "tagline": "Paper stock trading system with AI-powered signal analysis",
+      "description": "Identifies NYSE/Nasdaq stocks with 5%+ return potential within 1-2 weeks. Phase 1 screens using ATR and swing analysis with quality filters. Phase 2 adds 15 technical indicators, rule-based signals, Claude-powered validation, a Morning Sentinel news agent, and a Streamlit dashboard.",
+      "status": "complete",
+      "phase": "complete",
+      "tech": ["Python", "yfinance", "Streamlit", "Claude API", "pandas", "Peewee"],
+      "category": "ai",
+      "lastWorkedOn": "2026-02-16",
+      "currentFocus": "Both phases complete",
+      "nextSteps": [],
+      "completionEstimate": 100,
+      "repo": null,
+      "siteUrl": null
+    },
+    {
+      "id": "jjdockins",
+      "name": "jjdockins.com",
+      "tagline": "Personal portfolio and project showcase website",
+      "description": "Personal website hosted on GitHub Pages featuring a portfolio landing page, Project Blueprint career exploration showcase, and individual project pages. Built from scratch as a web development learning project.",
+      "status": "active",
+      "phase": "development",
+      "tech": ["HTML", "CSS", "Vanilla JS"],
+      "category": "web",
+      "lastWorkedOn": "2026-02-17",
+      "currentFocus": "Adding project dashboard page",
+      "nextSteps": [
+        "Add project dashboard page",
+        "Continue adding project showcase pages",
+        "Improve mobile responsiveness"
+      ],
+      "completionEstimate": 65,
+      "repo": "https://github.com/JoBlockins/jjdockins-website",
+      "siteUrl": "index.html"
+    }
+  ]
+}

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Project Dashboard - Track the progress of all projects by Josiah J Dockins.">
+    <meta property="og:title" content="Josiah J Dockins - Project Dashboard">
+    <meta property="og:description" content="Track the progress of all projects by Josiah J Dockins.">
+    <meta property="og:type" content="website">
+    <title>Josiah J Dockins - Project Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-mid) 50%, var(--accent-teal) 100%);
+            min-height: 100vh;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-pill {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .stat-pill .stat-num {
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            max-width: 1200px;
+            margin: 1.5rem auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-group::after {
+            content: '';
+            width: 1px;
+            background: rgba(255, 255, 255, 0.25);
+            margin: 0 0.5rem;
+        }
+
+        .filter-group:last-child::after {
+            display: none;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .filter-btn.active {
+            background: white;
+            color: var(--primary-dark);
+            border-color: white;
+            font-weight: 600;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.75rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+
+        .project-card[data-status="active"]::before { background: var(--accent-teal); }
+        .project-card[data-status="paused"]::before { background: var(--accent-gold); }
+        .project-card[data-status="complete"]::before { background: #48bb78; }
+        .project-card[data-status="archived"]::before { background: var(--neutral-700); }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+
+        .status-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.25rem 0.6rem;
+            border-radius: 50px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-left: 0.75rem;
+        }
+
+        .status-badge.active {
+            background: rgba(20, 184, 166, 0.12);
+            color: #0d9488;
+        }
+        .status-badge.paused {
+            background: rgba(251, 191, 36, 0.15);
+            color: #b45309;
+        }
+        .status-badge.complete {
+            background: rgba(72, 187, 120, 0.12);
+            color: #276749;
+        }
+        .status-badge.archived {
+            background: rgba(51, 65, 85, 0.1);
+            color: var(--neutral-700);
+        }
+
+        .card-tagline {
+            font-size: 0.9rem;
+            color: var(--neutral-700);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Tech Pills */
+        .tech-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-pill {
+            background: var(--neutral-50);
+            color: var(--neutral-700);
+            font-size: 0.72rem;
+            font-weight: 500;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            border: 1px solid var(--neutral-100);
+        }
+
+        /* Progress Bar */
+        .progress-section {
+            margin-bottom: 1rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--neutral-700);
+            margin-bottom: 0.35rem;
+            font-weight: 500;
+        }
+
+        .progress-bar-bg {
+            height: 6px;
+            background: var(--neutral-100);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        .project-card[data-status="active"] .progress-bar-fill { background: var(--accent-teal); }
+        .project-card[data-status="paused"] .progress-bar-fill { background: var(--accent-gold); }
+        .project-card[data-status="complete"] .progress-bar-fill { background: #48bb78; }
+        .project-card[data-status="archived"] .progress-bar-fill { background: var(--neutral-700); }
+
+        /* Current Focus */
+        .current-focus {
+            font-size: 0.85rem;
+            color: var(--neutral-700);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .current-focus strong {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        /* Card Footer */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--neutral-100);
+            margin-top: auto;
+        }
+
+        .last-updated {
+            font-size: 0.78rem;
+            color: #94a3b8;
+        }
+
+        .card-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .card-links a {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--accent-teal);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .card-links a:hover {
+            color: var(--primary-dark);
+        }
+
+        .card-links a::after {
+            display: none;
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }
+
+        /* Footer overrides to match index.html */
+        footer {
+            background: rgba(15, 38, 71, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            border-top: 2px solid rgba(20, 184, 166, 0.3);
+            margin-top: 3rem;
+        }
+
+        footer h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-teal);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        footer .copyright {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero .tagline {
+                font-size: 1rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-text">Josiah J Dockins</a>
+            <div class="hamburger" aria-label="Toggle navigation menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="personal.html">About Me</a></li>
+                <li><a href="projects.html">Dashboard</a></li>
+                <li><a href="Project-Blueprint/blueprint.html">Project Blueprint</a></li>
+                <li><a href="Project-Blueprint/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Project Dashboard</h1>
+            <p class="tagline">Everything I'm building, learning, and shipping</p>
+            <div class="hero-stats" id="heroStats"></div>
+        </section>
+
+        <div class="filter-bar">
+            <div class="filter-group" id="categoryFilters">
+                <button class="filter-btn active" data-filter="all" data-type="category">All</button>
+                <button class="filter-btn" data-filter="ai" data-type="category">AI</button>
+                <button class="filter-btn" data-filter="hardware" data-type="category">Hardware</button>
+                <button class="filter-btn" data-filter="data" data-type="category">Data</button>
+                <button class="filter-btn" data-filter="web" data-type="category">Web</button>
+            </div>
+            <div class="filter-group" id="statusFilters">
+                <button class="filter-btn active" data-filter="all" data-type="status">All</button>
+                <button class="filter-btn" data-filter="active" data-type="status">Active</button>
+                <button class="filter-btn" data-filter="paused" data-type="status">Paused</button>
+                <button class="filter-btn" data-filter="complete" data-type="status">Complete</button>
+            </div>
+        </div>
+
+        <div class="card-grid" id="cardGrid"></div>
+    </main>
+
+    <footer>
+        <h4>Disclaimer</h4>
+        <p>
+            This website was built from scratch as I teach myself web development, using HTML/CSS and AI tools as learning resources. I'm continuously improving the site as I develop my skills.
+        </p>
+        <p class="copyright">&copy; 2026 Josiah Dockins. All rights reserved.</p>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        let allProjects = [];
+        let activeCategory = 'all';
+        let activeStatus = 'all';
+
+        function timeAgo(dateStr) {
+            const now = new Date();
+            const date = new Date(dateStr + 'T00:00:00');
+            const diffMs = now - date;
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 0) return 'Today';
+            if (diffDays === 1) return 'Yesterday';
+            if (diffDays < 7) return diffDays + 'd ago';
+            if (diffDays < 30) return Math.floor(diffDays / 7) + 'w ago';
+            if (diffDays < 365) return Math.floor(diffDays / 30) + 'mo ago';
+            return Math.floor(diffDays / 365) + 'y ago';
+        }
+
+        function renderStats(projects) {
+            const stats = {
+                active: projects.filter(p => p.status === 'active').length,
+                paused: projects.filter(p => p.status === 'paused').length,
+                complete: projects.filter(p => p.status === 'complete').length,
+                total: projects.length
+            };
+
+            document.getElementById('heroStats').innerHTML =
+                '<span class="stat-pill"><span class="stat-num">' + stats.total + '</span> Total</span>' +
+                '<span class="stat-pill"><span class="stat-num">' + stats.active + '</span> Active</span>' +
+                '<span class="stat-pill"><span class="stat-num">' + stats.paused + '</span> Paused</span>' +
+                '<span class="stat-pill"><span class="stat-num">' + stats.complete + '</span> Complete</span>';
+        }
+
+        function renderCards(projects) {
+            var filtered = projects.filter(function(p) {
+                var catMatch = activeCategory === 'all' || p.category === activeCategory;
+                var statusMatch = activeStatus === 'all' || p.status === activeStatus;
+                return catMatch && statusMatch;
+            });
+
+            var grid = document.getElementById('cardGrid');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="empty-state">No projects match the selected filters.</div>';
+                return;
+            }
+
+            grid.innerHTML = filtered.map(function(p) {
+                var linksHtml = '';
+                if (p.repo) {
+                    linksHtml += '<a href="' + p.repo + '" target="_blank" rel="noopener noreferrer">GitHub</a>';
+                }
+                if (p.siteUrl) {
+                    linksHtml += '<a href="' + p.siteUrl + '">View Page</a>';
+                }
+
+                var techHtml = p.tech.map(function(t) {
+                    return '<span class="tech-pill">' + t + '</span>';
+                }).join('');
+
+                var focusHtml = '';
+                if (p.status !== 'complete') {
+                    focusHtml = '<div class="current-focus"><strong>Focus:</strong> ' + p.currentFocus + '</div>';
+                }
+
+                return '<div class="project-card" data-status="' + p.status + '" data-category="' + p.category + '">' +
+                    '<div class="card-header">' +
+                        '<h3>' + p.name + '</h3>' +
+                        '<span class="status-badge ' + p.status + '">' + p.status + '</span>' +
+                    '</div>' +
+                    '<p class="card-tagline">' + p.tagline + '</p>' +
+                    '<div class="tech-pills">' + techHtml + '</div>' +
+                    '<div class="progress-section">' +
+                        '<div class="progress-label"><span>' + p.phase + '</span><span>' + p.completionEstimate + '%</span></div>' +
+                        '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + p.completionEstimate + '%"></div></div>' +
+                    '</div>' +
+                    focusHtml +
+                    '<div class="card-footer">' +
+                        '<span class="last-updated">' + timeAgo(p.lastWorkedOn) + '</span>' +
+                        '<div class="card-links">' + linksHtml + '</div>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        // Filter button handlers
+        document.querySelectorAll('.filter-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var type = this.getAttribute('data-type');
+                var value = this.getAttribute('data-filter');
+
+                // Update active state within the group
+                var group = this.parentElement;
+                group.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                this.classList.add('active');
+
+                if (type === 'category') activeCategory = value;
+                if (type === 'status') activeStatus = value;
+
+                renderCards(allProjects);
+            });
+        });
+
+        // Fetch and render
+        fetch('data/projects.json')
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                allProjects = data.projects;
+                renderStats(allProjects);
+                renderCards(allProjects);
+            })
+            .catch(function(err) {
+                console.error('Failed to load projects:', err);
+                document.getElementById('cardGrid').innerHTML =
+                    '<div class="empty-state">Failed to load project data.</div>';
+            });
+    </script>
+</body>
+</html>
