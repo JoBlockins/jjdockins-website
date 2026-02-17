@@ -3,3 +3,14 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/dockinsi/public_html/jjdockins/
     - /bin/cp -R paper-trader $DEPLOYPATH
+    - /bin/cp projects.html $DEPLOYPATH
+    - /bin/mkdir -p $DEPLOYPATH/data
+    - /bin/cp data/projects.json $DEPLOYPATH/data/
+    - /bin/cp personal.html $DEPLOYPATH
+    - /bin/cp main.js $DEPLOYPATH
+    - /bin/cp styles.css $DEPLOYPATH
+    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp -R Project-Blueprint $DEPLOYPATH
+    - /bin/cp -R Bitcoin-AI-Agent $DEPLOYPATH
+    - /bin/cp -R Supplemental-Erg-Data $DEPLOYPATH
+    - /bin/cp -R Spotify-Recommendation $DEPLOYPATH
