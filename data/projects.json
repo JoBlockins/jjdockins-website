@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-02-17T09:00:00Z",
-  "activeProject": null,
+  "lastUpdated": "2026-02-17T15:15:00Z",
+  "activeProject": "jjdockins",
   "projects": [
     {
       "id": "2k",
@@ -79,26 +79,6 @@
       "siteUrl": "Supplemental-Erg-Data/index.html"
     },
     {
-      "id": "concept2-data-analyzer",
-      "name": "Concept2 Data Analyzer",
-      "tagline": "CLI tool for PM5 USB data capture and post-workout analysis",
-      "description": "Python tool for connecting to a Concept2 PM5 via USB, capturing real-time workout data (stroke rate, split, watts, drive length). Features interactive CLI, post-workout statistics with 500m split breakdowns, and CSV export.",
-      "status": "paused",
-      "phase": "testing",
-      "tech": ["Python", "PyRow", "PyUSB"],
-      "category": "data",
-      "lastWorkedOn": "2026-01-27",
-      "currentFocus": "Core modules complete, awaiting USB cable for hardware testing",
-      "nextSteps": [
-        "Test with physical PM5 hardware",
-        "Validate data accuracy against ErgData app",
-        "Add advanced analysis metrics"
-      ],
-      "completionEstimate": 70,
-      "repo": "https://github.com/JoBlockins/concept2-data-analyzer",
-      "siteUrl": null
-    },
-    {
       "id": "disneyme",
       "name": "DisneyME",
       "tagline": "Family Disney World trip PWA with offline support",
@@ -140,13 +120,13 @@
       "tech": ["HTML", "CSS", "Vanilla JS"],
       "category": "web",
       "lastWorkedOn": "2026-02-17",
-      "currentFocus": "Adding project dashboard page",
+      "currentFocus": "Dashboard page live, deploy pipeline set up, homepage updated with Paper Trader card",
       "nextSteps": [
-        "Add project dashboard page",
         "Continue adding project showcase pages",
-        "Improve mobile responsiveness"
+        "Improve mobile responsiveness",
+        "Add Paper Trader dedicated page"
       ],
-      "completionEstimate": 65,
+      "completionEstimate": 70,
       "repo": "https://github.com/JoBlockins/jjdockins-website",
       "siteUrl": "index.html"
     }
