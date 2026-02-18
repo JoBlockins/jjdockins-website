@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-02-17T15:15:00Z",
-  "activeProject": "jjdockins",
+  "lastUpdated": "2026-02-17T23:00:00Z",
+  "activeProject": "api-costs",
   "projects": [
     {
       "id": "2k",
@@ -51,8 +51,8 @@
       "phase": "complete",
       "tech": ["React", "Vite", "Node.js", "Puppeteer", "Claude API", "CoinGecko API"],
       "category": "ai",
-      "lastWorkedOn": "2026-02-04",
-      "currentFocus": "Project complete",
+      "lastWorkedOn": "2026-02-17",
+      "currentFocus": "Project complete — cost tracking wired in",
       "nextSteps": [],
       "completionEstimate": 100,
       "repo": "https://github.com/JoBlockins/Bitcoin-AI-Agent-Analysis",
@@ -103,8 +103,8 @@
       "phase": "complete",
       "tech": ["Python", "yfinance", "Streamlit", "Claude API", "pandas", "Peewee"],
       "category": "ai",
-      "lastWorkedOn": "2026-02-16",
-      "currentFocus": "Both phases complete",
+      "lastWorkedOn": "2026-02-17",
+      "currentFocus": "Both phases complete — cost tracking wired in",
       "nextSteps": [],
       "completionEstimate": 100,
       "repo": null,
@@ -129,6 +129,22 @@
       "completionEstimate": 70,
       "repo": "https://github.com/JoBlockins/jjdockins-website",
       "siteUrl": "index.html"
+    },
+    {
+      "id": "api-costs",
+      "name": "API Costs",
+      "tagline": "Local cost tracker for Anthropic API usage across projects",
+      "description": "Self-tracking system that logs token usage from Anthropic API calls across 2K, Bitcoin AI Agent, and Paper Trader to a shared JSONL file. A report script reads the log and prints a formatted per-project cost breakdown to the terminal with model-aware pricing.",
+      "status": "complete",
+      "phase": "complete",
+      "tech": ["Python", "JavaScript"],
+      "category": "tool",
+      "lastWorkedOn": "2026-02-17",
+      "currentFocus": "Tracker and report script complete, wired into all 3 AI projects",
+      "nextSteps": [],
+      "completionEstimate": 100,
+      "repo": null,
+      "siteUrl": null
     }
   ]
 }
