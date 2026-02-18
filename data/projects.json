@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-17T23:00:00Z",
+  "lastUpdated": "2026-02-18T00:30:00Z",
   "activeProject": "api-costs",
   "projects": [
     {
@@ -119,8 +119,8 @@
       "phase": "development",
       "tech": ["HTML", "CSS", "Vanilla JS"],
       "category": "web",
-      "lastWorkedOn": "2026-02-17",
-      "currentFocus": "Dashboard page live, deploy pipeline set up, homepage updated with Paper Trader card",
+      "lastWorkedOn": "2026-02-18",
+      "currentFocus": "API Costs page added, deploy pipeline set up",
       "nextSteps": [
         "Continue adding project showcase pages",
         "Improve mobile responsiveness",
@@ -133,14 +133,14 @@
     {
       "id": "api-costs",
       "name": "API Costs",
-      "tagline": "Local cost tracker for Anthropic API usage across projects",
-      "description": "Self-tracking system that logs token usage from Anthropic API calls across 2K, Bitcoin AI Agent, and Paper Trader to a shared JSONL file. A report script reads the log and prints a formatted per-project cost breakdown to the terminal with model-aware pricing.",
+      "tagline": "Anthropic API cost dashboard with automated weekly deploy",
+      "description": "Pulls cost and usage data from the Anthropic Admin API, generates per-project breakdowns (2K, Bitcoin AI Agent, Paper Trader), and deploys a visual dashboard to jjdockins.com. Automated weekly via launchd. Also includes per-call self-tracking wired into all 3 AI projects.",
       "status": "complete",
       "phase": "complete",
-      "tech": ["Python", "JavaScript"],
+      "tech": ["Python", "JavaScript", "Anthropic Admin API"],
       "category": "tool",
-      "lastWorkedOn": "2026-02-17",
-      "currentFocus": "Tracker and report script complete, wired into all 3 AI projects",
+      "lastWorkedOn": "2026-02-18",
+      "currentFocus": "Complete — Admin API integration, web dashboard, weekly auto-deploy",
       "nextSteps": [],
       "completionEstimate": 100,
       "repo": null,
