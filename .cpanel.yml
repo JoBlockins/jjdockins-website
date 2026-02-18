@@ -6,6 +6,8 @@ deployment:
     - /bin/cp projects.html $DEPLOYPATH
     - /bin/mkdir -p $DEPLOYPATH/data
     - /bin/cp data/projects.json $DEPLOYPATH/data/
+    - /bin/cp -f data/api-costs.json $DEPLOYPATH/data/ 2>/dev/null; true
+    - /bin/cp -R API-Costs $DEPLOYPATH
     - /bin/cp personal.html $DEPLOYPATH
     - /bin/cp main.js $DEPLOYPATH
     - /bin/cp styles.css $DEPLOYPATH
